@@ -1,0 +1,2414 @@
+<!doctype html>
+<html>
+<!-- TO DO:
+			Fade converter div when not in hover
+			Add jump to Service or Recall buttons
+			Add scroll to top button
+			Add in-lb to torque conversion
+			Add cross camber/toe to alignment function
+			Add countdown timer
+			Add saveable temp story
+
+		-->
+	<head>
+		<title>Jude's Main Page</title>
+		<link rel="shortcut icon" type="image/png" href="https://www.mercedes-benz.ca/favicon.ico">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<!--<link rel="stylesheet" href="https://xentry.daimler.com/xentry-frame-ui/css/main.css?v=2">-->
+		<video autoplay muted loop id="bgVideo">
+  		<source src="https://www.mercedes-amg.com/en/home/_jcr_content/stage/media/slides/slide_1775332595_cop_771106324/media1/video.video.20220527174120.mp4" type="video/mp4">
+		</video>
+		<style>
+			s1{/*font format for story*/
+				margin: 0px;
+				font-stretch: normal;
+				font-size: 12px;
+				line-height: normal;
+				font-family: "Helvetica Neue";
+				color: black;
+			}
+			s2{/*grey font format*/
+				margin: 0px;
+				font-stretch: normal;
+				font-size: 12px;
+				line-height: normal;
+				font-family: "Helvetica Neue";
+				color: #a3a3a3;
+			}
+			s3{/*Title in main body*/
+				margin:0px 0px 2px;
+				font-stretch: normal;
+				font-size: 25px;
+				font-weight: 200;
+				line-height: normal;
+				font-family: 'Courier New', serif;
+				color: #001c78;
+			}
+			.s1 {
+				margin: 0px;
+				font-stretch: normal;
+				font-size: 12px;
+				line-height: normal;
+				font-family: "Helvetica Neue";
+				color: black;
+			}
+			.button {/*button style*/
+				background-color: #001c78;
+				border: none;
+				color: white;
+				padding: 2px;
+				text-align: center;
+				text-decoration: none;
+				display: inline-block;
+				font-size: 13px;
+				margin: 4px 0px;
+				cursor: default;
+				border-radius: 6px 2px;
+				transition: all 0.3s ease;
+
+			}
+			.button:hover{
+				background-color: black;
+				color: #6a87e6;
+				border-color: black;
+			}
+			span.a{/*For spacing stories*/
+				display: block;
+				width: 100px;
+				height: 50px;
+				padding: 0px;
+				border: none;
+				background-color: none;
+			}
+			span.b{/*For spacing at the end*/
+				display: block;
+				width: 100px;
+				height: 160px;
+				padding: 0px;
+				border: none;
+				background-color: none;
+			}
+			span.c{/*For spacing stories*/
+				display: block;
+				width: 100px;
+				height: 25px;
+				padding: 0px;
+				border: none;
+				background-color: none;
+			}
+			.main-page{
+				position:fixed;
+				display:flex;
+				flex-direction:column;
+				min-height:620px;
+				height:100%;
+				width:100%;
+				margin:-9px;
+				color:#fff;
+				background-image: linear-gradient(to bottom, #000 20px, rgba(0, 0, 0, .3), rgba(50, 70, 200, .1)), url(https://www.mercedes-amg.com/en/home/_jcr_content/stage/media/slides/slide_1775332595_cop_771106324/media1/video.video.20220527174120.mp4);
+				/*https://www.mercedes-amg.com/content/global/en/vehicles/mercedes-amg-one/jcr:content/content/imageslider_1477917283/slides/slide/media1/image.media5.responsive_full_viewport_16_9.1531816317159.jpeg
+				*/
+				background-size: cover;
+			}
+			.converter{
+				position: fixed;
+				display: block;
+				right: 20px;
+				height: 110px;
+				padding: 5px;
+				background-color: rgba(0,28,120,0.2);
+				border-radius: 15px 5px;
+				border: 1px solid black;
+			}
+			.controls{
+				position: absolute;
+				top: 3px;
+				left: 92%;
+				display: block;
+				align-items: center;
+			}
+			.icon-bar {
+				position: fixed;
+				display: flex;
+				flex-wrap: wrap;
+				right: 50px;
+				top: 10px;
+			  width: 1px;
+				height: 100px;
+			}
+			.icon-bar a {
+			  display: block;
+			  text-align: center;
+			  transition: all 0.3s ease;
+			  color: #d6f8ff;
+			  font-size: 15px;
+			}
+			.icon-bar a:hover {
+			  color: #57e2ff;
+			}
+			.story-container{
+				position:absolute;
+				background-image: linear-gradient(to bottom, #fff 60%, rgba(156,156,156,.80));
+				overflow-y:auto;
+				padding:20px 50px 50px;
+				margin: 0px 10px 20px;
+			}
+			.banner-image{
+				height:120px; width:100%
+			}
+			.headerSpace{
+				position:relative;
+			}
+			.mainTitle{
+				display: flex;
+				align-items: center;
+				position:absolute;
+				top:40px;
+				left:70px;
+				color:#d6f8ff;
+				font-family: 'Courier New', serif;
+				font-size:25px;
+				line-height:20px;
+				text-shadow:0 0 20px 0 rgba(255,255,255,1)
+			}
+			#unit{
+			 width:70px;
+			}
+			#bgVideo{
+				position: fixed;
+				right: 0;
+				bottom: 300;
+				min-width: 100%;
+				min-height: 100%;
+			}
+		</style>
+		<script>
+			function passcode(){
+				displayBanner();
+				var passcodeInput = prompt("Password: ");
+				for (var i = 0; i < 2; i++) {
+					if (passcodeInput === null){
+						var passcodeInput = prompt("Password: ");
+					} else if (passcodeInput != "Jude"){
+						var passcodeInput = prompt("Password: ");
+					} else if (passcodeInput === "Jude") {
+						show('onOff','');
+						var i = 5;
+					}
+				}
+				if (passcodeInput != "Jude") {
+					window.open("https://i.kym-cdn.com/entries/icons/original/000/030/359/cover4.jpg", '_self');
+				} else if (passcodeInput === "Jude") {
+					show('onOff','');
+				}
+				}
+			function displayBanner(){
+				document.getElementById("topbanner").style.display='block';
+			}
+			function CopyToClipboard(id){
+				var r = document.createRange();
+				r.selectNode(document.getElementById(id));
+				window.getSelection().removeAllRanges();
+				window.getSelection().addRange(r);
+				document.execCommand('copy');
+				window.getSelection().removeAllRanges();
+			}
+			function show(shown, hidden) {
+			  document.getElementById(shown).style.display='block';
+			  document.getElementById(hidden).style.display='none';
+			  return false;
+			}
+			function convert() {
+				var x = 0.73756;
+			  var userInput = document.getElementById("inputValue");
+				var unitInput = document.getElementById("unit");
+				if (unitInput.value==="nm") {
+					var result = parseInt(userInput.value) * x;
+			    document.getElementById("outputUnit").innerHTML = "ft-lb";
+				}
+				else {
+					var result = parseInt(userInput.value) / x;
+			    document.getElementById("outputUnit").innerHTML = "Nm";
+				}
+			    return result.toFixed(1);
+			}
+			function treadDepth() {
+				var mmToIn = 0.039370;
+				var mmInput = document.getElementById("mmInput");
+				var treadDepthResult = Math.round(mmToIn * mmInput.value * 32);
+				document.getElementById("depthUnit").innerHTML = "inch";
+				return treadDepthResult+"/32";
+			}
+			function serviceStory(){
+				var count = 0;
+				var ServiceNotesF = "<BR>**********<br>"
+				var storyBase = "TEST DROVE THE VEHICLE. CHECKED ALL EXTERIOR LIGHTS, HORN, HAZARDS, WIPERS AND WASHERS. TOPPED OFF COOLANT, WASHER FLUID, AND CHECKED BRAKE FLUID LEVEL. INSPECTED ENGINE BAY. LIFTED THE VEHICLE. CHECKED ALL FOUR WHEELS, TIRES, AND BRAKES. CHECKED STEERING AND SUSPENSION COMPONENTS. INSPECTED UNDERBODY FOR DAMAGE. REMOVED ENGINE LOWER COVER AND DRAINED ENGINE OIL. ";
+				if (document.getElementById("drainPlug").checked == false) {
+					var storyBase = storyBase + "INSTALLED DRAIN PLUG WITH NEW CRUSH WASHER. ";
+				}	else {
+					var storyBase = storyBase + "INSTALLED NEW PLASTIC DRAIN PLUG. ";
+				}
+				var storyBase = storyBase + " REINSTALLED ENGINE LOWER COVER. ADJUSTED ALL TIRE PRESSURES. INSTALLED NEW ENGINE OIL FILTER. ";
+				if (document.getElementById("amgOil").checked == true) {
+					var storyBase = storyBase + "ADDED AMG ENGINE OIL TO SPEC. REPLACED ";
+				} else {
+					var storyBase = storyBase + "ADDED ENGINE OIL TO SPEC. REPLACED ";
+				}
+				if (document.getElementById("predust").checked == true) {
+					var storyBase = storyBase + "PRE-DUST FILTER, ";
+					var count = count + 1;
+				}
+				if (document.getElementById("combofilter").checked == true) {
+					var storyBase = storyBase + "COMBO FILTER, ";
+					var count = count + 1;
+				}
+				if (document.getElementById("frontWiper").checked == true) {
+					var storyBase = storyBase + "FRONT WIPERS, ";
+					var count = count + 1;
+				}
+				if (document.getElementById("keyBattery").checked == true) {
+					if (count==0) {
+						var storyBase = storyBase + "KEY BATTERY. ";
+					}
+					else {
+						var storyBase = storyBase + "AND KEY BATTERY. ";
+					}
+				}
+				if (document.getElementById("midtronic").checked == true) {
+					var storyBase = storyBase + "TESTED STARTER BATTERY. ";
+				}
+				if (document.getElementById("heater").checked == true) {
+					var storyBase = storyBase + "CHECKED BLOCK HEATER. ";
+				}
+				if (document.getElementById("fuel").checked == true) {
+					var storyBase = storyBase + "ADDED FUEL ADDITIVE. ";
+				}
+				if (document.getElementById("flush").checked == true) {
+					var storyBase = storyBase + "PERFORMED BRAKE FLUSH. ";
+				}
+				if (document.getElementById("def").value != 0) {
+					var storyBase = storyBase + "ADDED " + document.getElementById("def").value + "L OF ADBLUE. ";
+				}
+				if (document.getElementById("oilCheck").checked == true) {
+					var storyBase = storyBase + "CONNECTED XENTRY SCANNER AND CONFIRMED CORRECT LEVEL OF ENGINE OIL. RESET TPMS AND SERVICE REMINDER. ";
+				} else {
+					var storyBase = storyBase + "STARTED THE ENGINE AND CONFIRMED CORRECT LEVEL OF ENGINE OIL. RESET TPMS AND SERVICE REMINDER.";
+				}
+				var storyBrake = "<br>BRAKE PAD THICKNESS: " + document.getElementById("fBrakes").value + " MM FRONTS, " + document.getElementById("rBrakes").value + " MM REARS. ";
+				var storyTires = "<br>TIRE TREAD DEPTHS FROM WEAR INDICATOR: LF= " + document.getElementById("lfTire").value + " MM, RF= " + document.getElementById("rfTire").value + " MM, LR= " + document.getElementById("lrTire").value + " MM, RR= " + document.getElementById("rrTire").value + " MM. ";
+				var storyPSI = "<br>SET TIRE PRESSURES TO " + document.getElementById("fPSI").value + " PSI FRONTS, " + document.getElementById("rPSI").value + " PSI REARS";
+				if (document.getElementById("sPSI").value != 0) {
+					var storyPSI = storyPSI + ", " + document.getElementById("sPSI").value + " PSI SPARE.";
+				} else {
+					var storyPSI = storyPSI + ". ";
+				}
+				if (document.getElementById("ServiceNotesIn").value != 0) {
+					var ServiceNotesF = ServiceNotesF + document.getElementById("ServiceNotesIn").value;
+				}else {
+					var ServiceNotesF = "";
+				}
+				document.getElementById("storyResult").innerHTML = storyBase;
+				document.getElementById("storyBrake").innerHTML = storyBrake;
+				document.getElementById("storyTires").innerHTML = storyTires;
+				document.getElementById("storyPSI").innerHTML = storyPSI;
+				document.getElementById("ServiceNotesOut").innerHTML = ServiceNotesF;
+
+			}
+			function form2021010004(){
+				var base2021010004 = "AS PERMB RECALL CAMPAIGN 2021010004 , THE POWER SUPPLY HARNESS OF THE STARTER MOTOR MUST BE CHECKED FOR DAMAGES AND PROPER CLEARANCE WITH THE STARTER SOLENOID. LIFTED THE VEHICLE AND REMOVED LOWER ENGINE COVER. CHECKED STARTER WIRING HARNESS AT STARTER. ";
+				if (document.getElementById("2021010004a").checked == true) {
+					var base2021010004 = base2021010004 + "STARTER WIRING HARNESS IS NOT IN CONTACT WITH THE STARTER. NO FURTHER WORK NEEDED.";
+				} else if (document.getElementById("2021010004b").checked == true) {
+						var base2021010004 = base2021010004 + "STARTER WIRING HARNESS IS IN CONTACT WITH THE STARTER. DISCONNECTED GROUND LINE OF BATTERY. UNSCREWED WIRING HARNESS AT THE STARTER AND INSPECTED INSULATION FOR DAMAGES. FOUND NO DAMAGE TO WIRING HARNESS. NO FURTHER WORK NEEDED. REINSTALLED WIRING HARNESS IN SUCH A WAY THAT IT DOES NOT MAKE CONTACT WITH THE STARTER. REASSEMBLED IN REVERSE ORDER.";
+				} else if (document.getElementById("2021010004c").checked == true) {
+						var base2021010004 = base2021010004 + "STARTER WIRING HARNESS IS IN CONTACT WITH THE STARTER. DISCONNECTED GROUND LINE OF BATTERY. UNSCREWED WIRING HARNESS AT THE STARTER AND INSPECTED INSULATION FOR DAMAGES. FOUND HARNESS INSULATION IS CHAFED. REMOVED HEATSHIELD ABOVE BUSBAR. REMOVED BUSBAR COVER AND UNSCREWED STARTER WIRING HARNESS. REMOVED TURBO HEATSHIELDS. REMOVED STARTER WIRING HARNESS. INSTALLED NEW HARNESS IN REVERSE ORDER. REASSEMBLED PARTS IN REVERSE ORDER.";
+				}
+				document.getElementById("2021010004result").innerHTML = base2021010004;
+			}
+			function quickLubeStory(){
+				var quickLubeBase = "TOPPED OFF COOLANT AND WASHER FLUID. REMOVED UPPER AND LOWER ENGINE COVERS. DRAINED ENGINE OIL. ";
+				if (document.getElementById("quickLubePlug").checked == false) {
+					var quickLubeBase = quickLubeBase + "INSTALLED DRAIN PLUG WITH NEW CRUSH WASHER. ";
+				}	else {
+					var quickLubeBase = quickLubeBase + "INSTALLED NEW PLASTIC DRAIN PLUG. ";
+				}
+				var quickLubeBase = quickLubeBase + "INSTALLED NEW OIL FILTER. ";
+				if (document.getElementById("quickLubeAMG").checked == true) {
+					var quickLubeBase = quickLubeBase + "ADDED AMG ENGINE OIL TO SPEC. ";
+				} else {
+					var quickLubeBase = quickLubeBase + "ADDED ENGINE OIL TO SPEC. ";
+				}
+				if (document.getElementById("quickLubeXentry").checked == true) {
+					var quickLubeBase = quickLubeBase + "CONNECTED XENTRY DIAGNOSIS AND CONFIRMED CORRECT LEVEL OF ENGINE OIL. ";
+				} else {
+					var quickLubeBase = quickLubeBase + "STARTED THE ENGINE AND CONFIRMED CORRECT LEVEL OF ENGINE OIL. ";
+				}
+				var quickLubeBase = quickLubeBase + "ADJUSTED FOUR TIRE PRESSURES AND RESET TPMS. ";
+				document.getElementById("quickLube").innerHTML = quickLubeBase;
+			}
+			function starCert(){
+				var starCertBase = "TEST DROVE THE VEHICLE. TESTED OPERATION OF ALL DRIVER'S ASSISTANCE AND WARNING SYSTEMS, NAVIGATION, ENTERTAINMENT, INTERIOR AND EXTERIOR LIGHTS, HORN, WIPERS AND WASHERS. CHECKED OVERALL VEHICLE CONDITION. LIFTED THE VEHICLE. CHECKED UNDERBODY COMPONENTS, STEERING AND SUSPENSION COMPONENTS. ADJUSTED ALL TIRE PRESSURES AND RESET TPMS. CONNECTED XENTRY DIAGNOSIS. CHECKED AND CLEARED INITIAL QUICK TEST. PRINTED FINAL QUICK TEST.";
+				if (document.getElementById("starCertELW").checked == true) {
+					var starCertBase = starCertBase + "PERFORMED FURTHER INSPECTION AS PER<q>ELW SALE TO CUSTOMER</q> CHECKLIST IN TECHNICAL INSPECTION AND CERTIFICATION REPORT FORM";
+				} else {
+					var starCertBase = starCertBase + "PERFORMED FURTHER INSPECTION AS PER<q>PRE-OWNED CAR INSPECTION FOR STAR CERTIFIED WARRANTY</q> CHECKLIST IN TECHNICAL INSPECTION AND CERTIFICATION REPORT FORM";
+				}
+				document.getElementById("STARCERT1").innerHTML = starCertBase;
+			}
+			function recallNumberSelect(recallNumber,idName){
+				document.getElementById(idName).innerHTML = recallNumber.value;
+			}
+			function function2021020006() {
+				var base2021020006 = "AS PERMB RECALL CAMPAIGN 2021020006 , ON CERTAIN C-CLASS CABRIOLET WITH PRE-SAFE, THE SEAT BELT MIGHT NOT RETRACT COMPLETELY TO ITS STORAGE POSITION. CHECKED FRONT LEFT AND RIGHT SEAT BELTS. ";
+				if ((document.getElementById("2021020006left").checked == true) && (document.getElementById("2021020006right").checked == true)) {
+					var base2021020006 = base2021020006 + " FOUND BOTH LEFT AND RIGHT SEAT BELT STRAPS DO NOT RETRACT COMPLETELY INTO THEIR FINAL STORED POSITION DESPITE MANUAL ASSISTANCE. ";
+				} else if (document.getElementById("2021020006left").checked == true) {
+						var base2021020006 = base2021020006 + " FOUND LEFT SEAT BELT STRAP DOES NOT RETRACT COMPLETELY INTO ITS FINAL STORED POSITION DESPITE MANUAL ASSISTANCE. ";
+					} else if (document.getElementById("2021020006right").checked == true) {
+						var base2021020006 = base2021020006 + "FOUND RIGHT SEAT BELT STRAP DOES NOT RETRACT COMPLETELY INTO ITS FINAL STORED POSITION DESPITE MANUAL ASSISTANCE. ";
+					}
+				if ((document.getElementById("2021020006left").checked == false) && (document.getElementById("2021020006right").checked == false)) {
+					var base2021020006 = base2021020006 + "FOUND BOTH SEAT BELT STRAPS RETRACT INTO THEIR FINAL POSITION WITH SLIGHT MANUAL ASSISTANCE. NO FURTHER WORK NEEDED.";
+				} else {
+					var base2021020006 = base2021020006 + "DISCONNECTED GROUND LINE OF THE BATTERY. REMOVED LOWER SIDE TRIM IN REAR AND SEAT BELT TENSIONER. REMOVED DAMPING FOAM. AS PERWORK PROCEDURE, MODIFIED DAMPING FOAM OF THE AFFECTED SEAT BELT STRAP. REASSEMBLED IN REVERSE ORDER.";
+				}
+					document.getElementById("2021020006").innerHTML = base2021020006;
+			}
+			function function2020120005(){
+				var base2020120005 = "PER MB RECALL CAMPAIGN 2020120005 , TOWING EYE MAY BE MISSING IN THE STOWAGE BOX. CHECKED STOWAGE COMPARTMENT FOR TOWING EYE. ";
+				if (document.getElementById("2020120005P").checked == true) {
+					var base2020120005 = base2020120005 + "TOWING EYE IS PRESENT. NO FURTHER WORK NEEDED.";
+				} else if (document.getElementById("2020120005M").checked == true) {
+					var base2020120005 = base2020120005 + "TOWING EYE IS MISSING. MODIFIED RETAINING RIB AS PER WORK PROCEDURE. PLACED NEW TOWING EYE INTO STOWAGE COMPARTMENT.";
+				}
+				document.getElementById("2020120005").innerHTML = base2020120005;
+			}
+			function functionM276ENGINE(){
+				var M276ENGINEFrontCover = "CLEANED FRONT COVER AREA. REMOVED UPPER ENGINE COVER, LEFT AND RIGHT AIR DUCTS UPSTREAM OF AIR FILTER, LOW TEMPERATURE COOLANT TANK, AND OIL FILTER CAP. REMOVED LEFT AND RIGHT FRONT CAM COVERS. REMOVED CAM ADJUSTER MAGNETS. CLEANED FRONT COVERS. INSTALLED CAM COVERS WITH NEW RTV SEALANT. INSTALLED CAM ADJUSTERS WITH NEW O-RINGS. REINSTALLED ALL PARTS IN REVERSE ORDER. TEST DROVE THE VEHICLE. CHECKED FRONT COVERS FOR LEAKS. CONFIRMED FRONT COVERS ARE NO LONGER LEAKING.";
+				var M276ENGINEAirFilter = "REMOVED UPPER ENGINE COVER. REMOVED LEFT AND RIGHT ENGINE AIR FILTER COVERS. REMOVED FILTERS. INSTALLED NEW AIR FILTERS. RE-ASSEMBLED IN REVERSE ORDER.";
+				var M276ENGINESpark = "REMOVED UPPER ENGINE COVER, LEFT AND RIGHT AIR FILTER BOXES AND AIR DUCTS, AND NOISE ISOLATION FOAMS. REMOVED ALL 6 COIL PACKS. CLEANED ENGINE AREA WITH COMPRESSED AIR. REMOVED SPARK PLUGS. INSTALLED AND TORQUE NEW SPARK PLUGS TO 23NM. APPLIED GREASE IN SPARK PLUG ADAPTERS. INSTALLED AND TORQUE COIL PACKS TO 9NM. REASSEMBLED IN REVERSE ORDER. TEST DROVE THE VEHICLE AND CONFIRMED ENGINE SMOOTH OPERATION.";
+				var functionM276ENGINEResult = "";
+				if (document.getElementById("M276ENGINEFrontCover").checked == true) {
+					var functionM276ENGINEResult = M276ENGINEFrontCover;
+				}
+				if (document.getElementById("M276ENGINESpark").checked == true) {
+					var functionM276ENGINEResult = M276ENGINESpark;
+				}
+				if (document.getElementById("M276ENGINEAirFilter").checked == true) {
+					var functionM276ENGINEResult = M276ENGINEAirFilter;
+				}
+				document.getElementById("M276ENGINE").innerHTML = functionM276ENGINEResult;
+			}
+			function safetyStory(){
+				var safetyBase = "TEST DROVE THE VEHICLE. LIFTED THE VEHICLE AND REMOVED FRONT AND REAR RIGHT WHEELS. REMOVED LOWER ENGINE COVER. CHECKED AND ADJUSTED TIRE PRESSURES AND RESET TPMS. INSPECTED BRAKES, SUSPENSION, TIRES, LIGHTS, EXHAUST SYSTEM, SEATBELTS, STEERING COMPONENTS, AND OTHER COMPONENTS OUTLINED IN CERTIFICATE OF INSPECTION (COI) FORM. RE-ASSEMBLED IN REVERSE ORDER. TORQUED ALL FOUR WHEELS. DROVE THE VHEILCE OUT AND RE-TORQUED WHEELS.";
+				var safetyBase = safetyBase
+				+ "<br>TIRE TREAD DEPTHS: RF= "
+				+ document.getElementById("safetyrfTire").value
+				+ " MM, RR= "
+				+ document.getElementById("safetyrrTire").value
+				+ " MM, LF= "
+				+ document.getElementById("safetylfTire").value
+				+ " MM, LR= "
+				+ document.getElementById("safetylrTire").value
+				+ " MM. "
+				+ "<br> BRAKE PAD THICKNESS: FRONT= "
+				+ document.getElementById("safetyfPad").value
+				+ " MM, REAR= "
+				+ document.getElementById("safetyrPad").value
+				+ " MM. "
+				+ "<br> DRUM / ROTOR MEASUREMENT: FRONT= "
+				+ document.getElementById("safetyfDisc").value
+				+ " MM, REAR= "
+				+ document.getElementById("safetyrDisc").value
+				+ " MM. "
+				+ "<br> DRUM / ROTOR DISCARD LIMIT: FRONT= "
+				+ document.getElementById("safetyfDiscLim").value
+				+ " MM, REAR= "
+				+ document.getElementById("safetyrDiscLim").value
+				+ " MM. ";
+				if (document.getElementById("safetyPass").checked == true) {
+					var safetyBase = safetyBase + "<br> VEHICLE MEETS THE SAFETY STANDARDS FOR OPERATION IN MANITOBA AS PER <q>VEHICLE EQUIPMENT, SAFETY AND INSPECTION REGULATION.</q>";
+				} else if (document.getElementById("safetyAdvice").checked == true) {
+					var safetyBase = safetyBase + "<br> VEHICLE CURRENTLY MEETS ALL MINIMUM SAFETY STANDARDS AS PER <q>VEHICLE EQUIPMENT, SAFETY AND INSPECTION REGULATION.</q> HOWEVER, SOME COMPONENTS WILL SOON REQUIRE SERVICING OR REPAIR. ";
+				} else {
+					var safetyBase = safetyBase + "<br> VEHICLE DOES NOT MEET THE SAFETY STANDARD.";
+				}
+				document.getElementById("safetyStoryResult").innerHTML = safetyBase;
+			}
+			function functionM270ENGINE(){
+				var functionM270ENGINEResult = "";
+				var M270ENGINESpark = "REMOVED UPPER ENGINE COVER, AIR DUCT UPSTREAM OF TURBO, AND FOUR COIL PACKS. REMOVED FOUR SPARK PLUGS. INSTALLED NEW SPARK PLUGS AND TORQUE TO 23NM. REINSTALLED ALL PARTS IN REVERSE ORDER. TEST DROVE THE VEHICLE AND CONFIRMED ENGINE SMOOTH OPERATION.";
+				var M270ENGINEAirFilter = "REMOVED UPPER ENGINE COVER. REMOVED ENGINE AIR FILTER COVER AND FILTER. INSTALLED NEW FILTER. RE-ASSEMBLED IN REVERSE ORDER.";
+				var M270ENGINETransmissionService = "DISCONNECTED BATTERY GROUND. REMOVED AIR FILTER BOX AND AIR DUCT UPSTREAM OF FILTER. LIFTED THE VEHICLE AND REMOVED LOWER ENGINE COVER. DRAINED TRANSMISSION FLUID. REMOVED TRANSMISSION OIL PUMP FILTER. REMOVED TRANSMISSION OIL PAN AND FILTER. INSTALLED NEW FILTERS, O-RINGS, GASKETS, AND REINSTALLED TRANSMISSION OIL PAN AND DRAIN PLUG. REINSTALLED PARTS IN REVERSE ORDER. TORQUE DRAIN PLUG TO 25NM, OIL PAN BOLTS TO 8NM, FILTER HOUSING TO 25NM. PRE-FILLED TRANSMISSION. CONNECTED SCANNER. PERFORMED TRANSMISSION OIL LEVEL CHECK. ADJUSTED TRANSMISSION FLUID TO CORRECT SPEC. INSTALLED FILLER CAP AND LOCK. TEST DROVE THE VEHICLE.<br><s2>Pre-fill with 4L, check level with xentry and special dipstick</s2>";
+				var M270ENGINERemove = "LIFTED THE VEHICLE AND REMOVED FRONT LEFT AND RIGHT  WHEELS, AND FENDER LINERS. REMOVED FRONT BUMPER, LOWER ENGINE COVER, BOTH HEADLIGHTS, AND BATTERY TRAY. DRAINED COOLING SYSTEM. RECOVERED AC REFRIGERANT. REMOVED FRONT BUMPER CROSSMEMBER AND CHARGE AIR COOLER. REMOVED FRONT RADIATOR WITH CONDENSER AND FAN UNIT. REMOVED TOP CARRIER BAR. DISCONNECTED CENTRE EXHAUST PIPE FROM FRONT PIPE. DISCONNECTED DRIVESHAFT FROM TRANSMISSION. UNFASTENED BOTH FRONT LOWER CONTROL ARMS FROM STEERING KNUCKLE AND REMOVED LEFT AND RIGHT CV AXLES. REMOVED LOWER AND UPPER ENGINE PENDULUM SUPPORT. DISCONNECTED ALL RELEVANT COOLANT HOSES, FUEL LINE, EVAP LINES, VACUUM LINES, ELECTRICAL CONNECTORS FOR ENGINE AND TRANSMISSION. SUPPORTED THE ENGINE WITH ENGINE CRANE. REMOVED FRONT ENGINE MOUNT AND REAR MOUNT. REMOVED THE ENGINE WITH THE TRANSMISSION. <br><br> ASSEMBLED IN REVERSE ORDER. APPLIED VACUUM ON COOLING SYSTEM AND CONFIRMED SYSTEM HELD VACUUM (NO LEAKS). FILLED COOLING SYSTEM. PERFORMED VACUUM AND LEAK TEST ON AC SYSTEM. CONFIRMED NO LEAKS FOUND. CHARGED AC SYSTEM WITH REFRIGERANT AND INJECTED OIL. CONNECTED XENTRY SCANNER AND CLEARED FAULTS. PRINTED FINAL QUICK TEST. TEST DROVE THE VEHICLE AND RE-TORQUE FRONT WHEELS.";
+				var M270ENGINEOilFilterHousingSeal = "REMOVED UPPER ENGINE COVER. LOOSENED ENGINE OIL FILTER CAP. LIFTED THE VEHICLE AND REMOVED LOWER ENGINE COVER. REMOVED FRONT RIGHT WHEEL AND FRONT RIGHT AXLE. REMOVED 3 BOLTS ON OIL FILTER HOUSING. REMOVED SEAL AND INSTALLED NEW SEAL. TORQUED TO SPEC OF 20NM. ASSEMBLED IN REVERSE ORDER.";
+				if (document.getElementById("M270ENGINESpark").checked == true) {
+					var functionM270ENGINEResult = M270ENGINESpark;
+				}
+				if (document.getElementById("M270ENGINEAirFilter").checked == true) {
+					var functionM270ENGINEResult = M270ENGINEAirFilter;
+				}
+				if (document.getElementById("M270ENGINETransmissionService").checked == true) {
+					var functionM270ENGINEResult = M270ENGINETransmissionService;
+				}
+				if (document.getElementById("M270ENGINEOilFilterHousingSeal").checked == true) {
+					var functionM270ENGINEResult = M270ENGINEOilFilterHousingSeal;
+				}
+				if (document.getElementById("M270ENGINERemove").checked == true) {
+					var functionM270ENGINEResult = M270ENGINERemove;
+				}
+				document.getElementById("M270ENGINE").innerHTML = functionM270ENGINEResult;
+			}
+			function functionM133ENGINE(){
+				var functionM133ENGINEResult = "";
+				var M133ENGINERemove = "LIFTED THE VEHICLE AND REMOVED FRONT LEFT AND RIGHT WHEELS, AND FENDER LINERS. REMOVED FRONT BUMPER, LOWER ENGINE COVER, BOTH HEADLIGHTS, AND BATTERY TRAY. DRAINED HIGH AND LOW TEMP COOLING SYSTEMS. RECOVERED AC REFRIGERANT. REMOVED FRONT BUMPER CROSSMEMBER. REMOVED FRONT RADIATOR WITH CONDENSER AND FAN UNIT. REMOVED TOP CARRIER BAR. DISCONNECTED CENTRE EXHAUST PIPE FROM FRONT PIPE. DISCONNECTED DRIVESHAFT FROM TRANSMISSION. UNFASTENED BOTH FRONT LOWER CONTROL ARMS FROM STEERING KNUCKLE AND REMOVED LEFT AND RIGHT CV AXLES. REMOVED LOWER AND UPPER ENGINE PENDULUM SUPPORT. DISCONNECTED ALL RELEVANT COOLANT HOSES, FUEL LINE, EVAP LINES, VACUUM LINES, ELECTRICAL CONNECTORS FOR ENGINE AND TRANSMISSION. SUPPORTED THE ENGINE WITH ENGINE CRANE. REMOVED FRONT ENGINE MOUNT AND REAR MOUNT. REMOVED THE ENGINE WITH THE TRANSMISSION. <br><br> ASSEMBLED IN REVERSE ORDER. APPLIED VACUUM ON BOTH COOLING SYSTEMS AND CONFIRMED SYSTEMS HELD VACUUM (NO LEAKS). FILLED COOLING SYSTEMS. PERFORMED VACUUM AND LEAK TEST ON AC SYSTEM. CONFIRMED NO LEAKS FOUND. CHARGED AC SYSTEM WITH REFRIGERANT AND INJECTED OIL. CONNECTED XENTRY SCANNER AND CLEARED FAULTS. PRINTED FINAL QUICK TEST. TEST DROVE THE VEHICLE AND RE-TORQUE FRONT WHEELS.";
+				if (document.getElementById("M133ENGINERemove").checked == true) {
+					var functionM133ENGINEResult = M133ENGINERemove;
+				}
+				document.getElementById("M133ENGINE").innerHTML = functionM133ENGINEResult;
+			}
+			function functionM260ENGINE(){//M260
+				var functionM260ENGINEResult = "";
+				var M260ENGINESpark = "REMOVED UPPER ENGINE COVER, AIR DUCT UPSTREAM OF TURBO, AND FOUR COIL PACKS. REMOVED FOUR SPARK PLUGS. INSTALLED NEW SPARK PLUGS AND TORQUE TO 23NM. REINSTALLED ALL PARTS IN REVERSE ORDER. TEST DROVE THE VEHICLE AND CONFIRMED ENGINE SMOOTH OPERATION.";
+				var M260ENGINEHead = "PLACED VEHICLE IN NEUTRAL AND DISCONNECTED BATTERY GROUND. LIFTED THE VEHICLE AND REMOVED UPPER AND LOWER ENGINE COVER. REMOVED FRONT RIGHT WHEEL AND WHEEL WELL LINER. DRAINED COOLANT. DISCONNECTED CHARGE AIR HOSE DOWNSTREAM OF TURBO, TURBO COOLANT LINES AND OIL LINES, ELECTRICAL CONNECTORS FOR MAIN ENGINE HARNESS, AND ALL RELEVANT VACUUM LINES AND COOLANT LINES. REMOVED COOLANT RESERVOIR, INTAKE DUCT DOWNSTREAM OF AIR FILTER, CHARGE AIR PIPE UPSTREAM OF THROTTLE VALVE, FRONT ENGINE MOUNT, THROTTLE VALVE, AND CHARGE AIR DISTRIBUTOR. DETACHED MAIN ENGINE WIRING HARNESS FROM ITS CLIPS AND MOVED HARNESS TO ONE SIDE. REMOVED VACUUM PUMP, HIGH PRESSURE FUEL PUMP, FUEL RAIL WITH INJECTORS ATTACHED, INTAKE CAM ADJUSTER. DETACHED OIL FILLER NECK FROM HEAD COVER. REMOVED TURBO HEAT SHIELDS, TURBOCHARGER WITH EXHAUST MANIFOLD, ENGINE LIFT LUGS, AND TIMING CHAIN TENSIONER. REMOVED HEAD COVER, FRONT TIMING COVER, INTAKE AND EXHAUST VALVES. REMOVED CYLINDER HEAD WITH VALVES. CLEANED SURFACE AND INSTALLED NEW HEAD GASKET. INSTALLED NEW CYLINDER HEAD WITH VALVES. TRANSFERRED OVER PINS FOR TIMING CHAIN GUIDES, DOWELS FOR FRONT COVER ON TO NEW HEAD. TORQUED HEAD BOLTS TO SPEC. INSTALLED CAMS AND CONFIRMED ENGINE TIMING. TRANSFERRED TOP TIMING CHAIN GUIDE ON TO NEW HEAD COVER. APPLIED SILICONE SEALANT TO NEW HEAD COVER AS DETAILED IN WORKSHOP INSTRUCTION. INSTALLED HEAD COVER AND TORQUED TO SPEC. ASSEMBLED IN REVERSE ORDER WITH NEW SEALS/O-RINGS/BOLTS WHERE NEEDED. CONNECTED VACUUM COOLANT FILLER AND CONFIRMED COOLING SYSTEM CAN HOLD VACUUM FOR 5MIN. FILLED COOLING SYSTEM. PERFORMED TWO START UP CRANK CYCLES WITH INJECTORS DISCONNECTED TO CONFIRM ENGINE OIL IS CIRCULATING. CONNECTED ALL INJECTORS AND STARTED THE ENGINE. CONNECTED XENTRY SCANNER AND CLEARED STORED FAULTS. PRINTED FINAL QUICK TEST. TEST DROVE THE VEHICLE AND CONFIRMED NO OBVIOUS ISSUES/CEL. LIFTED THE VEHICLE AND CHECKED FOR LEAKS, FOUND NONE.";
+				if (document.getElementById("M260ENGINEHead").checked == true) {
+					var functionM260ENGINEResult = M260ENGINEHead;
+				}
+				if (document.getElementById("M260ENGINESpark").checked == true) {
+					var functionM260ENGINEResult = M260ENGINESpark;
+				}
+				document.getElementById("M260ENGINE").innerHTML = functionM260ENGINEResult;
+				}
+			function functionM274ENGINE(){
+				var functionM274ENGINEResult = "";
+				var M274ENGINESpark = "REMOVED UPPER ENGINE COVER, ENGINE AIR FILTER BOX, AND FOUR COIL PACKS. REMOVED FOUR SPARK PLUGS. INSTALLED NEW SPARK PLUGS AND TORQUE TO 23NM. ASSEMBLED IN REVERSE ORDER. TEST DROVE THE VEHICLE AND CONFIRMED ENGINE SMOOTH OPERATION.";
+				var M274ENGINEAirFilter = "REMOVED ENGINE AIR FILTER COVER AND AIR FILTER. ASSEMBLED IN REVERSE ORDER WITH NEW FILTER.";
+				if (document.getElementById("M274ENGINESpark").checked == true) {
+					var functionM274ENGINEResult = M274ENGINESpark;
+				}
+				if (document.getElementById("M274ENGINEAirFilter").checked == true) {
+					var functionM274ENGINEResult = M274ENGINEAirFilter;
+				}
+				document.getElementById("M274ENGINE").innerHTML = functionM274ENGINEResult;
+			}
+			function functionOM642ENGINE(){
+				var functionOM642ENGINEResult = "";
+				var OM642ENGINEOilcooler = "DISCONNECTED BATTERY GROUND AND DRAINED ENGINE COOLANT. REMOVED ENGINE COVERS, WIPER ARMS, WINDSHIELD WIPER COWL, AND WIPER LINKAGE ASSEMBLY. REMOVED AIR INTAKE DUCTS DOWNSTREAM OF FILTERS, LEFT AND RIGHT AIR FILTERS, AND LEFT AIR FILTER HOUSING. REMOVED CHARGE AIR DUCT FROM TURBO AND NOISE DAMPER. REMOVED GLOW OUTPUT STAGE AND MIXING CHAMBER. REMOVED FUEL FILTER, TURBO HEAT SHIELD, EAR VALVE, AND TURBOCHARGER. DISCONNECTED ALL GLOW PLUG CONNECTORS, RIGHT INJECTOR CONNECTORS, AND LEFT FUEL RAIN AT INJECTORS AND HIGH PRESSURE PUMP. DISCONNECTED RELEVANT FUEL LINES AND MOVED ENGINE HARNESS AND FUEL LINES ASIDE. REMOVED CHARGE AIR MANIFOLD. CLEANED AREA OF OIL COOLER. REMOVED OIL COOLER AND INSTALLED NEW SEAL. ASSEMBLED IN REVERSE ORDER. CONNECTED COOLANT AIRLIFT FILLER AND APPLIED VACUUM TO THE COOLING SYSTEM. CONFIRMED COOLING SYSTEM CAN HOLD VACUUM THUS NO LEAKS ARE PRESENT IN THE COOLING SYSTEM. FILLED COOLING SYSTEM. CHECKED ENGINE OIL LEVEL. STARTED THE ENGINE AND TEST DROVE THE VEHICLE. CONFIRMED NO FAULTS ARE PRESENT.";
+				var OM642ENGINEOilFilterHouse = "REMOVED UPPER ENGINE COVER AND CHARGE AIR DAMPER. LOOSENED BELT TENSIONER AND REMOVED GUIDE PULLEY. REMOVED OIL FILTER HOUSING. INSTALLED NEW OIL FILTER HOUSING AND TORQUED TO SPEC. ASSEMBLED IN REVERSE ORDER. CHECKED AND CONFIRMED CORRECT ENGINE  OIL LEVEL.";
+				if (document.getElementById("OM642ENGINEOilcooler").checked == true) {
+					var functionOM642ENGINEResult = OM642ENGINEOilcooler;
+				}
+				if (document.getElementById("OM642ENGINEOilFilterHouse").checked == true) {
+					var functionOM642ENGINEResult = OM642ENGINEOilFilterHouse;
+				}
+				document.getElementById("OM642ENGINE").innerHTML = functionOM642ENGINEResult;
+			}
+			function functionAdditionalService(){
+				var additionalServiceResult = "";
+				var ASpanoramic = "CLEANED AND LUBRICATED PANORAMIC SLIDING SUNROOF MECHANISMS. ACTUATED ROOF AND CONFIRMED SMOOTH OPERATION.";
+				var ASbrakeFlush = "CONNECTED BRAKE PRESSURE BLEEDER. LIFTED THE VEHICLE. DRAINED 1L OF BRAKE FLUID FROM THE SYSTEM FROM ALL FOUR BRAKE CALIPERS. ";
+				if (document.getElementById("ASpanoramic").checked == true) {
+					var additionalServiceResult = ASpanoramic;
+				}
+				if (document.getElementById("ASbrakeFlush").checked == true) {
+					var additionalServiceResult = ASbrakeFlush;
+				}
+				document.getElementById("additionalService").innerHTML = additionalServiceResult;
+			}
+			function functionM276NENGINE(){
+				var functionM276NENGINEResult = "";
+				var M276NENGINEFrontCover = "REMOVED UPPER ENGINE COVER. REMOVED AIR FILTER BOX, INTAKE MANIFOLD, AND OIL FILTER CAP. REMOVED LEFT AND RIGHT FRONT CAM COVERS. REMOVED FOUR CAM ADJUSTER MAGNETS. CLEANED OLD SEALANT. REINSTALLED FRONT CAM COVERS WITH NEW SEALANT. REINSTALLED CAM ADJUSTER MAGNETS WITH NEW O-RINGS. REINSTALLED ALL PARTS IN REVERSE ORDER. CLEANED OIL LEAK. TEST DROVE THE VEHICLE. CHECKED FRONT COVERS FOR LEAKS. CONFIRMED FRONT COVERS NO LONGER LEAKING.";
+				var M276NENGINESpark = "REMOVED UPPER ENGINE COVER, AIR INTAKE MANIFOLD, AND NOISE ISOLATION FOAMS. REMOVED ALL 6 COIL PACKS. CLEANED ENGINE AREA WITH COMPRESSED AIR. REMOVED SPARK PLUGS. INSTALLED AND TORQUE NEW SPARK PLUGS TO 23NM. APPLIED GREASE IN SPARK PLUG ADAPTERS. INSTALLED AND TORQUE COIL PACKS TO 9NM. REASSEMBLED IN REVERSE ORDER. TEST DROVE THE VEHICLE AND CONFIRMED ENGINE SMOOTH OPERATION.";
+				var M276NENGINEAirFilter = "REMOVED UPPER ENGINE COVER. REMOVED AIR FILTER BOX. REMOVED AIR FILTER. INSTALLED NEW FILTER AND RE-ASSEMBLED IN REVERSE ORDER.";
+				if (document.getElementById("M276NENGINEFrontCover").checked == true) {
+					var functionM276NENGINEResult = M276NENGINEFrontCover;
+				}
+				if (document.getElementById("M276NENGINESpark").checked == true) {
+					var functionM276NENGINEResult = M276NENGINESpark;
+				}
+				if (document.getElementById("M276NENGINEAirFilter").checked == true) {
+					var functionM276NENGINEResult = M276NENGINEAirFilter;
+				}
+				document.getElementById("M276NENGINE").innerHTML = functionM276NENGINEResult;
+			}
+			function functionM156ENGINE(){
+				var functionM156ENGINEResult = "";
+				var M156ENGINERemove = "LIFTED THE VEHICLE AND REMOVED BOTH FRONT WHEELS, FENDER LINERS, AND FRONT, MID, AND CENTER LOWER COVERS. DRAINED COOLING SYSTEM. CONNECTED AC MACHINE AND RECOVERED AC REFRIGERANT. DISCONNECTED BATTERY GROUND. DISCONNECTED ENGINE CONTROL UNIT AND ENGINE WIRING HARNESS FROM BODY CONNECTIONS. REMOVED UPPER ENGINE COVER, LEFT AND RIGHT AIR FILTER HOUSING WITH INTAKE DUCTS, AND FAN UNIT. DISCONNECTED RELEVANT COOLANT LINES AND HOSES, VACUUM LINES, FUEL LINE, ELECTRICAL CONNECTORS, AND AC LINES FOR ENGINE REMOVAL. DISCONNECTED CROSS STRUTS AND TORQUE STRUT FROM FRONT SUBFRAME. DISCONNECTED OUTER TIE RODS FROM KNUCKLES. DISCONNECTED STEERING SHAFT FROM RACK. DISCONNECTED FRONT EXHAUST SYSTEM FROM THE REAR PIPES. LOWERED THE ENGINE WITH TRANSMISSION. ";
+				var M156ENGINEInstall = "INSTALLED ENGINE IN REVERSE ORDER. PERFORMED VACUUM AND LEAK TEST OF AC SYSTEM. CONFIRMED NO LEAK IS DETECTED. CHARGED AC SYSTEM TO SPEC AND INJECTED OIL. APPLIED VACUUM TO COOLING SYSTEM EXPANSION TANK FOR 5MIN AND CONFIRMED SYSTEMS ARE HOLDING VACUUM—THUS NO LEAKS ARE PRESENT IN THE SYSTEM. FILLED COOLING SYSTEM WITH COOLANT. CONNECTED BATTERY CHARGER AND XENTRY SCANNER. PERFORMED FINAL QUICK TEST AND CONFIRMED NO CONCERNING FAULTS ARE PRESENT. TEST DROVE THE VEHICLE. ";
+				var M156ENGINEHeadBolts = "PLACED THE ENGINE 40 DEG AFTER TDC. REMOVED INTAKE MANIFOLD. REMOVED DRIVE BELT, THE TWO GUIDE PULLEYS BY THE COOLANT PUMP, COOLANT PUMP, BELT TENSIONER, OIL FILTER HOUSING. REMOVED LEFT AND RIGHT FRONT CAM COVERS, CAM COVERS. REMOVED ALTERNATOR AND CHAIN TENSIONER. HAMMERED OUT TIMING CHAIN GUIDE PINS. REMOVED ALL FOUR CAM ADJUSTERS. REMOVED ALL CAMSHAFTS. REMOVED BEARING PIN FOR LEFT AND RIGHT CAMSHAFT GEAR DRIVE. REMOVED LEFT AND RIGHT HEADS. CLEANED SEALING SURFACE AND INSTALLED NEW HEAD GASKETS. INSTALLED HEADS WITH NEW HEAD BOLTS. TORQUED HEAD BOLTS TO SPECIFIED STAGES AND PATTERN. RE-INSTALLED AND LUBRICATED CAMS AND BEARING CAPS IN THEIR ORIGINAL POSITION. INSTALLED NEW TIMING CHAIN TENSIONER. MANUALLY SPUN THE CRANK TO CONFIRM CORRECT ENGINE TIMING. ASSEMBLED IN REVERSE ORDER. INSTALLED COOLANT PUMP, OIL FILTER HOUSING, FRONT CAM COVERS, CAM COVERS, AIR LINES, INTAKE MANIFOLD WITH NEW GASKETS AND SEALS, AND TOQUED TO SPEC. ";
+				var M156ENGINEOilFilterHousing = "DISCONNECTED BATTERY GROUND, DRAINED MAIN COOLANT SYSTEM, AND REMOVED ENGINE FAN UNIT. REMOVED UPPER ENGINE COVER, LEFT AIR INTAKE DUCT, LEFT AIR FILTER HOUSING, AND LEFT TURBO INTAKE AND CHARGE PIPES. UNLOCKED THE BELT TENSIONER AND REMOVED DRIVE BELT. DISCONNECTED UPPER RAD HOSE AND REMOVED THERMOSTAT HOUSING. DISCONNECTED LEFT TURBO COOLANT LINES AT FRONT COVER. LOOSENED OIL FILTER HOUSING CAP AND REMOVED TWO OIL COOLER LINES AT FILTER HOUSING. REMOVED OIL FILTER HOUSING. TAPPED NEW M8X1.25 THREAD ON NEW FILTER HOUSING AND SWAPPED OVER GUIDE PULLEY. INSTALLED NEW OIL FILTER HOUSING AND TORQUED TO SPEC/PATTERN. ASSEMBLED IN REVERSE ORDER. CHECKED AND CONFIRMED CORRECT LEVEL OF ENGINE OIL. APPLIED VACUUM AND CONFIRMED COOLING SYSTEM CAN HOLD VACUUM. FILLED COOLING SYSTEM.";
+				var M156ENGINEThermostat = "DISCONNECTED BATTERY GROUND, DRAINED MAIN COOLANT SYSTEM, AND REMOVED ENGINE FAN UNIT. REMOVED UPPER ENGINE COVER, LEFT AIR INTAKE DUCT, LEFT AIR FILTER HOUSING, AND LEFT TURBO INTAKE AND CHARGE PIPES. UNLOCKED THE BELT TENSIONER AND REMOVED DRIVE BELT. DISCONNECTED UPPER RAD HOSE AND REMOVED THERMOSTAT HOUSING. INSTALLED NEW THERMOSTAT ASSEMBLY AND ASSEMBLED IN REVERSE ORDER. APPLIED VACUUM AND CONFIRMED COOLING SYSTEM CAN HOLD VACUUM. FILLED COOLING SYSTEM.";
+				var M156ENGINECamCovers = "DISCONNECTED BATTERY GROUND, DRAINED MAIN COOLANT SYSTEM, AND REMOVED ENGINE FAN UNIT. REMOVED UPPER ENGINE COVER, AIR INTAKE DUCTS, LEFT AND RIGHT AIR FILTER HOUSING, AND LEFT AND RIGHT TURBO INTAKE AND CHARGE PIPES. UNLOCKED THE BELT TENSIONER AND REMOVED DRIVE BELT. DISCONNECTED UPPER RAD HOSE AND REMOVED THERMOSTAT HOUSING. DISCONNECTED LEFT TURBO COOLANT LINES AT FRONT COVER. LOOSENED OIL FILTER HOUSING CAP AND REMOVED TWO OIL COOLER LINES AT FILTER HOUSING. REMOVED OIL FILTER HOUSING. REMOVED LEFT AND RIGHT FRONT CAM COVERS. CLEANED OLD RTV SEALS. APPLIED NEW SEALANT AND INSTALLED FRONT CAM COVERS. REMOVED CAM ADJUSTERS AND RE-INSTALLED WITH NEW O-RINGS. ASSEMBLED IN REVERSE ORDER. CHECKED AND CONFIRMED CORRECT LEVEL OF ENGINE OIL. APPLIED VACUUM AND CONFIRMED COOLING SYSTEM CAN HOLD VACUUM. FILLED COOLING SYSTEM.";
+				var M156ENGINESparks = "REMOVED UPPER ENGINE COVER, LEFT AND RIGHT AIR FILTER HOUSINGS. REMOVED ALL 8 COIL PACKS. REMOVED SPARK PLUGS. INSTALLED NEW SPARK PLUGS AND TORQUED TO SPEC. ADDED DIELECTRIC GREASE ON SPARK PLUG ADAPTERS AND ASSEMBLED IN REVERSE ORDER.";
+				if (document.getElementById("M156ENGINERemove").checked == true) {
+					var functionM156ENGINEResult = M156ENGINERemove;
+				}
+				if (document.getElementById("M156ENGINEInstall").checked == true) {
+					var functionM156ENGINEResult = M156ENGINEInstall;
+				}
+				if (document.getElementById("M156ENGINEHeadBolts").checked == true) {
+					var functionM156ENGINEResult = M156ENGINEHeadBolts;
+				}
+				if (document.getElementById("M156ENGINEOilFilterHousing").checked == true) {
+					var functionM156ENGINEResult = M156ENGINEOilFilterHousing;
+				}
+				if (document.getElementById("M156ENGINEThermostat").checked == true) {
+					var functionM156ENGINEResult = M156ENGINEThermostat;
+				}
+				if (document.getElementById("M156ENGINECamCovers").checked == true) {
+					var functionM156ENGINEResult = M156ENGINECamCovers;
+				}
+				if (document.getElementById("M156ENGINESparks").checked == true) {
+					var functionM156ENGINEResult = M156ENGINESparks;
+				}
+				document.getElementById("M156ENGINE").innerHTML = functionM156ENGINEResult;
+			}
+			function functionFieldMeasure(){
+				var functionFieldMeasureResult = "";
+				var fmPreInspection = "CONNECTED XENTRY DIAGNOSIS AND BATTERY CHARGER. PERFORMED QUICK TEST. PERFORMED PRE-INSPECTION. LIFTED THE VEHICLE AND PERFORMED VISUAL INSPECTION OF EMISSION SYSTEM. CONFIRMED ALL EMISSION EQUIPMENT ARE PRESENT AND NO NON-COMPLIANT ALTERATIONS HAVE BEEN PERFORMED. VEHICLE IS READY FOR FIELD MEASURE INSTALLATION.";
+				var fm2021120026 = "DISCONNECTED BATTERY GROUND. REMOVED ENGINE COVER. REMOVED AIR FILTER HOUSING. CONNECTED PLUG TO THE ENGINE HARNESS FOR THE O2 SENSOR. PLUGGED THE O2 SENSOR ON THE NEW DOC. REMOVED LOWER ENGINE AND TRANSMISSION COVERS. LOOSENED REAR LEFT AND RIGHT UNDERBODY PANELS. REMOVED NOX SENSORS AND PM SENSOR. DISCONNECTED METERING VALVE. REMOVED DOC, DPF, AND SCR. INSTALLED NEW DOC, DPF, SCR, NOX SENSORS, AND PM SENSOR. RECONNECTED BATTERY GROUND. CONNECTED XENTRY SCANNER AND BATTERY CHARGER. PERFORMED SERVICE MEASURE (EXHAUST AFTER-TREATMENT SYSTEM) UNDER CDI. CLEARED STORED FAULTS AND PRINTED FINAL QUICK TEST. TEST DROVE THE VEHICLE.";
+				var fm2021120024 = ""; //same text as fm2021120026
+				var fm2021120031 = "LIFTED THE VEHICLE. DISCONNECTED BATTERY GROUND. REMOVED ENGINE COVER AND  CHARGE AIR PIPE AT TURBO. DRAINED COOLANT AT RADIATOR. REMOVED THERMOSTAT HOUSING WITH THERMOSTAT. REMOVED UNDERBODY PANELS. CUT OFF THE EXHAUST AT MARKED NOTCH. REMOVED DOC, DPF, SCR, NOX SENSORS, AND PM SENSOR. TRANSFERRED THE RUBBER DAMPER FROM OLD DPF TO NEW PART. INSTALLED NEW PARTS IN REVERSE ORDER. RECONNECTED BATTERY GROUND. APPLIED VACUUM TO COOLING SYSTEM AND CONFIRMED COOLING SYSTEM HELD VACUUM FOR 5MIN. FILLED COOLING SYSTEM WITH COOLANT. CONNECTED XENTRY SCANNER AND BATTERY CHARGER. PERFORMED SERVICE MEASURE (EXHAUST AFTER-TREATMENT SYSTEM) UNDER CDI SPECIAL PROCEDURES. CLEATED STORED FAULTS AND PERFORMED FINAL QUICK TEST. TEST DROVE THE VEHICLE.";
+				var fm2021120029 = "LIFTED THE VEHICLE. DISCONNECTED BATTERY GROUND. REMOVED LOWER ENGINE AND TRANSMISSION COVERS. LOWERED LEFT AND RIGHT UNDERBODY PANELS. REMOVED NOX SENSORS AND PARTICULATE SENSOR. CUT OFF THE EXHAUST SYSTEM AT MARKED NOTCH. DISCONNECTED METERING VALVE. REMOVED SCR. REMOVED LOWER TRANSMISSION SUPPORT MEMBER AND SUPPORTED TRANSFERCASE. REMOVED REMOVED CAT/DPF UNIT, AND SCR. TRANSFERRED RUBBER DAMPER FROM OLD CAT/DPF TO NEW PART. INSTALLED NEW PARTS IN REVERSE ORDER. RECONNECTED BATTERY GROUND. CONNECTED XENTRY SCANNER AND BATTERY CHARGER. PERFORMED SERVICE MEASURE (EXHAUST AFTER-TREATMENT SYSTEM) UNDER CDI SPECIAL PROCEDURES. CLEATED STORED FAULTS AND PERFORMED FINAL QUICK TEST. TEST DROVE THE VEHICLE.";
+				var fm2021120027 = "LIFTED THE VEHICLE. DISCONNECTED BATTERY GROUND. REMOVED LOWER ENGINE AND TRANSMISSION COVERS. DRAINED COOLANT. REMOVED UPPER AND FRONT ENGINE COVER. DETACHED CHARGE AIR DAMPER AND REMOVED CHARGE AIR PIPE AFTER TURBO. REMOVED COOLANT THERMOSTAT AND INSTALLED A NEW THERMOSTAT. LOWERED LEFT AND RIGHT UNDERBODY PANELS. REMOVED NOX SENSORS. CUT OFF THE EXHAUST SYSTEM AT MARKED NOTCH. DISCONNECTED METERING VALVE. REMOVED SCR. REMOVED LOWER TRANSMISSION SUPPORT MEMBER AND SUPPORTED TRANSFERCASE. REMOVED REMOVED CAT/DPF UNIT, AND SCR. TRANSFERRED RUBBER DAMPER FROM OLD CAT/DPF TO NEW PART. INSTALLED NEW PARTS IN REVERSE ORDER. CONNECTED COOLANT FILLER AND APPLIED VACUUM TO THE COOLING SYSTEM. CONFIRMED THE COOLING SYSTEM CAN HOLD THE VACUUM FOR 5MIN. FILLED COOLING SYSTEM WITH COOLANT. RECONNECTED BATTERY GROUND. CONNECTED XENTRY SCANNER AND BATTERY CHARGER. PERFORMED SERVICE MEASURE (EXHAUST AFTER-TREATMENT SYSTEM) UNDER CDI SPECIAL PROCEDURES. CLEATED STORED FAULTS AND PERFORMED FINAL QUICK TEST. TEST DROVE THE VEHICLE."
+				if (document.getElementById("FMPREINSPECTION").checked == true) {
+					var functionFieldMeasureResult = fmPreInspection;
+				}
+				if (document.getElementById("FM2021120026").checked == true) {
+					var functionFieldMeasureResult = fm2021120026;
+				}
+				if (document.getElementById("FM2021120024").checked == true) {
+					var functionFieldMeasureResult = fm2021120026;
+				}
+				if (document.getElementById("FM2021120031").checked == true) {
+					var functionFieldMeasureResult = fm2021120031;
+				}
+				if (document.getElementById("FM2021120029").checked == true) {
+					var functionFieldMeasureResult = fm2021120029;
+				}
+				if (document.getElementById("FM2021120027").checked == true) {
+					var functionFieldMeasureResult = fm2021120027;
+				}
+				document.getElementById("FieldMesaure").innerHTML = functionFieldMeasureResult;
+			}
+			function functionBrakes(){
+				var functionBrakesFront = document.getElementById("functionBrakesFront").checked;
+				var functionBrakesRear = document.getElementById("functionBrakesRear").checked;
+				var functionBrakesFixed = document.getElementById("functionBrakesFixed").checked;
+				var functionBrakesPark = document.getElementById("functionBrakesPark").checked;
+				var functionBrakesFR = "";
+				if (functionBrakesPark && functionBrakesRear) {
+					var functionBrakesResult = "MOVED REAR BRAKE PISTONS TO PAD REPLACEMENT POSITION. LIFTED THE VEHICLE. ";
+				}else {
+					var functionBrakesResult = "LIFTED THE VEHICLE. ";
+				}
+				if (functionBrakesFront && functionBrakesRear){
+					var functionBrakesFR = "FRONT AND REAR"
+				}else if (functionBrakesFront) {
+					var functionBrakesFR = "FRONT"
+				}else if (functionBrakesRear) {
+					var functionBrakesFR = "REAR"
+				}
+				var functionBrakesResult = functionBrakesResult + "REMOVED " + functionBrakesFR + " WHEELS. ";
+				if ((functionBrakesFixed && functionBrakesFront) != functionBrakesRear) {
+					var functionBrakesResult = functionBrakesResult + "REMOVED FRONT CALIPERS, PADS, AND ROTORS. ";
+				}else {
+					var functionBrakesResult = functionBrakesResult + "REMOVED " + functionBrakesFR + " CALIPERS, PADS, CALIPER BRACKETS, AND ROTORS. ";
+				}
+				var functionBrakesResult = functionBrakesResult + "CLEANED AND LUBRICATED GUIDE PINS. INSTALLED NEW " + functionBrakesFR + " ROTORS, PADS, AND WEAR SENSORS. REASSEMBLED IN REVERSE ORDER. CHECKED AND CORRECTED BRAKE FLUID LEVEL. TEST DROVE THE VEHICLE TO BREAK-IN NEW PADS.";
+				document.getElementById("BRAKES").innerHTML = functionBrakesResult;
+			}
+			function fAlignment(){
+				var alignmentResult = "TEST DROVE THE VEHICLE. ";
+				var alignmentOffSpecF = "";
+				var alignmentOffSpecR = "";
+				var alignmentAdjustedF = "";
+				var alignmentAdjustedR = "";
+				var alignmentES = document.getElementById("alignmentES").checked;
+				var alignmentDrive = document.getElementById("alignmentDrive").value;
+				var lft = document.getElementById("alignmentLFT").checked;
+				var lfc = document.getElementById("alignmentLFC").checked;
+				var rfc = document.getElementById("alignmentRFC").checked;
+				var rft = document.getElementById("alignmentRFT").checked;
+				var lrt = document.getElementById("alignmentLRT").checked;
+				var lrc = document.getElementById("alignmentLRC").checked;
+				var rrc = document.getElementById("alignmentRRC").checked;
+				var rrt = document.getElementById("alignmentRRT").checked;
+				var lfta = document.getElementById("alignmentLFTA").checked;
+				var lfca = document.getElementById("alignmentLFCA").checked;
+				var rfca = document.getElementById("alignmentRFCA").checked;
+				var rfta = document.getElementById("alignmentRFTA").checked;
+				var lrta = document.getElementById("alignmentLRTA").checked;
+				var lrca = document.getElementById("alignmentLRCA").checked;
+				var rrca = document.getElementById("alignmentRRCA").checked;
+				var rrta = document.getElementById("alignmentRRTA").checked;
+				var aCount = 0;
+				var bCount = 0;
+				if (lft || lfc || rfc || rft) {
+					if (lft || rft){
+						if (lft && rft){
+							var alignmentOffSpecF = "LF AND RF TOES";
+							var aCount = 2;
+						}else if (lft) {
+							var alignmentOffSpecF = "LF TOE";
+							var aCount = 1;
+						}else {
+							var alignmentOffSpecF = "RF TOE";
+							var aCount = 1;
+						}
+					}
+					if (lfc || rfc) {
+						if (lfc && rfc){
+							if (aCount == 0){
+								var alignmentOffSpecF = "LF AND RF CAMBERS";
+								var aCount = 2;
+							}else {
+								var alignmentOffSpecF = alignmentOffSpecF + ", LF AND RF CAMBERS";
+								var aCount = aCount + 2;
+							}
+						}else if (lfc) {
+							if (aCount == 0){
+								var alignmentOffSpecF = "LF CAMBER";
+								var aCount = 1;
+							}else{
+								var alignmentOffSpecF = alignmentOffSpecF + ", LF CAMBER";
+								var aCount = aCount + 1;
+							}
+						}else {
+							if (aCount == 0){
+								var alignmentOffSpecF = "RF CAMBER";
+								var aCount = 1;
+							}else{
+								var alignmentOffSpecF = alignmentOffSpecF + ", RF CAMBER";
+								var aCount = aCount + 1;
+							}
+						}
+					}
+				}
+				if (lrt || lrc || rrc || rrt) {
+					if (lrt || rrt){
+						if (lrt && rrt){
+							if (aCount == 0) {
+								var alignmentOffSpecR = "LR AND RR TOES";
+								var aCount = 2;
+							}else {
+								var alignmentOffSpecR = alignmentOffSpecR + ", LR AND RR TOES";
+								var aCount = aCount + 2;
+							}
+						}else if (lrt) {
+							if (aCount == 0) {
+								var alignmentOffSpecR = "LR TOE";
+								var aCount = 1;
+							}else {
+								var alignmentOffSpecR = alignmentOffSpecR + ", LR TOE";
+								var aCount = aCount + 1;
+							}
+						}else {
+							if (aCount == 0) {
+								var alignmentOffSpecR = "RR TOE";
+								var aCount = 1;
+							}else {
+								//alert(aCount);
+								var alignmentOffSpecR = alignmentOffSpecR + ", RR TOE";
+								var aCount = aCount + 1;
+							}
+						}
+					}
+					if (lrc || rrc) {
+						if (lrc && rrc){
+							if (aCount == 0){
+								var alignmentOffSpecR = "LR AND RR CAMBERS";
+								var aCount = 2;
+							}else {
+								var alignmentOffSpecR = alignmentOffSpecR + ", LR AND RR CAMBERS";
+								var aCount = aCount + 2;
+							}
+						}else if (lrc) {
+							if (aCount == 0){
+								var alignmentOffSpecR = "LR CAMBER";
+								var aCount = 1;
+							}else{
+								var alignmentOffSpecR = alignmentOffSpecR + ", LR CAMBER";
+								var aCount = aCount + 1;
+							}
+						}else {
+							if (aCount == 0){
+								var alignmentOffSpecR = "RR CAMBER";
+								var aCount = 1;
+							}else{
+								var alignmentOffSpecR = alignmentOffSpecR + ", RR CAMBER";
+								var aCount = aCount + 1;
+							}
+						}
+					}
+				}
+				if (lfta || lfca || rfca || rfta) {
+					if (lfta || rfta){
+						if (lfta && rfta){
+							var alignmentAdjustedF = "LF AND RF TOES";
+							var bCount = 2;
+						}else if (lfta) {
+							var alignmentAdjustedF = "LF TOE";
+							var bCount = 1;
+						}else {
+							var alignmentAdjustedF = "RF TOE";
+							var bCount = 1;
+						}
+					}
+					if (lfca || rfca) {
+						if (lfca && rfca){
+							if (bCount == 0){
+								var alignmentAdjustedF = "LF AND RF CAMBERS";
+								var bCount = 2;
+							}else {
+								var alignmentAdjustedF = alignmentAdjustedF + ", LF AND RF CAMBERS";
+								var bCount = bCount + 2;
+							}
+						}else if (lfca) {
+							if (bCount == 0){
+								var alignmentAdjustedF = "LF CAMBER";
+								var bCount = 1;
+							}else{
+								var alignmentAdjustedF = alignmentAdjustedF + ", LF CAMBER";
+								var bCount = bCount + 1;
+							}
+						}else {
+							if (aCount == 0){
+								var alignmentAdjustedF = "RF CAMBER";
+								var bCount = 1;
+							}else{
+								var alignmentAdjustedF = alignmentAdjustedF + ", RF CAMBER";
+								var bCount = bCount + 1;
+							}
+						}
+					}
+				}
+				if (lrta || lrca || rrca || rrta) {
+					if (lrta || rrta){
+						if (lrta && rrta){
+							if (bCount == 0) {
+								var alignmentAdjustedR = "LR AND RR TOES";
+								var bCount = 2;
+							}else {
+								var alignmentAdjustedR = alignmentAdjustedR + ", LR AND RR TOES";
+								var bCount = bCount + 2;
+							}
+						}else if (lrta) {
+							if (bCount == 0) {
+								var alignmentAdjustedR = "LR TOE";
+								var bCount = 1;
+							}else {
+								var alignmentAdjustedR = alignmentAdjustedR + ", LR TOE";
+								var bCount = bCount + 1;
+							}
+						}else {
+							if (bCount == 0) {
+								var alignmentAdjustedR = "RR TOE";
+								var bCount = 1;
+							}else {
+								var alignmentAdjustedR = alignmentAdjustedR + ", RR TOE";
+								var bCount = bCount + 1;
+							}
+						}
+					}
+					if (lrca || rrca) {
+						if (lrca && rrca){
+							if (bCount == 0){
+								var alignmentAdjustedR = "LR AND RR CAMBERS";
+								var bCount = 2;
+							}else {
+								var alignmentAdjustedR = alignmentAdjustedR + ", LR AND RR CAMBERS";
+								var bCount = bCount + 2;
+							}
+						}else if (lrca) {
+							if (bCount == 0){
+								var alignmentAdjustedR = "LR CAMBER";
+								var bCount = 1;
+							}else{
+								var alignmentAdjustedR = alignmentAdjustedR + ", LR CAMBER";
+								var bCount = bCount + 1;
+							}
+						}else {
+							if (bCount == 0){
+								var alignmentAdjustedR = "RR CAMBER";
+								var bCount = 1;
+							}else{
+								var alignmentAdjustedR = alignmentAdjustedR + ", RR CAMBER";
+								var bCount = bCount + 1;
+							}
+						}
+					}
+				}
+				if (alignmentDrive != 0) {
+					var alignmentResult = alignmentResult + alignmentDrive;
+				}
+				var alignmentResult = alignmentResult + " DROVE THE VEHICLE IN AND PERFORMED CASTER SWEEP. "
+				var alignmentOffSpecC = alignmentOffSpecF + alignmentOffSpecR;
+				var alignmentAdjustedC = alignmentAdjustedF + alignmentAdjustedR;
+				if (aCount > 0) {
+					if (aCount > 1) {
+						var alignmentResult = alignmentResult + "FOUND " + alignmentOffSpecC + " WERE OUT OF SPEC. ";
+					}else if (aCount == 1) {
+						var alignmentResult = alignmentResult + "FOUND " + alignmentOffSpecC + " WAS OUT OF SPEC. ";
+					}
+					}else {
+						var alignmentResult = alignmentResult + "FOUND NO ADJUSTABLE ALIGNMENT ANGLE OUT OF SPEC. ";
+					}
+				if (bCount > 0) {
+					var alignmentResult = alignmentResult + "ADJUSTED " + alignmentAdjustedC + ". ";
+					}else {
+						var alignmentResult = alignmentResult + "NO ADJUSTMENTS DONE. ";
+					}
+				if (alignmentES) {
+					var alignmentResult = alignmentResult + "CONNECTED XENTRY DIAG TOOL. PERFORMED RESET AND TEACH-IN OF ELECTRIC STEERING CONTROL UNIT LEARNT VALUES. ";
+				}
+				var alignmentResult =  alignmentResult + "TEST DROVE THE VEHICLE. CONFIRMED VEHICLE DRIVES STRAIGHT-STEERING WHEEL STRAIGHT. ";
+				document.getElementById("alignment").innerHTML = alignmentResult;
+				//alert(alignmentResult);
+			}
+			function mountAndBalance(){//error in counting
+				var base = "MAB";
+				var mab0 = document.getElementById("MAB0").checked;
+				var mab1 = document.getElementById("MAB1").checked;
+				var mab2 = document.getElementById("MAB2").checked;
+				var mab3 = document.getElementById("MAB3").checked;
+				var mabWinter = document.getElementById("MABWinter").checked;
+				var mabSummer = document.getElementById("MABSummer").checked;
+				var mabRepair = document.getElementById("MABRepair").checked;
+				var mabNew = document.getElementById("MABNew").checked;
+				var mabStore = document.getElementById("MABStore").checked;
+				var mabBag = document.getElementById("MABBag").checked;
+				var mabSwap = document.getElementById("MABSWAP").checked;
+				var mabMab = document.getElementById("MABMaB").checked;
+				var mabfPSI = document.getElementById("MABfPSI").value;
+				var mabrPSI = document.getElementById("MABrPSI").value;
+				var mabSelectedf = "";
+				var mabSelectedr = "";
+				var mabSeparator = "";
+				var mabnumbersW = "";
+				var mabnumbersT = "";
+				var counter = "";
+				if (mabWinter) {//setting type
+					var mabtype = " WINTER";
+					var mabtype0 = " SUMMER";
+					}else if (mabSummer) {
+						var mabtype = " SUMMER";
+						var mabtype0 = " WINTER";
+					}else if (mabNew) {
+						var mabtype = " NEW";
+						var mabtype0 = " OLD";
+					}
+				if (mabRepair) {
+					var mabtype = " REPAIRED";
+					var mabtype0 = " REPAIRED";
+					}
+				for (var i = 0; i < 4; i++) { //counting checked
+					if (document.getElementById((base+i)).checked) {
+						counter++;
+					}
+				}
+				if (counter == 4){
+					var mabSelectedf = "ALL FOUR"
+					}else {
+						for (var f = 0; f < 2; f++) {//front
+							if (document.getElementById((base+f)).checked) {
+								if (f == 0 && mab1) {
+									var mabSelectedf = mabSelectedf + "LEFT AND RIGHT FRONT";
+									var counterf = 2;
+								}else if (f == 0) {
+									var mabSelectedf = mabSelectedf + "LEFT FRONT";
+									var counterf = 1;
+								}if (f == 1 && mab0) {
+									var counterf = 2;
+								}else if (f == 1) {
+									var mabSelectedf = mabSelectedf + "RIGHT FRONT";
+									var counterf = 1;
+								}
+							}
+						}
+						for (var r = 2; r < 4; r++) {//rear
+							if (document.getElementById((base+r)).checked) {
+								if (r == 2 && mab3) {
+									var mabSelectedr = mabSelectedr + "LEFT AND RIGHT REAR";
+									var counterr = 2;
+								}else if (r == 2) {
+									var mabSelectedr = mabSelectedr + "LEFT REAR";
+									var counterr = 1;
+								}if (r == 3 && mab2) {
+									var counter = 2;
+								}else if (r == 3) {
+									var mabSelectedr = mabSelectedr + "RIGHT REAR";
+									var counterr = 1;
+								}
+							}
+						}
+						if (counterf > 1 && counterr > 0) {//separator
+							var mabSeparator = ", AND ";
+							}
+						if (counterf == 1 && counterr > 0) {//separator
+								var mabSeparator = " AND ";
+							}
+						}
+				if (counter > 1) {
+					var mabnumbersW = " WHEELS";
+					var mabnumbersT = " TIRES";
+					}else {
+						var mabnumbersW = " WHEEL";
+						var mabnumbersT = " TIRE";
+					}
+				var mabResult = "LIFTED THE VEHICLE. REMOVED "
+				+ mabSelectedf
+				+ mabSeparator
+				+ mabSelectedr
+				+ mabnumbersW + ". ";
+				//REMOVED WHEELS
+				if (mabMab) {
+					var mabResult = mabResult + "DISMOUNTED " +mabnumbersT+ ". MOUNTED AND BALANCED " + counter + mabtype + mabnumbersT + ". ";
+					}else if (mabRepair) {
+						var mabResult = mabResult + "DISMOUNTED " +mabnumbersT+ ". REPAIRED LEAKING " +mabnumbersT+ ". MOUNTED AND BALANCED " + counter + mabtype0 + mabnumbersT + ". ";
+					}
+				if (mabSwap) {
+					var mabResult = mabResult + "INSTALLED" + mabtype + " SET. ";
+				}else {
+					var mabResult = mabResult + "REINSTALLED" + mabnumbersW + ". ";
+				}
+				//INSTALLED
+				if (mabfPSI != 0) {
+					var mabResult = mabResult + "ADJUSTED TIRE PRESSURES TO " + mabfPSI + " PSI FRONT AND " + mabrPSI + " PSI REARS, AND RESET TPMS. ";
+				}else {
+					var mabResult = mabResult + "ADJUSTED TIRE PRESSURES TO SPEC AND RESET TPMS. ";
+				}
+				var mabResult = mabResult + "TORQUE ALL FOUR WHEELS TO SPEC. TEST DROVE THE VEHICLE AND RE-TORQUE WHEELS. ";
+				if (mabStore) {
+					var mabResult = mabResult + "FILLED OUT TIRE STORAGE FORM AND LABELED TIRES FOR STORAGE.";
+				}else if (mabBag) {
+					var mabResult = mabResult + "BAGGED" + mabtype0 + mabnumbersT + " AND PLACED IN THE VEHICLE.";
+				}
+				document.getElementById("MOUNTBALANCE").innerHTML = mabResult;
+			}
+			function viewDatacard(){
+				var datacardVIN = document.getElementById("dataVIN").value;
+				var datacardLink = "https://xentry.mercedes-benz.com/xhpi/datacard/chassis/" + datacardVIN + "/codes?lang=en";
+				window.open(datacardLink, '_blank');
+			}
+			function functionCrankcase(){
+				var crankcaseDiag = document.getElementById("crankcaseDiag").checked;
+				var crankcaseM270 = document.getElementById("crankcaseM270").checked;
+				var crankcaseM274 = document.getElementById("crankcaseM274").checked;
+				if (crankcaseDiag) {
+					var crankcaseStoryResult = "CONFIRMED CHECK ENGINE LIGHT IS ON. CONNECTED SCANNER AND BATTERY CHARGER. PERFORMED QUICK TEST. FOUND FAULT CODE P052E71 (THE VALVE FOR CRANKCASE VENTILATION HAS A MALFUNCTION. THE ACTUATOR IS BLOCKED.) REMOVED ENGINE UPPER COVER AND INSPECTED THE CRANKCASE VENT SYSTEM HOSES AND ELECTRICAL CONNECTORS. FOUND ALL OKAY. PER FAULT GUIDED TEST, COMPONENT Y58/2 PARTIAL LOAD VALVE WILL HAVE TO BE REPLACED. CHECKED ENGINE OIL LEVEL AND QUALITY, EXHAUST TIPS FOR EXCESSIVE OIL RESIDUE. FOUND ALL OKAY. SENT P/A FOR CRANKCASE VENT SYSTEM.";
+				}else if (crankcaseM270) {
+					var crankcaseStoryResult = "REMOVED UPPER ENGINE COVER. DISCONNECTED BATTERY GROUND. DISCONNECTED HOSES AND ELECTRICAL CONNECTORS ON INTAKE LINE. REMOVED INTAKE LINE. LIFTED THE VEHICLE AND REMOVED RF WHEEL. UNFASTENED RF LOWER CONTROL ARM TO STEERING KNUCKLE. REMOVED RF DRIVE AXLE, LOWER RIGHT ENGINE MOUNT AND BRACKET. REMOVED CRANKCASE OIL SEPARATOR. INSTALLED NEW OIL SEPARATOR AND INTAKE LINE. RE-ASSEMBLED IN REVERSE ORDER. TORQUED WHEEL TO SPEC. CONNECTED XENTRY DIAG TOOL AND PERFORMED QUICK TEST. CLEARED FAULTS AND PRINTED FINAL QUICK TEST. TEST DROVE THE VEHICLE. CONFIRMED NO CEL.";
+				}else if (crankcaseM274) {
+					var crankcaseStoryResult = "DISCONNECTED BATTERY GROUND. REMOVED UPPER ENGINE COVER, ENGINE AIR FILTER HOUSING, ECU AND BRACKET, INTERCOOLER AND BRACKET. DISCONNECTED AIR INTAKE AND OIL SEPARATOR LINES. LIFTED THE VEHICLE. REMOVED LOWER ENGINE AND TRANSMISSION COVERS. REMOVED LOWER LEFT ENGINE MOUNT. REMOVED OIL SEPARATOR AND LINES. INSTALLED NEW CRANKCASE VENTILATION KIT. ASSEMBLED IN REVERSE ORDER. CONNECTED XENTRY SCANNER. CLEARED FAULTS. PERFORMED FINAL QUICK TEST. CONFIRMED NO ACTIVE FAULTS. TEST DROVE THE VEHICLE. CONFIRMED CEL IS OFF.";
+				}
+				document.getElementById("CRANKCASE").innerHTML = crankcaseStoryResult;
+			}
+			function copypasteRO(){
+				var copypasteRONumber = document.getElementById("copypasteROn").value
+				var copypasteROCopy = document.getElementById("copypasteROStory").value
+
+				if (document.getElementById("copypasteROn").value != 0){
+					var copypasteROFull = "PREVIOUSLY DIAGNOSED IN RO: " + copypasteRONumber + ": " + "<q>" + copypasteROCopy + "</q>";
+				} else {
+					var copypasteROFull = copypasteROCopy;
+				}
+				document.getElementById("COPYPASTE").innerHTML = copypasteROFull;
+				CopyToClipboard('COPYPASTE');
+			}
+			function functionEngineTemplate(){
+				var functionTENGINEResult = "";
+				var MENGINEOption1 = "Option 1 story";
+				var MENGINEOption2 = "Option 2 story";
+				var MENGINEOption3 = "Option 3 story";
+				var M270ENGINEAirFilter = "";
+				var M270ENGINETransmissionService = "";
+				var M270ENGINERemove = "";
+				if (document.getElementById("MENGINEOption1").checked == true) {
+					var functionTENGINEResult = MENGINEOption1;
+				}
+				if (document.getElementById("MENGINEOption2").checked == true) {
+					var functionTENGINEResult = MENGINEOption2;
+				}
+				if (document.getElementById("MENGINEOption3").checked == true) {
+					var functionTENGINEResult = MENGINEOption3;
+				}
+				document.getElementById("MENGINEidInMainStory").innerHTML = functionTENGINEResult;
+			}
+			function function2022030016(){
+				var base2022030016 = "PER MBC CAMPAIGN 2022030016, THE HERMES CONTROL UNIT REQUIRED FOR LTE CONNECTIVITY IS NOW AVAILABLE AND CAN BE RETROFITTED. REMOVED CODE 077. ";
+				var end2022030016 = "CONNECTED XENTRY DIAGNOSIS AND BATTERY CHARGER. PERFORMED RETROFIT PROGRAMMING OF NEW CONTROL UNIT UNDER TEACH-IN. REMOVED MASKING STICKER FROM SOS BUTTON. PERFORMED FUNCTION TEST. CONFIRMED SOS-NOT-READY MESSAGE GOES OUT AUTOMATICALLY.";
+				if (document.getElementById("2022030016A").checked == true) {
+					var base2022030016 = base2022030016 + "REMOVED LEFT COVER OF DASHBOARD AND LIGHT SWITCH MODULE. REMOVED HERMES CONTROL UNIT. INSTALLED NEW CONTROL UNIT AND ASSEMBLED IN REVERSE ORDER. " + end2022030016;
+				}
+				if (document.getElementById("2022030016GLC").checked == true) {
+					var base2022030016 = base2022030016 + "REMOVED CENTER CONSOLE STOWAGE BOX COVER AND CENTER CONSOLE COVER. REMOVED HERMES CONTROL UNIT. INSTALLED NEW CONTROL UNIT AND ASSEMBLED IN REVERSE ORDER." + end2022030016;
+				}
+				if (document.getElementById("2022030016E").checked == true) {
+					var base2022030016 = base2022030016 + "REMOVED CENTER CONSOLE STOWAGE BOX BUTTON AND CENTER CONSOLE TRIM. REMOVED HEAD UNIT. REMOVED HERMES CONTROL UNIT. INSTALLED NEW CONTROL UNIT AND ASSEMBLED IN REVERSE ORDER." + end2022030016;
+				}
+				document.getElementById("2022030016").innerHTML = base2022030016;
+			}
+			function functionPDI(){
+				var basePDI = "INSPECTED EXTERIOR AND INTERIOR FOR DAMAGE, SCRATCHES, OR DENTS. REMOVED SEAT AND FLOOR COVERS. INSTALLED SUPPLIED FLOOR MATS. CHECKED ALL EXTERIOR LIGHTS, HORN, HAZARDS, WIPERS AND WASHERS. TOPPED OFF COOLANT, WASHER FLUID, AND CHECKED BRAKE FLUID AND ENGINE OIL LEVELS. INSPECTED ENGINE BAY. LIFTED THE VEHICLE. CHECKED ALL FOUR WHEELS, TIRES, AND BRAKES. CHECKED STEERING AND SUSPENSION COMPONENTS. INSPECTED UNDERBODY FOR DAMAGE. CONNECTED XENTRY SCANNER AND BATTERY CHARGER. PERFORMED QUICK TEST. CONFIRMED NO ACTIVE FAULTS. PRINTED FINAL QUICK TEST. ";
+				var endPDI = "PERFORMED CHECKS AS PER PDI CHECKLIST. PERFORMED HAND-OVER IN WORKSHOP MENU AND RESET TPMS. TEST DROVE THE VEHICLE. ATTACHED FINAL QUICK TEST, FUEL RECEIPT, AND PDI CHECKLIST TO THE WORK ORDER.";
+				var notesPDI = "<br>**********<br>";
+				if (document.getElementById("PDIwheellock").checked == true) {
+					var basePDI = basePDI + "INSTALLED WHEEL LOCK BOLT SET AND PLACED KEY IN SPARE COMPARTMENT. ";
+				}
+				if (document.getElementById("PDIfrontplate").checked == true) {
+					var basePDI = basePDI + "INTALLED FRONT LICENSE PLATE BRACKET. ";
+				}
+				if (document.getElementById("PDIfPSI").value != 0 && document.getElementById("PDIrPSI").value != 0) {
+					var PDItirepressures = "SET TIRE PRESSURES TO " + document.getElementById("PDIfPSI").value + " PSI FRONTS, " + document.getElementById("PDIrPSI").value + " PSI REARS";
+					if (document.getElementById("PDIsPSI").value != 0) {
+						var PDItirepressures = PDItirepressures + ", " + document.getElementById("PDIsPSI").value + " PSI SPARE. ";
+					}else {
+						var PDItirepressures = PDItirepressures + ". "
+					}
+				}else {
+				 var PDItirepressures = "ADJUSTED ALL TIRE PRESSURES TO SPEC. ";
+			 	}
+				var basePDI = basePDI + PDItirepressures;
+				if (document.getElementById("PDIfuel").checked == true) {
+					var basePDI = basePDI + "FUELLED UP THE VEHICLE. ";
+				}
+				var basePDI = basePDI + endPDI;
+				if (document.getElementById("PDInotes").value != 0) {
+					var basePDI = basePDI + notesPDI + document.getElementById("PDInotes").value;
+				}
+				document.getElementById("PDIstory").innerHTML = basePDI;
+			}
+			function diagnosisStory(){
+				var diagStoryBase = "";
+				if (document.getElementById("diagdrive").checked == true) {
+					var diagStoryBase = diagStoryBase + "TEST DROVE THE VEHICLE. ";
+				}
+				if (document.getElementById("diagpos").checked == true) {
+					var diagStoryBase = diagStoryBase + "CONFIRMED CUSTOMER'S CONCERN: ";
+				}else if (document.getElementById("diagneg").checked == true) {
+					var diagStoryBase = diagStoryBase + "COULD NOT CONFIRM CUSTOMER'S CONCERN: ";
+				}
+				var diagStoryBase = diagStoryBase +  document.getElementById("diagcomplaint").value;
+				if (document.getElementById("diagscan").checked == true && document.getElementById("diagcharge").checked == true) {
+					var diagStoryBase = diagStoryBase + " CONNECTED BATTERY CHARGER AND XENTRY DIAGNOSIS. ";
+				}else if (document.getElementById("diagscan").checked == true) {
+					var diagStoryBase = diagStoryBase + " CONNECTED XENTRY DIAGNOSIS. ";
+				}
+				if (document.getElementById("diagiqt").checked == true) {
+					var diagStoryBase = diagStoryBase + "PERFORMED INITIAL QUICK TEST. ";
+				}
+				if (document.getElementById("diagfaultsn").value != 0 && document.getElementById("diagfaultsn").value <= 5) {
+					var diagStoryBase = diagStoryBase + "FOUND " + document.getElementById("diagfaultsn").value + " FAULTS REGARDING CUSTOMER'S CONCERN. ";
+				}
+				if (document.getElementById("diagfaultsn").value >= 6) {
+					var diagStoryBase = diagStoryBase + "FOUND MULTIPLE FAULTS REGARDING CUSTOMER'S CONCERN. ";
+				}
+				if (document.getElementById("diagfaultsn").value == 0 && document.getElementById("diagiqt").checked == true) {
+					var diagStoryBase = diagStoryBase + "FOUND NO FAULTS REGARDING CUSTOMER'S CONCERN. ";
+				}
+				if (document.getElementById("diagnote").value != 0) {
+					var diagStoryBase = diagStoryBase + document.getElementById("diagnote").value;
+				}
+
+				//ADD FAULT DESCRIPTIONS HERE
+				//ADD FAULTS HERE
+
+				if (document.getElementById("diagtips").checked == true) {
+					var diagStoryBase = diagStoryBase + " CHECKED TIPS FOR RELEVANT DOCUMENTS. ";
+					if (document.getElementById("diagtipsd").value == 0) {
+						var diagStoryBase = diagStoryBase + "FOUND NONE. ";
+					}
+				}
+				if (document.getElementById("diagtipsd").value != 0) {
+					var diagStoryBase = diagStoryBase + "FOUND TIPS DOCUMENT " + document.getElementById("diagtipsd").value + ". ";
+					if (document.getElementById("diagtipsr").value != 0) {
+						var diagStoryBase = diagStoryBase + "PER TIPS, " + document.getElementById("diagtipsr").value;
+					}
+				}
+				if (document.getElementById("diagupdate").checked == true) {
+					if (document.getElementById("diagcu").value != 0) {
+						var diagStoryBase = diagStoryBase + "CHECKED " + document.getElementById("diagcu").value + " FOR SOFTWARE UPDATES. ";
+					} else if (document.getElementById("diagcu").value == 0) {
+						var diagStoryBase = diagStoryBase + "CHECKED RELEVANT CONTROL UNITS FOR SOFTWARE UPDATES. ";
+					}
+				}
+				if (document.getElementById("diagupdatel").value != 0) {
+					var diagStoryBase = diagStoryBase + "FOUND A " + document.getElementById("diagupdatel").value + "MIN UPDATE IS AVAILABLE. ";
+				}
+				if (document.getElementById("diagupdated").checked == true) {
+					var diagStoryBase = diagStoryBase + "PERFORMED SOFTWARE UPDATE. ";
+				}
+				if (document.getElementById("diageqt").checked == true) {
+					var diagStoryBase = diagStoryBase + " ERASED FAULT MEMORY. ";
+				}
+				if (document.getElementById("diagfqt").checked == true) {
+					var diagStoryBase = diagStoryBase + " PERFORMED FINAL QUICK TEST. ";
+				}
+				if (document.getElementById("diagfdrive").checked == true) {
+					var diagStoryBase = diagStoryBase + "PERFORMED FINAL TEST DRIVE. ";
+				}
+				if (document.getElementById("diagnotefinal").value != 0) {
+					var diagStoryBase = diagStoryBase + document.getElementById("diagnotefinal").value;
+				}
+				document.getElementById("diagStory").innerHTML = diagStoryBase;
+			}//add fault descriptions & auto add lines
+
+
+			/*
+			var add_more_fields = document.getElementById('add_more_fields');
+
+			add_more_fields.onclick = function(){
+			  var newField = document.createElement('input');
+			  newField.setAttribute('type','text');
+			  newField.setAttribute('name','diag');
+			  newField.setAttribute('siz',50);
+			  newField.setAttribute('placeholder','Another Field');
+			  diagnosisForm.appendChild(newField);
+			}*/
+
+
+
+
+		</script>
+	</head>
+<body style="background-color: black">
+	<div class="main-page">
+		<div>
+			<div class="headerSpace">
+				<div class="mainTitle";>
+						<img src="https://www.mercedes-benz.ca/etc/designs/mb-nafta/images/Mercedes_Benz__logo--desktop.png"
+						 width="50" height="50" href="#" onclick="passcode();"><span class="xf-only-frame-title" style="padding-left: 10px; padding-top:5px;">
+						Jude's Stories<br></span> <!-- Main title Logo https://www.mercedes-benz.ca/etc/designs/mb-nafta/images/Mercedes_Benz__logo--desktop.png-->
+				</div>
+				<img id="topbanner" alt="banner" class="banner-image" src="https://ats.daimler.com/attachment/downloadByRedirect?skey=1b2e366b-5a52-4679-823f-223a080bc859&inline=true" style="display:none;">
+				<div class="icon-bar">
+					<a href="https://xentry.mercedes-benz.com/home/" target="_blank"><i class="fa fa-home"></i></a>
+					<a href="https://xentry.mercedes-benz.com/xhpi/" target="_blank"><i class="fa fa-wrench"></i></a>
+					<a href="https://controlpanel.msoutlookonline.net/portal/aduser/login" target="_blank"><i class="fa fa-envelope"></i></a>
+					<a href="#"><i class="fa fa-lock" onclick="show('onOff','onOff');"></i></a><!--Lock button -->
+				</div>
+			</div>
+			<!-- MAIN STORIES ********************************************************** -->
+			<div id="onOff"; class="story-container" style="height: 100%; display:none;">
+				<div id="calc"; class="converter">
+					<s1>Converter</s1>
+					<form oninput=ans.value=convert()>
+						<input type="text" id="inputValue" placeholder="0" size="5" maxlength="3">
+						<select name="unitSelect" id="unit">
+							<option value="nm">Nm</option>
+							<option value="lb">ft-lb</option>
+						</select>
+						<s1> = </s1>
+						<input type="text" size="5" readonly placeholder="torque" name="ans">
+						<s1 id="outputUnit"></s1>
+					</form>
+					<form oninput=depth.value=treadDepth()>
+						<input type="text" id="mmInput" placeholder="0" size="5" maxlength="4">
+						<select id="unit">
+							<option>mm</option>
+						</select>
+						<s1> = </s1>
+						<input type="text" size="5" readonly placeholder="32nd" name="depth">
+						<s1 id="depthUnit"></s1>
+					</form>
+					<s1>Datacard: </s1>
+					<form>
+						<input type="text" id="dataVIN" value="WDDSJ4GB1GN288750" size="18" maxlength="17">
+						<input type="submit" onclick="viewDatacard(); return false" value="View">
+					</form>
+					<div class="controls">
+						<a href="#"><i class="fa fa-close" onclick="show('calcOn','calc');"></i></a> <!--Close button -->
+					</div>
+				</div>
+			<div>
+					<s3>SERVICE</s3>
+					<a href="#"><i id="calcOn" class="fa fa-calculator" onclick="show('calc','calcOn');" style="display:none;"></i></a>
+
+					<span class="a"></span>
+					<br>
+
+					<button class="button"; onclick="CopyToClipboard('SERVICE')">
+						SERVICE</button><br>
+						<form oninput="serviceStory()">
+							<input type="checkbox" id="predust" name="predust">
+							<label class="s1" for="predust">Pre-Dust Filter&nbsp;</label>
+							<input type="checkbox" id="combofilter" name="combofilter">
+							<label class="s1" for="combofilter">Dust Filter&nbsp;</label>
+							<input type="checkbox" id="frontWiper" name="frontWiper">
+							<label class="s1" for="frontWiper">Front Wipers&nbsp;</label>
+							<input type="checkbox" id="keyBattery" name="keyBattery" checked>
+							<label class="s1" for="keyBattery">Key Battery&nbsp;</label>
+							<input type="checkbox" id="midtronic" name="midtronic">
+							<label class="s1" for="midtronic">Battery Test&nbsp;</label>
+							<input type="checkbox" id="heater" name="heater">
+							<label class="s1" for="heater">Block Heater&nbsp;</label>
+							<input type="checkbox" id="fuel" name="fuel">
+							<label class="s1" for="fuel">Fuel Additive&nbsp;</label>
+							<input type="checkbox" id="flush" name="flush">
+							<label class="s1" for="flush">Brake Flush&nbsp;</label>
+							<input type="checkbox" id="amgOil" name="amgOil">
+							<label class="s1" for="amgOil">AMG Oil&nbsp;</label>
+							<input type="checkbox" id="oilCheck" name="oilCheck">
+							<label class="s1" for="oilCheck">Xentry Oil Check&nbsp;</label>
+							<input type="checkbox" id="drainPlug" name="drainPlug">
+							<label class="s1" for="drainPlug">Plastic Drain Plug&nbsp;</label>
+							<br>
+							<label class="s1">Brakes: </label>
+							<input type="text" id="fBrakes" name="fBrakes" size="5" placeholder="Fronts" maxlength="2">
+							<input type="text" id="rBrakes" name="rBrakes" size="5" placeholder="Rears" maxlength="2">
+							&nbsp; &nbsp;
+							<label class="s1">Tires: </label>
+							<input type="text" id="rfTire" name="rfTire" size="4" placeholder="RF" maxlength="4">
+							<input type="text" id="rrTire" name="rrTire" size="4" placeholder="RR" maxlength="4">
+							<input type="text" id="lrTire" name="lrTire" size="4" placeholder="LR" maxlength="4">
+							<input type="text" id="lfTire" name="lfTire" size="4" placeholder="LF" maxlength="4">
+							&nbsp; &nbsp;
+							<label class="s1">Tire Pressures: </label>
+							<input type="text" id="fPSI" name="fPSI" size="5" placeholder="Fronts"  maxlength="2">
+							<input type="text" id="rPSI" name="rPSI" size="5" placeholder="Rears" maxlength="2">
+							<input type="text" id="sPSI" name="sPSI" size="5" placeholder="Spare" maxlength="2">
+							&nbsp; &nbsp;
+							<label class="s1">AdBlue: </label>
+							<input type="text" id="def" name="def" size="4" placeholder="0L" maxlength="4">
+							&nbsp; &nbsp;
+							<input type="text" id="ServiceNotesIn" size="40" placeholder="Notes">
+							&nbsp; &nbsp;
+							<input type="reset" onclick="serviceStory()" value="Reset">
+						</form>
+						<s1 id="SERVICE">
+							<s1 id="storyResult">TEST DROVE THE VEHICLE. CHECKED ALL EXTERIOR LIGHTS, HORN, HAZARDS, WIPERS AND WASHERS. TOPPED OFF COOLANT, WASHER FLUID, AND CHECKED BRAKE FLUID LEVEL. INSPECTED ENGINE BAY. LIFTED THE VEHICLE. CHECKED ALL FOUR WHEELS, TIRES, AND BRAKES. CHECKED STEERING AND SUSPENSION COMPONENTS. INSPECTED UNDERBODY FOR DAMAGE. REMOVED ENGINE LOWER COVER AND DRAINED ENGINE OIL. INSTALLED DRAIN PLUG WITH NEW CRUSH WASHER. REINSTALLED ENGINE LOWER COVER. ADJUSTED ALL TIRE PRESSURES. INSTALLED NEW ENGINE OIL FILTER. ADDED ENGINE OIL TO SPEC. REPLACED KEY BATTERY. STARTED THE ENGINE AND CONFIRMED CORRECT LEVEL OF ENGINE OIL. RESET TPMS AND SERVICE REMINDER. </s1>
+							<s1 id="storyBrake"></s1>
+							<s1 id="storyTires"></s1>
+							<s1 id="storyPSI"></s1>
+							<s1 id="ServiceNotesOut"></s1>
+						</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('diagStory')">
+						XENTRY DIAGNOSIS</button><br>
+						<form id="diagnosisForm" oninput="diagnosisStory()">
+							<input type="checkbox" id="diagdrive" name="diag">
+							<label class="s1" for="diagdrive">Test Drive</label>
+							<input type="radio" id="diagpos" name="diag">
+							<label class="s1" for="diagpos">C</label>
+							<input type="radio" id="diagneg" name="diag">
+							<label class="s1" for="diagneg">NC</label>
+							<input type="text" id="diagcomplaint" name="diag" size="40" placeholder="Complaint">
+							&nbsp; &nbsp;
+							<input type="checkbox" id="diagscan" name="diag" checked>
+							<label class="s1" for="diagscan">Xentry&nbsp;</label>
+							<input type="checkbox" id="diagcharge" name="diag" checked>
+							<label class="s1" for="diagcharge">Charger&nbsp;</label>
+							&nbsp; &nbsp;
+							<input type="checkbox" id="diagiqt" name="diag" checked>
+							<label class="s1" for="diagiqt">IQT&nbsp;</label>
+							<input type="checkbox" id="diageqt" name="diag">
+							<label class="s1" for="diageqt">EFM&nbsp;</label>
+							<input type="checkbox" id="diagfqt" name="diag">
+							<label class="s1" for="diagfqt">FQT&nbsp;</label>
+							<br>
+							<input type="checkbox" id="diagupdate" name="diag">
+							<label class="s1" for="diagupdate">Software</label>
+							<input type="text" id="diagcu" name="diag" size="5" placeholder="CU">
+							<input type="text" id="diagupdatel" name="diag" size="5" placeholder="min">
+							<input type="checkbox" id="diagupdated" name="diag">
+							&nbsp; &nbsp;
+							<input type="checkbox" id="diagtips" name="diag">
+							<label class="s1" for="diagtips">Tips</label>
+							<input type="text" id="diagtipsd" name="diag" size="15" placeholder="GI20.10-P-059075">
+							<input type="text" id="diagtipsr" name="diag" size="15" placeholder="Cause/Remedy">
+							&nbsp; &nbsp;
+							<label class="s1">Faults: </label>
+							<input type="text" id="diagfaultsn" name="diag" size="3" placeholder="0" value="0" maxlength="2">
+							<input type="text" id="diagnote" name="diag" size="15" placeholder="Note">
+							&nbsp; &nbsp;
+							<input type="checkbox" id="diagfdrive" name="diag">
+							<label class="s1" for="diagfdrive">Test Drive</label>
+							<input type="text" id="diagnotefinal" name="diag" size="15" placeholder="Final Note">
+							&nbsp; &nbsp;
+							<input type="reset" onclick="diagnosisStory()" value="Reset">
+
+						</form>
+						<s1 id="diagStory">CONFIRMED CUSTOMER'S CONCERN: CHECK ENGINE LIGHT IS ON. CONNECTED BATTERY CHARGER AND XENTRY DIAGNOSIS. PERFORMED INITIAL QUICK TEST. FOUND MULTIPLE FAULTS REGARDING CUSTOMER'S CONCERN. ******** ERASED FAULT MEMORY. PERFORMED FINAL QUICK TEST. PERFORMED FINAL TEST DRIVE. CONFIRMED CEL IS NO LONGER ON.</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('quickLube')">
+						QUICK LUBE</button><br>
+						<form oninput="quickLubeStory()">
+							<input type="checkbox" id="quickLubeAMG" name="quickLube">
+							<label class="s1" for="quickLubeAMG">AMG Oil&nbsp;</label>
+							<input type="checkbox" id="quickLubePlug" name="quickLube">
+							<label class="s1" for="quickLubePlug">Plastic Drain Plug&nbsp;</label>
+							<input type="checkbox" id="quickLubeXentry" name="quickLube">
+							<label class="s1" for="quickLubeXentry">Xentry Oil Check&nbsp;</label>
+							<input type="reset" onclick="quickLubeStory()" value="Reset">
+						</form>
+						<s1 id="quickLube";>TOPPED OFF COOLANT AND WASHER FLUID. REMOVED UPPER AND LOWER ENGINE COVERS. DRAINED ENGINE OIL. INSTALLED DRAIN PLUG WITH NEW CRUSH WASHER. INSTALLED NEW OIL FILTER. ADDED ENGINE OIL TO SPEC. STARTED THE ENGINE AND CONFIRMED CORRECT LEVEL OF ENGINE OIL. ADJUSTED FOUR TIRE PRESSURES AND RESET TPMS.</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('additionalService')">
+						ADDITIONAL SERVICE</button><br>
+						<form oninput="functionAdditionalService()">
+							<input type="radio" id="ASpanoramic" name="additionalService">
+							<label class="s1" for="ASpanoramic">Clean / Lube Panoramic Roof&emsp;</label>
+							<input type="radio" id="ASbrakeFlush" name="additionalService">
+							<label class="s1" for="ASbrakeFlush">Brake Flush&emsp;</label>
+						</form>
+						<s1 id="additionalService";></s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('PDIstory')">
+						PRE-DELIVERY INSPECTION</button><br>
+						<form oninput="functionPDI()">
+							<input type="checkbox" id="PDIwheellock" name="PDI">
+							<label class="s1" for="PDIwheellock">Wheel Lock&emsp;</label>
+							<input type="checkbox" id="PDIfrontplate" name="PDI">
+							<label class="s1" for="PDIfrontplate">Front Plate Bracket&emsp;</label>
+							<input type="checkbox" id="PDIfuel" name="PDI">
+							<label class="s1" for="PDIfuel">Fuel Up&emsp;</label>
+							<label class="s1">Tire Pressures: </label>
+							<input type="text" id="PDIfPSI" name="PDI" size="5" placeholder="Fronts"  maxlength="2">
+							<input type="text" id="PDIrPSI" name="PDI" size="5" placeholder="Rears" maxlength="2">
+							<input type="text" id="PDIsPSI" name="PDI" size="5" placeholder="Spare" maxlength="2">
+							&nbsp; &nbsp;
+							<input type="text" id="PDInotes" size="40" placeholder="Notes">
+							&nbsp; &nbsp;
+							<input type="reset" onclick="functionPDI()" value="Reset">
+						</form>
+						<s1 id="PDIstory";>INSPECTED EXTERIOR AND INTERIOR FOR DAMAGE, SCRATCHES, OR DENTS. REMOVED SEAT AND FLOOR COVERS. INSTALLED SUPPLIED FLOOR MATS. CHECKED ALL EXTERIOR LIGHTS, HORN, HAZARDS, WIPERS AND WASHERS. TOPPED OFF COOLANT, WASHER FLUID, AND CHECKED BRAKE FLUID AND ENGINE OIL LEVELS. INSPECTED ENGINE BAY. LIFTED THE VEHICLE. CHECKED ALL FOUR WHEELS, TIRES, AND BRAKES. CHECKED STEERING AND SUSPENSION COMPONENTS. INSPECTED UNDERBODY FOR DAMAGE. CONNECTED XENTRY SCANNER AND BATTERY CHARGER. PERFORMED QUICK TEST. CONFIRMED NO ACTIVE FAULTS. PRINTED FINAL QUICK TEST. ADJUSTED ALL TIRE PRESSURES TO SPEC. PERFORMED CHECKS AS PER PDI CHECKLIST. PERFORMED HAND-OVER IN WORKSHOP MENU AND RESET TPMS. TEST DROVE THE VEHICLE. ATTACHED FINAL QUICK TEST, FUEL RECEIPT, AND PDI CHECKLIST TO THE WORK ORDER.</s1><br><s2>Checklist: AP00.20-P-1100B</s2>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('SAFETY')">
+						MB GOVERNMENT SAFETY INSPECTION</button><br>
+						<form oninput="safetyStory()">
+							<label class="s1">Result: &nbsp;&nbsp;</label>
+							<input type="radio" id="safetyPass" name="safetyResult">
+							<label class="s1" for="safetyPass">Pass&nbsp;&nbsp;</label>
+							<input type="radio" id="safetyAdvice" name="safetyResult">
+							<label class="s1" for="safetyAdvice">Advicement&nbsp;&nbsp;</label>
+							<input type="radio" id="safetyFail" name="safetyResult">
+							<label class="s1" for="safetyFail">Fail</label>
+							<br>
+							<label class="s1">Tires: </label>
+							<input type="text" id="safetyrfTire" name="rfTire" size="5" placeholder="RF" maxlength="4">
+							<input type="text" id="safetyrrTire" name="rrTire" size="5" placeholder="RR" maxlength="4">
+							<input type="text" id="safetylrTire" name="lrTire" size="5" placeholder="LR" maxlength="4">
+							<input type="text" id="safetylfTire" name="lfTire" size="5" placeholder="LF" maxlength="4">
+							&nbsp; &nbsp;
+							<label class="s1">Brakes: </label>
+							<input type="text" id="safetyfPad" name="fPad" size="5" placeholder="Fronts" maxlength="2">
+							<input type="text" id="safetyrPad" name="rPad" size="5" placeholder="Rears" maxlength="2">
+							&nbsp; &nbsp;
+							<label class="s1">Rotors: </label>
+							<input type="text" id="safetyfDisc" name="fDisc" size="5" placeholder="Fronts" maxlength="4">
+							<input type="text" id="safetyrDisc" name="rDisc" size="5" placeholder="Rears" maxlength="4">
+							&nbsp; &nbsp;
+							<label class="s1">Rotor Limit: </label>
+							<input type="text" id="safetyfDiscLim" name="fDiscLim" size="5" placeholder="Fronts" maxlength="4">
+							<input type="text" id="safetyrDiscLim" name="rDiscLim" size="5" placeholder="Rears" maxlength="4">
+						</form>
+						<s1 id="SAFETY">
+							<s1 id="safetyStoryResult">TEST DROVE THE VEHICLE. INSPECTED BRAKES, SUSPENSION, TIRES, LIGHTS, EXHAUST SYSTEM, SEATBELTS, STEERING COMPONENTS, AND OTHER COMPONENTS OUTLINED IN CERTIFICATE OF INSPECTION (COI) FORM.</s1>
+							</s1>
+						<s2>
+							<br>Tire tread depths minimum of 1.6mm
+							<br><a href="file://files/homedir/Shop/Desktop/JUDE/MBSafety.pdf" target="_blank" class="s1">Document</a>
+							<!--<br>Rotor < 15" run-out exceeds 0.127 mm or 0.005"
+							<br>Rotor > 15" run-out exceeds 0.250 mm or 0.010"
+							<br>Windshield cracks > 12"
+							<br>Front windows < 50% tint -->
+							</s2>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('STARCERT1')">
+						STAR CERTIFICATION INSPECTION
+						</button><br>
+						<form oninput="starCert()">
+							<input type="radio" id="starCertUsed" name="starCertType">
+							<label class="s1" for="starCertUsed">Internal&nbsp;</label>
+							<input type="radio" id="starCertELW" name="starCertType">
+							<label class="s1" for="starCertELW">ELW Sale&nbsp;</label>
+							<a href="file://files/homedir/Shop/Desktop/JUDE/TICR.pdf" target="_blank" class="button">Form</a>
+						</form>
+						<s1 id="STARCERT1";>TEST DROVE THE VEHICLE. TESTED OPERATION OF ALL DRIVER'S ASSISTANCE AND WARNING SYSTEMS, NAVIGATION, ENTERTAINMENT, INTERIOR AND EXTERIOR LIGHTS, HORN, WIPERS AND WASHERS. CHECKED OVERALL VEHICLE CONDITION. LIFTED THE VEHICLE. CORRECTED ALL TIRE PRESSURES AND RESET TPMS. CONNECTED XENTRY DIAGNOSIS. PERFORMED QUICK TEST. CHECKED AND CLEARED FAULTS. PRINTED FINAL QUICK TEST. PERFORMED FURTHER INSPECTION AS PER ELW SALE TO CUSTOMER CHECKLIST IN TECHNICAL INSPECTION AND CERTIFICATION REPORT FORM</s1>
+
+					<span class="a"></span>
+
+					<button class="button" onclick="CopyToClipboard('MOUNTBALANCE')">
+						MOUNT AND BALANCE</button><br>
+						<form oninput="mountAndBalance()">
+							<label class="s1">Wheels:&nbsp;</label>
+							<input type="checkbox" id="MAB0" name="MABTire">
+							<label class="s1" for="MAB0">LF&emsp;</label>
+							<input type="checkbox" id="MAB1" name="MABTire">
+							<label class="s1" for="MAB1">RF&emsp;</label>
+							<input type="checkbox" id="MAB2" name="MABTire">
+							<label class="s1" for="MAB2">LR&emsp;</label>
+							<input type="checkbox" id="MAB3" name="MABTire">
+							<label class="s1" for="MAB3">RR&emsp;</label>
+							&emsp;
+							<input type="radio" id="MABWinter" name="MABSeason">
+							<label class="s1" for="MABWinter">W&emsp;</label>
+							<input type="radio" id="MABSummer" name="MABSeason">
+							<label class="s1" for="MABSummer">S&emsp;</label>
+							<input type="radio" id="MABNew" name="MABSeason">
+							<label class="s1" for="MABNew">N&emsp;</label>
+							&emsp;
+							<input type="radio" id="MABRepair" name="MABwork">
+							<label class="s1" for="MABRepair">Patch&emsp;</label>
+							<input type="radio" id="MABSWAP" name="MABwork">
+							<label class="s1" for="MABSWAP">SWAP&emsp;</label>
+							<input type="radio" id="MABMaB" name="MABwork">
+							<label class="s1" for="MABMaB">Mount&emsp;</label>
+							&emsp;
+							<label class="s1">Tire Pressures: </label>
+							<input type="text" id="MABfPSI" name="MABfPSI" size="5" placeholder="Fronts"  maxlength="2">
+							<input type="text" id="MABrPSI" name="MABrPSI" size="5" placeholder="Rears" maxlength="2">
+							&emsp;
+							<input type="radio" id="MABStore" name="MABTires">
+							<label class="s1" for="MABStore">S&nbsp;</label>
+							<input type="radio" id="MABBag" name="MABTires">
+							<label class="s1" for="MABBag">B&nbsp;</label>
+							&emsp;
+							<input type="reset" onclick="mountAndBalance()" value="Reset">
+						</form>
+						<s1 id="MOUNTBALANCE">MOUNT AND BALANCE / SEASONAL TIRE SWAP / TIRE REPAIR</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('BRAKES')">
+						BRAKES</button><br>
+						<form oninput="functionBrakes()">
+							<input type="checkbox" id="functionBrakesFront" name="functionBrakesC">
+							<label class="s1" for="functionBrakesFront">Front&emsp;</label>
+							<input type="checkbox" id="functionBrakesRear" name="functionBrakesC">
+							<label class="s1" for="functionBrakesRear">Rear&emsp;</label>
+							<input type="checkbox" id="functionBrakesPark" name="functionBrakesC">
+							<label class="s1" for="functionBrakesPark">Electric Parking&emsp;</label>
+							<input type="checkbox" id="functionBrakesFixed" name="functionBrakesC">
+							<label class="s1" for="functionBrakesFixed">Fixed Caliper&emsp;</label>
+						</form>
+						<s1 id="BRAKES";>REPLACE BRAKES</s1>
+
+						<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('MOUNT2')">
+						MOUNTED AND BALANCED</button><br>
+						<s1 id="MOUNT2";>LIFTED THE VEHICLE. REMOVED ****** WHEEL. DISMOUNTED TIRES. MOUNTED AND BALANCED NEW TIRES. REINSTALLED &nbsp;WHEELS. ADJUSTED FOUR TIRE PRESSURES AND RESET TPMS. LOWERED THE VEHICLE AND TORQUED ALL FOUR WHEELS. TEST DROVE THE VEHICLE AND RE-TORQUED ALL FOUR WHEELS.</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('alignment')">
+						FOUR WHEEL ALIGNMENT
+						</button><br>
+						<form oninput="fAlignment()">
+							<label class="s1">Out of spec: &emsp;&emsp;&emsp;&emsp;</label>
+							<label class="s1"> Adjusted: </label>
+							<br>
+							<input type="checkbox" id="alignmentLFT" name="alignmentLFT">
+							<input type="checkbox" id="alignmentLFC" name="alignmentLFC">
+							<input type="checkbox" id="alignmentRFC" name="alignmentRFC">
+							<input type="checkbox" id="alignmentRFT" name="alignmentRFT">
+							&emsp;&emsp;
+							<input type="checkbox" id="alignmentLFTA" name="alignmentLFTA">
+							<input type="checkbox" id="alignmentLFCA" name="alignmentLFCA">
+							<input type="checkbox" id="alignmentRFCA" name="alignmentRFCA">
+							<input type="checkbox" id="alignmentRFTA" name="alignmentRFTA">
+							&emsp;&emsp;
+							<input type="text" id="alignmentDrive" size="20" placeholder="Test drive">
+							<br>
+							<input type="checkbox" id="alignmentLRT" name="alignmentLRT">
+							<input type="checkbox" id="alignmentLRC" name="alignmentLRC">
+							<input type="checkbox" id="alignmentRRC" name="alignmentRRC">
+							<input type="checkbox" id="alignmentRRT" name="alignmentRRT">
+							&emsp;&emsp;
+							<input type="checkbox" id="alignmentLRTA" name="alignmentLRTA">
+							<input type="checkbox" id="alignmentLRCA" name="alignmentLRCA">
+							<input type="checkbox" id="alignmentRRCA" name="alignmentRRCA">
+							<input type="checkbox" id="alignmentRRTA" name="alignmentRRTA">
+							&emsp;&emsp;
+							<input type="checkbox" id="alignmentES">
+							<label class="s1" for="alignmentES">ES Teach-in&nbsp;&nbsp;</label>
+							<br>
+						</form>
+						<s1 id="alignment";>
+						TEST DROVE THE VEHICLE. DROVE THE VEHICLE IN AND PERFORMED CASTER SWEEP. ADJUSTED ****. TEST DROVE THE VEHICLE. CONFIRMED VEHICLE DRIVES STRAIGHT AND STEERING WHEEL IS STRAIGHT.
+						</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('ROD1')">
+						OUTER TIE RODS</button><br>
+						<s1 id="ROD1";>LIFTED THE VEHICLE. REMOVED LF AND RF WHEELS. REMOVED BOTH OUTER TIE RODS. INSTALLED NEW OUTER TIE RODS IN REVERSE ORDER. PERFORMED FRONT TOE ALIGNMENT CORRECTION. TEST DROVE THE VEHICLE.</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('ROD2')">
+						INNER TIE RODS</button><br>
+						<s1 id="ROD2";>LIFTED THE VEHICLE. REMOVED LF AND RF WHEELS. REMOVED BOTH OUTER AND INNER TIE RODS. INSTALLED NEW INNER TIE RODS IN REVERSE ORDER. PERFORMED FRONT TOE ALIGNMENT CORRECTION. TEST DROVE THE VEHICLE.</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('722SERVICE')">
+						TRANSMISSION SERVICE 722</button><br>
+						<s1 id="722SERVICE";>LIFTED THE VEHICLE AND REMOVED LOWER ENGINE AND TRANSMISSION COVERS. DRAINED TRANSMISSION FLUID. REMOVED TRANSMISSION PAN AND FILTER. CLEANED TRANSMISSION PAN AND INSTALLED NEW GASKET. INSTALLED NEW FILTER. REINSTALLED PAN AND TORQUED TO SPEC. PRE-FILLED TRANSMISSION. STARTED THE ENGINE TO GET TRANSMISSION FLUID UP TO TEMP. ADJUSTED TRANSMISSION FLUID TO CORRECT SPEC. INSTALLED DRAIN PLUGS WITH NEW GASKETS. REINSTALLED OTHER PARTS IN REVERSE ORDER. TEST DROVE THE VEHICLE. VERIFIED VEHICLE SHIFTS SMOOTHLY.</s1>
+						<s2><br>Pre-fill with 5L, bring up to temp, check and adjust
+						<br>Torque pan to transmission housing to 4nm + 180 deg</s2>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('725SERVICE')">
+						TRANSMISSION SERVICE 9G-Tronic 725</button><br>
+						<s1 id="725SERVICE";>LIFTED THE VEHICLE AND REMOVED LOWER ENGINE AND TRANSMISSION COVERS. DRAINED TRANSMISSION OIL. REMOVED TRANSMISSION OIL PAN. INSTALLED NEW TRANSMISSION OIL PAN WITH NEW BOLTS. PRE-FILLED TRANSMISSION OIL. CONNECTED XENTRY SCAN TOOL AND PERFORMED TRANSMISSION OIL LEVEL CHECK. ADJUSTED TRANSMISSION OIL TO CORRECT SPEC. INSTALLED NEW PLATIC DRAIN PLUG. REASSEMBLED IN REVERSE ORDER. TEST DROVE THE VEHICLE. VERIFIED VEHICLE DRVES AND SHIFTS SMOOTHLY.</s1>
+						<s2><br>Drain positions: 4 (drain fully), 1 (fill), 2 (small drain), 3 (justify).
+							<br>Pan to transmission housing bolts: 4nm + 90 deg
+							<br>Prefill w/ 4.5L - drained from oil pan
+							<br>Prefill w/ 7.5L - drained from oil pan + torque converter</s2>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('SPARK3')">
+						REPLACE SPARK PLUGS M157</button><br>
+						<s1 id="SPARK3";>
+							REMOVED UPPER ENGINE COVER, LEFT AND RIGHT AIR FILTER BOXES AND AIR DUCTS, AND NOISE ISOLATION FOAMS. REMOVED ALL 8 COIL PACKS. CLEANED ENGINE AREA WITH COMPRESSED AIR. REMOVED SPARK PLUGS. INSTALLED AND TORQUE NEW SPARK PLUGS TO 23NM. APPLIED GREASE IN SPARK PLUG ADAPTERS. INSTALLED AND TORQUE COIL PACKS TO 9NM. REASSEMBLED IN REVERSE ORDER. TEST DROVE THE VEHICLE AND CONFIRMED ENGINE SMOOTH OPERATION.
+						</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('RACK1')">
+						REPLACE STEERING RACK 117, 246, 156</button><br>
+						<s1 id="RACK1";>DISCONNECTED BATTERY GROUND. DISCONNECTED STEERING SHAFT. LIFTED THE VEHICLE AND REMOVED BOTH FRONT WHEELS AND FENDER LINERS. REMOVED LOWER ENGINE COVER, AND PARTIALLY REMOVED TWO SIDE UNDER BODY PANELS. DISCONNECTED BOTH FRONT LOWER CONTROL ARMS FROM STEERING KNUCKLE, BOTH OUTER TIE RODS FROM STEERING KNUCKLE, AND BOTH SWAY BAR LINK FROM STRUTS. DISCONNECTED ELECTRIC STEERING CONNECTORS. UNFASTENED LOWER ENGINE MOUNT AND EXHAUST FROM THE SUBFRAME. REMOVED THE FRONT SUBFRAME ASSEMBLY WITH THE STEERING RACK, LOWER CONTROL ARMS, AND SWAY BAR. REMOVED STEERING RACK. INSTALLED NEW STEERING RACK. REINSTALLED IN REVERSE ORDER. PERFORMED FRONT TOE ADJUSTMENT. TEST DROVE THE VEHICLE. VERIFIED STEERING WHEEL IS STRAIGHT WHEN THE VEHICLE IS DRIVING STRAIGHT. NEW STEERING RACK SERIAL NUMBER IS ******. </s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('P017285')">
+						MED40 P017285 MIXTURE ADAPTATION TOO RICH</button><br>
+						<s1 id="P017285";>TEST DROVE THE VEHICLE. CONFIRMED CHECK ENGINE LIGHT IS ON. CONNECTED SCANNER AND BATTERY CHARGER. PERFORMED QUICK TEST. FOUND STORED FAULT CODE P017285 ON ENGINE CONTROL UNIT. CHECKED VEHICLE HISTORY. CHECKED TIPS DOCUMENTS FOR RELEVANT CASES. FOUND TIPS CASE LI07.70-P-067986. AS PER TIPS DOCUMENT, MIXTURE ADAPTATION IS HIGH POSSIBLY FROM SOFTWARE ISSUE. CHECKED ENGINE OIL LEVEL AND QUALITY. PERFORMED SOFTWARE UPDATE OF ENGINE CONTROL UNIT. POWERTRAIN CONTROL UNIT AND TRANSMISSION CONTROL UNIT SOFTWARES ARE BOTH UP TO DATE. CLEARED FAULTS AND PERFORMED FINAL QUICK TEST. TEST DROVE THE VEHICLE.
+							<br>****
+							<br>NOTE: OIL LEVEL IS ABOVE MAXIMUM AND IS DILUTED WITH FUEL. RECOMMEND OIL AND FILTER CHANGE. AS PER TIPS DOCUMENT, A TIPS CASE MUST BE OPENED FOR REPEATED VISITS.</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('GLKRADAR')">
+						REPLACE OUTER REAR RADAR SENSORS AND HARNESS X204</button><br>
+						<s1 id="GLKRADAR";>
+						LIFTED THE VEHICLE. REMOVED TRUNK PANELING. REMOVED LEFT AND RIGHT TAILLIGHTS. REMOVED REAR BUMPER. REMOVED LEFT AND RIGHT RADAR SENSORS AND HARNESS. INSTALLED NEW SENSORS AND HARNESS. REASSEMBLED IN REVERSE ORDER. CONNECTED SCANNER AND BATTERY CHARGER. PERFORMED INITAL START UP OF RADAR SENSOR CONTROL UNIT. CLEARED STORED FAULTS AND PRINTED FINAL QUICK TEST. TEST DROVE THE VEHICLE. CONFIRMED BLIND SPOT ASSIST INOPERATIVE MESSAGE IS NO LONGER PRESENT AND BLIND SPOT ASSIST IS OPERATING NORMALLY.
+						</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('166RADAR')">
+						REPLACE OUTER REAR RADAR SENSORS AND HARNESS GLE 166</button><br>
+						<s1 id="166RADAR";>
+						LIFTED THE VEHICLE. REMOVED LEFT AND RIGHT TAILLIGHTS. REMOVED REAR BUMPER. REMOVED LEFT AND RIGHT RADAR SENSORS AND HARNESS. INSTALLED NEW SENSORS AND HARNESS. REASSEMBLED IN REVERSE ORDER. CONNECTED SCANNER AND BATTERY CHARGER. PERFORMED INITIAL START UP OF RADAR SENSOR CONTROL UNIT. CLEARED STORED FAULTS AND PERFORMED FINAL QUICK TEST. TEST DROVE THE VEHICLE. CONFIRMED BLIND SPOT ASSIST INOPERATIVE MESSAGE IS NO LONGER PRESENT AND BLIND SPOT ASSIST IS OPERATING NORMALLY.
+						</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('453RRSHOCKS')">
+						REPLACE REAR SHOCKS 453 SMART FORTWO
+						</button><br>
+						<s1 id="453RRSHOCKS";>
+						REMOVED TRUNK PANELLING. DISCONNECTED LEFT AND RIGHT SHOCK ABSORBER TOP MOUNTS. LIFTED THE VEHICLE. REMOVED LEFT AND RIGHT SHOCK ABSORBERS. INSTALLED NEW SHOCKS IN REVERSE ORDER. REASSEMBLED IN REVERSE ORDER. TEST DROVE THE VEHICLE. CONFIRMED NO ABNORMAL NOISE AUDIBLE.
+						</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('RRBATTERY')">
+						REPLACE MAIN BATTERY</button><br>
+						<s1 id="RRBATTERY";>
+							REMOVED BATTERY COVER. DISCONNECTED POSITIVE AND NEGATIVE CALBES. REMOVED BATTERY HOLD DOWN. REMOVED BATTERY. INSTALLED NEW BATTERY. REASSEMBLED IN REVERSE ORDER. CONNECTED XENTRY DIAGNOSIS. CONFIRMED BATTERY CHANGE IN FRONT SAM CONTROL UNIT.
+						</s1>
+
+						<span class="a"></span>
+
+						<button class="button"; onclick="CopyToClipboard('DIFFPINIONHOUSINGSEAL')">
+						FRONT DIFFERENTIAL PINION HOUSING SEAL
+						</button><br>
+						<s1 id="DIFFPINIONHOUSINGSEAL";>
+							DISCONNECTED BATTERY GROUND. REMOVED UPPER ENGINE COVER, ENGINE AIR FILTER BOX, EXHAUST MANIFOLD HEAT SHIELD. LIFTED THE VEHICLE AND REMOVED LOWER ENGINE AND TRANSMISSION COVERS. DISCONNECTED EXHAUST PIPE FROM CATALYTIC CONVERTER. REMOVED FRONT PROPELLER SHAFT SHIELD. UNFASTENED FRONT PROPELLER SHAFT FROM FRONT DIFFERENTIAL. REMOVED FRONT DIFFERENTIAL PINION ASSEMBLY. INSTALLED NEW O-RING HOUSING SEAL. ASSEMBLED IN REVERSE ORDER. TEST DROVE THE VEHICLE.
+						</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('M276NENGINE')">
+						M276 NA ENGINE</button><br>
+						<form oninput="functionM276NENGINE()">
+							<input type="radio" id="M276NENGINESpark" name="M276NENGINE">
+							<label class="s1" for="M276NENGINESpark">Spark Plugs&emsp;</label>
+							<input type="radio" id="M276NENGINEFrontCover" name="M276NENGINE">
+							<label class="s1" for="M276NENGINEFrontCover">Front Cover Seal&emsp;</label>
+							<input type="radio" id="M276NENGINEAirFilter" name="M276NENGINE">
+							<label class="s1" for="M276NENGINEAirFilter">Air Filters&emsp;</label>
+						</form>
+						<s1 id="M276NENGINE";></s1>
+
+					<span class="a"></span>
+
+
+					<button class="button"; onclick="CopyToClipboard('M276ENGINE')">
+						M276 BITURBO ENGINE</button><br>
+						<form oninput="functionM276ENGINE()">
+							<input type="radio" id="M276ENGINESpark" name="M276ENGINE">
+							<label class="s1" for="M276ENGINESpark">Spark Plugs&emsp;</label>
+							<input type="radio" id="M276ENGINEFrontCover" name="M276ENGINE">
+							<label class="s1" for="M276ENGINEFrontCover">Front Cover Seal&emsp;</label>
+							<input type="radio" id="M276ENGINEAirFilter" name="M276ENGINE">
+							<label class="s1" for="M276ENGINEAirFilter">Air Filters&emsp;</label>
+						</form>
+						<s1 id="M276ENGINE";></s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('M270ENGINE')">
+						M270 ENGINE</button><br>
+						<form oninput="functionM270ENGINE()">
+							<input type="radio" id="M270ENGINESpark" name="M270ENGINE">
+							<label class="s1" for="M270ENGINESpark">Spark Plugs&emsp;</label>
+							<input type="radio" id="M270ENGINETransmissionService" name="M270ENGINE">
+							<label class="s1" for="M270ENGINETransmissionService">Transmission Service&emsp;</label>
+							<input type="radio" id="M270ENGINEAirFilter" name="M270ENGINE">
+							<label class="s1" for="M270ENGINEAirFilter">Air Filters&emsp;</label>
+							<input type="radio" id="M270ENGINEOilFilterHousingSeal" name="M270ENGINE">
+							<label class="s1" for="M270ENGINEOilFilterHousingSeal">Oil Filter Housing Seal&emsp;</label>
+							<input type="radio" id="M270ENGINERemove" name="M270ENGINE">
+							<label class="s1" for="M270ENGINERemove">Engine Removal/Installation&emsp;</label>
+						</form>
+						<s1 id="M270ENGINE";></s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('M133ENGINE')">
+						M133 ENGINE</button><br>
+						<form oninput="functionM133ENGINE()">
+							<input type="radio" id="M133ENGINERemove" name="M133ENGINE">
+							<label class="s1" for="M133ENGINERemove">Engine Removal/Installation&emsp;</label>
+						</form>
+						<s1 id="M133ENGINE";></s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('C63S')">
+						M177 C63S ENGINE SWAP</button><br>
+						<s1 id="C63S";>
+							LIFTED THE VEHICLE AND REMOVED BOTH FRONT WHEELS AND FENDER LINERS. REMOVED FRONT LOWER COVER, LOWER ENGINE COVER, LOWER TRANSMISSION COVER. DISCONNECTED BATTERY GROUND. REMOVED FRONT BUMPER. EXTRACTED AC REFRIGERANT AND DRAINED COOLANT FROM HIGH AND LOW TEMP COOLING SYSTEMS. DISCONNECTED RELEVANT ELECTRICAL CONNECTORS, FUEL LINE, AND COOLANT HOSES PRIOR TO ENGINE AND TRANSMISSION REMOVAL. REMOVED RADIATOR FAN, RADIATOR AND CONDENSER ASSEMBLY. REMOVED LEFT AND RIGHT LOW TEMP COOLANT PUMPS, OIL COOLER. DISCONNECTED DRIVE SHAFT FROM TRANSMISSION OUTPUT FLANGE. DISCONNECTED LEFT AND RIGHT CAT FROM MID EXHAUST PIPES. DISCONNECTED SPRING LINKS AND TORQUE STRUTS FROM FRONT SUBFRAME, LEFT AND RIGHT OUTER TIE RODS FROM KNUCKLES, SWAY BAR LINKS FROM SPRING LINKS, SWAY BAR MOUNT FROM BODY.  LOWERED THE ENGINE AND TRANSMISSION ASSEMBLY. DETACHED TRANSMISSION FROM THE ENGINE. PLACED ENGINE ON ENGINE STAND. INSTALLED NEW ENGINE ON FRONT SUBFRAME AND TORQUED ENGINE MOUNT BOLT TO SPEC. INSTALLED TRANSMISSION, TRANSMISSION COOLER LINES AND BRACKETS. TRANSFERRED AC COMPRESSOR, LEFT AND RIGHT CATS, MOUNTS AND CLIPS FOR EXHAUSTS AND WIRINGS TO NEW ENGINE. RE-INSTALLED SUBFRAME WITH NEW ENGINE AND TRANSMISSION ASSEMBLED. ASSEMBLED IN REVERSE ORDER.
+							<br>
+							****
+							<br>
+							APPLIED VACUUM TO HIGH AND LOW TEMP COOLING SYSTEMS. CONFIRMED COOLING SYSTEM IS HOLDING VACUUM THUS NO LEAK IS PRESENT IN THE SYSTEM. FILLED HIGH AND LOW TEMP COOLING SYSTEM WITH COOLANT.
+							<br>
+							****
+							<br>
+							PERFORMED VACUUM AND LEAK TEST OF AC SYSTEM. CONFIRMED SYSTEM HAS NO LEAKS. FILLED SYSTEM WITH REFRIGERANT AND ADDED AC OIL.
+							<br>
+							****
+							<br>
+							CHECKED ENGINE OIL LEVEL. STARTED THE ENGINE.
+							<br>
+							CHECKED AND CORRECTED TRANSMISSION FLUID LEVEL.
+							<br>
+							****
+							<br>
+							CONNECTED XENTRY AND PERFORMED QUICK TEST. CLEARED STORED FAULTS AND PRINTED FINAL QUICK TEST.
+							<br>
+							****
+							<br>
+							TEST DROVE THE VEHICLE. CONFIRMED NO CEL, ENGINE IS RUNNING SMOOTHLY, AND TRANSMISSION IS SHIFTING SMOOTHLY.
+						</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('M260ENGINE')">
+						M260 ENGINE</button><br>
+						<form oninput="functionM260ENGINE()">
+							<input type="radio" id="M260ENGINESpark" name="M260ENGINE">
+							<label class="s1" for="M260ENGINESpark">Spark Plugs&emsp;</label>
+							<input type="radio" id="M260ENGINEHead" name="M260ENGINE">
+							<label class="s1" for="M260ENGINEHead">Cylinder Head&emsp;</label>
+						</form>
+						<s1 id="M260ENGINE";></s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('M156ENGINE')">
+						M156 ENGINE</button><br>
+						<form oninput="functionM156ENGINE()">
+							<input type="radio" id="M156ENGINERemove" name="M156ENGINE">
+							<label class="s1" for="M156ENGINERemove">Remove Engine&emsp;</label>
+							<input type="radio" id="M156ENGINEInstall" name="M156ENGINE">
+							<label class="s1" for="M156ENGINEInstall">Install Engine&emsp;</label>
+							<input type="radio" id="M156ENGINEHeadBolts" name="M156ENGINE">
+							<label class="s1" for="M156ENGINEHeadBolts">Head Bolts and Gasket&emsp;</label>
+							<input type="radio" id="M156ENGINECamCovers" name="M156ENGINE">
+							<label class="s1" for="M156ENGINECamCovers">Front Cam Cover Re-seal&emsp;</label>
+							<input type="radio" id="M156ENGINEThermostat" name="M156ENGINE">
+							<label class="s1" for="M156ENGINEThermostat">Thermostat&emsp;</label>
+							<input type="radio" id="M156ENGINEOilFilterHousing" name="M156ENGINE">
+							<label class="s1" for="M156ENGINEOilFilterHousing">Oil Filter Housing&emsp;</label>
+							<input type="radio" id="M156ENGINESparks" name="M156ENGINE">
+							<label class="s1" for="M156ENGINESparks">Spark Plugs&emsp;</label>
+						</form>
+						<s1 id="M156ENGINE";></s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('M274ENGINE')">
+						M274 ENGINE</button><br>
+						<form oninput="functionM274ENGINE()">
+							<input type="radio" id="M274ENGINESpark" name="M274ENGINE">
+							<label class="s1" for="M274ENGINESpark">Spark Plugs&emsp;</label>
+							<input type="radio" id="M274ENGINEAirFilter" name="M274ENGINE">
+							<label class="s1" for="M274ENGINEAirFilter">Air Filters&emsp;</label>
+						</form>
+						<s1 id="M274ENGINE";></s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('OM642ENGINE')">
+						OM642 ENGINE</button><br>
+						<form oninput="functionOM642ENGINE()">
+							<input type="radio" id="OM642ENGINEOilcooler" name="OM642ENGINE">
+							<label class="s1" for="OM642ENGINEOilcooler">Oil Cooler Re-seal&emsp;</label>
+							<input type="radio" id="OM642ENGINEOilFilterHouse" name="OM642ENGINE">
+							<label class="s1" for="OM642ENGINEOilFilterHouse">Oil Filter Housing&emsp;</label>
+						</form>
+						<s1 id="OM642ENGINE";></s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('CRANKCASE')">
+					CRANKCASE
+					</button><br>
+					<form oninput="functionCrankcase()">
+						<input type="radio" id="crankcaseDiag" name="crankcaseN">
+						<label class="s1" for="crankcaseDiag">Diagnosis&emsp;</label>
+						<input type="radio" id="crankcaseM270" name="crankcaseN">
+						<label class="s1" for="crankcaseM270">M270&emsp;</label>
+						<input type="radio" id="crankcaseM274" name="crankcaseN">
+						<label class="s1" for="crankcaseM274">M274&emsp;</label>
+					</form>
+
+					<s1 id="CRANKCASE";>
+					P052E71
+					</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('FieldMesaure')">
+						CANADA FIELD MEASURE</button><br>
+						<form oninput="functionFieldMeasure()">
+							<input type="radio" id="FMPREINSPECTION" name="CANFM">
+							<label class="s1" for="FMPREINSPECTION">Pre-Inspection&emsp;</label>
+							<input type="radio" id="FM2021120026" name="CANFM">
+							<label class="s1" for="FM2021120026">2021120026 3.7H&emsp;</label>
+							<input type="radio" id="FM2021120024" name="CANFM">
+							<label class="s1" for="FM2021120024">2021120024 4.2H&emsp;</label>
+							<input type="radio" id="FM2021120031" name="CANFM">
+							<label class="s1" for="FM2021120031">2021120031 5.3H&emsp;</label>
+							<input type="radio" id="FM2021120029" name="CANFM">
+							<label class="s1" for="FM2021120029">2021120029 4.2H&emsp;</label>
+							<input type="radio" id="FM2021120027" name="CANFM">
+							<label class="s1" for="FM2021120027">2021120027 5.2H&emsp;</label>
+						</form>
+						<s1 id="FieldMesaure";></s1>
+
+					<span class="a"></span>
+					<span class="a"></span>
+
+
+
+
+
+
+
+
+					<s3>RECALL STORIES</s3><!-- RECALL STORIES***************************** -->
+
+
+
+
+
+
+
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2020030008A')">
+						X204 DRIVER AND PASSENGER AIRBAG RECALL 1.0H</button><br>
+						<form oninput=recallNumberSelect(parsScan,"2020030008Ascan")>
+							<label class="s1" for="parsScan">SCAN ID:</label>
+							<input type="text" id="parsScan" name="parsScan" size="6" maxlength="6">
+						</form>
+						<s1 id="2020030008A";>AS PER MB RECALL CAMPAIGN 2020030008 , DRIVER&rsquo;S AND PASSENGER FRONT AIRBAGS MUST BE REPLACED. CONFIRMED NO SRS LIGHT OR WARNING ARE ON. DISCONNECTED BATTERY GROUND TERMINAL. REMOVED DRIVERS STEERING WHEEL AIRBAG. REMOVED CENTRE DASHBOARD VENTS AND RIGHT VENT, REMOVED COMAND DISPLAY TRIM, AND DASHBOARD TRIM. REMOVED GLOVE COMPARTMENT. REMOVED PASSENGER FRONT AIRBAG. SCANNED AIRBAG CODES. INSTALLED NEW AIRBAGS IN REVERSE ORDER. REINSTALLED ALL PARTS IN REVERSE ORDER. RECONNECTED BATTERY GROUND TERMINAL. STARTED THE VEHICLE. VERIFIED NO SRS LIGHT OR WARNINGS. &nbsp; &nbsp; &nbsp; &nbsp;
+							<br>PARTS SCAN ID: <s1 id="2020030008Ascan"></s1></s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2020120001')">
+						X204 PASSENGER AIRBAG RECALL 1.0H</button><br>
+						<form oninput=recallNumberSelect(parsScan,"2020120001scan")>
+							<label class="s1" for="parsScan">SCAN ID:</label>
+							<input type="text" id="parsScan" name="parsScan" size="6" maxlength="6">
+						</form>
+						<s1 id="2020120001";>AS PER MB RECALL CAMPAIGN 2020120001 , THE PASSENGER FRONT AIRBAG MUST BE REPLACED. CONFIRMED NO SRS LIGHT OR WARNING ARE ON. DISCONNECTED BATTERY GROUND TERMINAL. REMOVED GLOVE COMPARTMENT. REMOVED PASSENGER FRONT AIRBAG. SCANNED AIRBAG CODES. INSTALLED NEW AIRBAG IN REVERSE ORDER. RECONNECTED BATTERY GROUND TERMINAL. STARTED THE VEHICLE. VERIFIED NO SRS LIGHT OR WARNINGS. &nbsp; &nbsp; &nbsp; &nbsp;
+							<br>PARTS SCAN ID: <s1 id="2020120001scan"></s1></s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2021060007')">
+						C204, C207 PASSENGER AIRBAG RECALL 1.4H</button><br>
+						<form oninput=recallNumberSelect(parsScan,"2021060007scan")>
+							<label class="s1" for="parsScan">SCAN ID:</label>
+							<input type="text" id="parsScan" name="parsScan" size="6" maxlength="6">
+						</form>
+						<s1 id="2021060007";>AS PER MB RECALL CAMPAIGN 2021060007 , THE PASSENGER FRONT AIRBAG MUST BE REPLACED. CONFIRMED NO SRS LIGHT OR WARNING ARE ON. DISCONNECTED BATTERY GROUND TERMINAL. REMOVED RIGHT A-PILLAR TRIM, GLOVE COMPARTMENT, AIR DUCT ABOVE THE GLOVE COMPARTMENT, AND CENTER TOP SPEAKER GRILL. LOOSENED RELEVANT FASTENERS TO SLIGHTLY RAISE INSTRUMENT PANEL AT THE FRONT PASSENGER SIDE. REMOVED PASSENGER FRONT AIRBAG. SCANNED AIRBAG CODES. INSTALLED NEW AIRBAG. ASSEMBLED IN REVERSE ORDER. RECONNECTED BATTERY GROUND TERMINAL. TURNED KEY TO POSITION 1 AND CONFIRMED AIRBAG INDICATOR LAMP TURNED OFF AFTER SRS SELF TEST. &nbsp; &nbsp; &nbsp; &nbsp;
+							<br>PARTS SCAN ID: <s1 id="2021060007scan"></s1></s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2020030008')">
+						W204 DRIVER AND PASSENGER AIRBAG RECALL 1.4H</button>
+						<form oninput=recallNumberSelect(recallNumber,"20200300082019090004")>
+							<input type="radio" checked value="2020030008" id="2020030008Form" name="recallNumber">
+							<label class="s1" for="2020030008Form">2020030008&nbsp;</label>
+							<input type="radio" value="2019090004" id="2019090004Form" name="recallNumber">
+							<label class="s1" for="2019090004Form">2019090004&nbsp;</label>
+						</form>
+						<form oninput=recallNumberSelect(parsScan,"2020030008scan")>
+							<label class="s1" for="parsScan">SCAN ID:</label>
+							<input type="text" id="parsScan" name="parsScan" size="6" maxlength="6">
+						</form>
+						<s1 id="2020030008";>AS PER MB RECALL CAMPAIGN <s1 id="20200300082019090004">2020030008</s1> , PASSENGER AND DRIVER FRONT AIRBAG MUST BE REPLACED. CONFIRMED NO SRS LIGHT OR WARNING ARE ON. DISCONNECTED BATTERY GROUND TERMINAL. REMOVED A-PILLAR PANEL, TRIM AROUND THE INSTRUMENT PANEL, TRIM WITH SUN SENSOR, GLOVEBOX COMPARTMENT, CLIMATE CONTROL UNIT. LOOSENED FASTENERS SECURING DASHBOARD. REMOVED DRIVER&rsquo;S AND PASSENGER AIRBAGS. SCANNED AIRBAG CODES. INSTALLED NEW AIRBAGS IN REVERSE ORDER. TIGHTENED DASHBOARD FASTENERS. REINSTALLED ALL PARTS IN REVERSE ORDER. RECONNECTED BATTERY GROUND. STARTED THE VEHICLE. CONFIRMED NO SRS LIGHT OR WARNINGS. &nbsp; &nbsp; &nbsp; &nbsp;
+							<br>PARTS SCAN ID: <s1 id="2020030008scan"></s1></s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2020100007')">
+						W204 C-CLASS PASSENGER AIRBAG RECALL 1.4H</button><br>
+						<form oninput=recallNumberSelect(parsScan,"2020100007scan")>
+							<label class="s1" for="parsScan">SCAN ID:</label>
+							<input type="text" id="parsScan" name="parsScan" size="6" maxlength="6">
+						</form>
+						<s1 id="2020100007";>AS PER MB RECALL CAMPAIGN 2020100007 , PASSENGER FRONT AIRBAG MUST BE REPLACED. CONFIRMED NO SRS LIGHT OR WARNING ARE ON. DISCONNECTED BATTERY GROUND TERMINAL. REMOVED RIGHT A-PILLAR TRIM, CENTRE DASHBOARD VENTS WITH TRIM, TRIM AROUND INSTRUMENT CLUSTER, HEAD UNIT, CLIMATE CONTROL UNIT, TOP CENTRE TRIM WITH SUN SENSOR, AND GLOVE COMPARTMENT. LOOSENED DASHBOARD FASTENERS. REMOVED PASSENGER AIRBAG. SCANNED AIRBAG CODES. INSTALLED NEW AIRBAG. TIGHTENED DASHBOARD FASTENERS. REINSTALLED ALL PARTS IN REVERSE ORDER. RECONNECTED BATTERY GROUND. STARTED THE VEHICLE. CONFIRMED NO SRS LIGHT OR WARNINGS. &nbsp; &nbsp; &nbsp; &nbsp;
+							<br>PARTS SCAN ID: <s1 id="2020100007scan"></s1></s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2019080012B')">
+						253, 213, 238, 205 STEERING GEAR BOLT RECALL 0.6H</button><br>
+						<s1 id="2019080012B";>AS PER MB RECALL CAMPAIGN 2019080012 , BOLTS ON STEERING GEAR MUST BE REPLACED. LIFTED THE VEHICLE. REMOVED LOWER ENGINE COVER. REMOVED AND REPLACED STEERING GEAR BOLTS INDIVIDUALLY AND ONE AFTER THE OTHER - TORQUING EACH BOLTS TO 5NM AND 90 DEGREES. APPLIED GENEROUS COAT OF WAX AS INDICATED IN THE DOCUMENT WORK PROCEDURE. REINSTALLED ENGINE LOWER COVER.</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2019080012A')">
+						X204, 212, 217, 218, 222 STEERING GEAR BOLT RECALL 1.0H</button><br>
+						<s1 id="2019080012A";>AS PER MB RECALL CAMPAIGN 2019080012 , BOLTS ON STEERING GEAR MUST BE REPLACED. LIFTED THE VEHICLE. REMOVED LOWER ENGINE COVER. REMOVED MOUNTING PLATE FOR STEERING GEAR. SLIGHTLY LOWERED STEERING GEAR ON TO A TRANSMISSION JACK. REMOVED AND REPLACED STEERING GEAR BOLTS INDIVIDUALLY AND ONE AFTER THE OTHER - TORQUING EACH BOLTS TO 5NM AND 90 DEGREES. APPLIED GENEROUS COAT OF WAX AS INDICATED IN THE DOCUMENT WORK PROCEDURE. ASSEMBLED IN REVERSE ORDER. PERFORMED FRONT TOE ALIGNMENT CORRECTION. CONNECTED SCANNER AND BATTERY CHARGER, PERFORMED RESET OF LEARNED VALUES FOR ELECTRIC POWER STEERING. TEST DROVE THE VEHICLE. VERIFIED STEERING WHEEL IS STRAIGHT WHEN THE VEHICLE IS DRIVING STRAIGHT.</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2019080012')">
+						166, 292 STEERING GEAR BOLT RECALL 2.2H</button><br>
+						<s1 id="2019080012";>
+							AS PER MB RECALL CAMPAIGN 2019080012 , BOLTS ON STEERING GEAR MUST BE REPLACED. LIFTED THE VEHICLE. REMOVED LOWER ENGINE COVER. REMOVED BOLTS CONNECTING FRONT DIFFERENTIAL TO AXLE CARRIER. REMOVED STEERING RETAINING PLATES. DISCONNECTED RIGHT-SIDE TIE ROD AT THE STEERING KNUCKLE. REMOVED AND REPLACED STEERING GEAR BOLTS INDIVIDUALLY AND ONE AFTER THE OTHER - TORQUING EACH BOLTS TO 5NM AND 90 DEGREES. APPLIED GENEROUS COAT OF WAX AS INDICATED IN THE DOCUMENT WORK PROCEDURE. ASSEMBLED IN REVERSE ORDER. PERFORMED FRONT TOE ALIGNMENT CORRECTION. CONNECTED SCANNER AND BATTERY CHARGER, PERFORMED RESET OF LEARNED VALUES FOR ELECTRIC POWER STEERING. TEST DROVE THE VEHICLE. VERIFIED STEERING WHEEL IS STRAIGHT WHEN THE VEHICLE IS DRIVING STRAIGHT.
+						</s1>
+						<s1>
+						<br>-
+						<br>0.1 UNSCREWED ACTIVE CURVE SYSTEM (CODE 468) HYDRAULIC BLOCK
+						<br>0.9 PERFORM FRONT TOE ALIGNMENT</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2019070002')">
+						166, 292 STEERING GEAR BOLT RECALL 2.2H
+						</button><br>
+						<s1 id="2019070002";>
+						AS PER MB RECALL CAMPAIGN 2019070002 , BOLTS ON STEERING GEAR MUST BE REPLACED. LIFTED THE VEHICLE. REMOVED LOWER ENGINE COVER. REMOVED BOLTS CONNECTING FRONT DIFFERENTIAL TO AXLE CARRIER. REMOVED STEERING RETAINING PLATES. DISCONNECTED RIGHT-SIDE TIE ROD AT THE STEERING KNUCKLE. REMOVED AND REPLACED STEERING GEAR BOLTS INDIVIDUALLY AND ONE AFTER THE OTHER - TORQUING EACH BOLTS TO 5NM AND 90 DEGREES. APPLIED GENEROUS COAT OF WAX AS INDICATED IN THE  DOCUMENT WORK PROCEDURE. ASSEMBLED IN REVERSE ORDER. PERFORMED FRONT TOE ALIGNMENT CORRECTION. CONNECTED SCANNER AND BATTERY CHARGER, PERFORMED RESET OF LEARNED VALUES FOR ELECTRIC POWER STEERING. TEST DROVE THE VEHICLE. VERIFIED STEERING WHEEL IS STRAIGHT WHEN THE VEHICLE IS DRIVING STRAIGHT.
+						</s1>
+						<s1>
+						<br>-
+						<br>0.1 UNSCREWED ACTIVE CURVE SYSTEM (CODE 468) HYDRAULIC BLOCK
+						<br>0.9 PERFORM FRONT TOE ALIGNMENT</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2019030013')">
+						205, 253 UPDATE POWERTRAIN CONTROL UNIT SOFTWARE 0.3H</button><br>
+						<form oninput=recallNumberSelect(recallNumber,"20190300132022030005")>
+							<input type="radio" checked value="2019030013" id="2019030013Form" name="recallNumber">
+							<label class="s1" for="2019030013Form">2019030013&nbsp;</label>
+							<input type="radio" value="2022030005" id="2022030005Form" name="recallNumber">
+							<label class="s1" for="2022030005Form">2022030005&nbsp;</label>
+						</form>
+						<s1 id="2019030013";>AS PER MB RECALL CAMPAIGN <s1 id="20190300132022030005">2019030013</s1> , POWERTRAIN CONTROL UNIT SOFTWARE MUST BE UPDATED. CONNECTED SCANNER AND BATTERY CHARGER. PERFORMED SOFTWARE UPDATE OF POWERTRAIN CONTROL UNIT (PTCU). DISCONNECTED SCANNER AND CHARGER.</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2019040004')">
+						204 ME SOFTWARE UPDATE RECALL 0.3H</button><br>
+						<s1 id="2019040004";>AS PER MB RECALL CAMPAIGN 2019040004 , ENGINE ELECTRONICS CONTROL UNIT SOFTWARE MUST BE UPDATED. CONNECTED XENTRY DIAGNOSIS AND BATTERY CHARGER. PERFORMED SOFTWARE UPDATE OF ENGINE ELECTRONICS (ME). DISCONNECTED XENTRY AND CHARGER. TEST DROVE THE VEHICLE.</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2019090012')">
+						166 REWORK ECU CONNECTORS RECALL 0.1H</button><br>
+						<s1 id="2019090012";>AS PER MB RECALL CAMPAIGN 2019090012 , THE ELECTRICAL CONNECTOR OF THE ENGINE CONTROL UNIT MUST BE REWORKED. REMOVED UPPER ENGINE COVER AND REWORKED CONNECTORS.</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2020050010')">
+						PANORAMIC ROOF BONDING AGENT RECALL 0.1H</button><br>
+						<form oninput=recallNumberSelect(a,"2020050010a")>
+							<label class="s1" for="a">Date: </label>
+							<input type="text" id="a" name="a" placeholder="dd-mm-yyyy" size="10">
+						</form>
+						<s1 id="2020050010";>AS PER MB RECALL CAMPAIGN 2020050010 , THE BONDING AGENT BETWEEN THE GLASS PANEL AND THE SLIDING ROOF FRAME OF THE PANORAMIC ROOF MUST BE TESTED IF THE SUNROOF PRODUCTION DATE IS BETWEEN 16-01-2006 AND 09-07-2006. MOVED THE SUNROOF TO TILT POSITION AND CHECKED THE PRODUCTION DATE. PRODUCTION DATE IS <s1 id="2020050010a">dd-mm-yyyy</s1> , THEREFORE NO FURTHER TESTS REQUIRED.</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2020030007')">
+						177 A-CLASS REARVIEW CAMERA RESPONSE TIME RECALL 0.3H</button><br>
+						<s1 id="2020030007";>
+							AS PER MB RECALL CAMPAIGN 2020030007 , MBUX MULTIMEDIA SYSTEM (HEAD UNIT) CONTROL UNIT SOFTWARE MUST BE UPDATED. CONNECTED XENTRY DIAGNOSIS AND BATTERY CHARGER. PERFORMED SOFTWARE UPDATE OF MBUX. DISCONNECTED XENTRY AND CHARGER.&nbsp;</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2020070009')">
+						177 A-CLASS A/C DRAIN HOSE 0.1H</button><br>
+						<s1 id="2020070009";>AS PER MB RECALL CAMPAIGN 2020070009 , INSTALLATION OF AIR CONDITION DRAIN HOSE HAS TO BE CHECKED. LIFTED FLOOR COVERING AT RIGHT FRONT CENTRE CONSOLE AND CHECKED CONDENSATION DRAIN HOSE OF A/C. FOUND DRAIN HOSE IS CORRECTLY INSTALLED; NO FURTHER STEPS REQUIRED.</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2021040013')">
+						AC DRAIN HOSE 0.1H</button><br>
+						<s1 id="2021040013";>PER MB RECALL CAMPAIGN 2021040013 , THE AIR CONDITIONING DRAIN HOSES MIGHT BE INCORRECTLY FITTED IN THE VEHICLE. REMOVED PASSENGER LOWER DASH COVER. SLIGHTLY LOWERED DRIVER’S LOWER DASH COVER. PULLED FLOOR COVERING IN DRIVER AND PASSENGER FOOTWELL. CHECKED CONDENSATION DRAIN HOSES. CONDENSATION DRAIN HOSES ARE INSTALLED CORRECTLY.  FOUND NO VISIBLE OR NOTICEABLE TRACE OF WATER. REASSEMBLED IN REVERSE ORDER.</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2020110007')">
+						205, 253 ISOLATION OF POWER STEERING WIRE HARNESS 0.6H</button><br>
+						<s1 id="2020110007";>AS PER MB RECALL CAMPAIGN 2020110007 , WIRES AND CONNECTORS FOR ELECTRIC STEERING MUST BE CHECKED FOR MOISTURE OR DAMAGE. LIFTED THE VEHICLE AND REMOVED LOWER ENGINE COVER. RELEASED AND REMOVED BOTH CONNECTORS AT STEERING CONTROL UNIT. CHECKED CONNECTORS FOR MOISTURE/DAMAGE. FOUND NO MOISTURE/DAMAGE. EXPOSED WIRING HARNESS UP TO 300MM FROM CONNECTOR. CHECKED WIRES FOR CUTS IN INSULATION. FOUND NO CUTS IN INSULATION. NO FURTHER STEPS REQUIRED. REINSTALLED PARTS IN REVERSE ORDER.
+						</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2018060002A')">
+						204 VALEO, CHECK STEERING COLUMN AND REWORK IF NECESSARY 0.5H
+						</button><br>
+						<s1 id="2018060002A";>
+							AS PER MB RECALL CAMPAIGN 2018060002 , THE ELECTRIC STEERING COLUMN MUST BE CHECKED AND REWORKED IF NECESSARY. CONFIRMED NO SRS FAULT MESSAGE PRESENT. DISCONNECTED GROUND LINE OF BATTERY. REMOVED DRIVER'S AIRBAG AND STEERING WHEEL. CHECKED THE VERSION OF INSTALLED STEERING COLUMN MODULE. FOUND THAT IT IS FROM VALEO. FOLLOWED WORK PROCEDURE: REMOVED COVER ON THE STEERING COLUMN MODULE. INSTALLED PROTECTIVE RING ON STEERING COLUMN MODULE AND REINSTALLED COVER. REMOVED STEERING COLUMN SWITCH MODULE FROM STEERING COLUMN. INSTALLED CONTRACT BRIDGE. INSTALLED NEW GROUND LINE. REASSEMBLED IN REVERSE ORDER.  TURNED KEY INTO POSITION ONE AND CONFIRMED AIRBAG INDICATOR LAMP GOES OUT PERMANENTLY AFTER A FEW SECONDS. TURNED STEERING WHEEL LEFT AND RIGHT AND CONFIRMED NO ABNORMAL GRINDING NOISES AUDIBLE.
+						</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2018030001')">
+						246, 117, 205 VALEO, CHECK STEERING COLUMN AND REWORK IF NECESSARY 0.4H
+						</button><br>
+						<form oninput=recallNumberSelect(recallNumber,"20180300012017110007")>
+							<input type="radio" checked value="2018030001" id="2018030001Form" name="recallNumber">
+							<label class="s1" for="2018030001Form">2018030001&nbsp;</label>
+							<input type="radio" value="2017110007" id="2017110007Form" name="recallNumber">
+							<label class="s1" for="2017110007Form">2017110007&nbsp;</label>
+							<input type="radio" value="2017120012" id="2017120012Form" name="recallNumber">
+							<label class="s1" for="2017120012Form">2017120012&nbsp;</label>
+						</form>
+						<s1 id="2018030001";>
+						AS PER MB RECALL CAMPAIGN <s1 id="20180300012017110007">2018030001</s1> , THE ELECTRIC STEERING COLUMN MUST BE CHECKED AND REWORKED IF NECESSARY. CONFIRMED NO SRS FAULT MESSAGE PRESENT. DISCONNECTED GROUND LINE OF BATTERY. REMOVED DRIVER'S AIRBAG AND STEERING WHEEL. CHECKED THE VERSION OF INSTALLED STEERING COLUMN MODULE. FOUND THAT IT IS FROM VALEO. FOLLOWED WORK PROCEDURE: REMOVED COVER ON THE STEERING COLUMN MODULE. INSTALLED PROTECTIVE RING ON STEERING COLUMN MODULE AND REINSTALLED COVER. REMOVED STEERING COLUMN SWITCH MODULE FROM STEERING COLUMN. INSTALLED CONTRACT BRIDGE. REASSEMBLED IN REVERSE ORDER. TURNED KEY INTO POSITION ONE AND CONFIRMED AIRBAG INDICATOR LAMP GOES OUT PERMANENTLY AFTER A FEW SECONDS. TURNED STEERING WHEEL LEFT AND RIGHT AND CONFIRMED NO ABNORMAL GRINDING NOISES AUDIBLE.
+						</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2018030001A')">
+						246, 117, 205 KOSTAL, CHECK STEERING COLUMN AND REWORK IF NECESSARY 0.3H
+						</button><br>
+						<form oninput=recallNumberSelect(recallNumber,"20180300012017110007a")>
+							<input type="radio" checked value="2018030001" id="2018030001Forma" name="recallNumber">
+							<label class="s1" for="2018030001Forma">2018030001&nbsp;</label>
+							<input type="radio" value="2017110007" id="2017110007Forma" name="recallNumber">
+							<label class="s1" for="2017110007Forma">2017110007&nbsp;</label>
+							<input type="radio" value="2018060002" id="2018060002Forma" name="recallNumber">
+							<label class="s1" for="2018060002Forma">2018060002&nbsp;</label>
+							<input type="radio" value="2017120012" id="2017120012Forma" name="recallNumber">
+							<label class="s1" for="2017120012Forma">2017120012&nbsp;</label>
+						</form>
+						<s1 id="2018030001A";>
+						AS PER MB RECALL CAMPAIGN <s1 id="20180300012017110007a">2018030001</s1> , THE ELECTRIC STEERING COLUMN MUST BE CHECKED AND REWORKED IF NECESSARY. CONFIRMED NO SRS FAULT MESSAGE PRESENT. DISCONNECTED GROUND LINE OF BATTERY. REMOVED DRIVER'S AIRBAG AND STEERING WHEEL. CHECKED THE VERSION OF INSTALLED STEERING COLUMN MODULE. FOUND THAT IT IS THE KOSTAL STEERING COLUMN. NO FURTHER WORK REQUIRED. REINSTALLED PARTS IN REVERSE ORDER. CONFIRMED NO SRS WARNING PRESENT.
+						</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2018100006')">
+						203, 164, 251, 212, 171 DRIVER'S AIRBAG RECALL 0.3H
+						</button><br>
+						<s1 id="2018100006";>
+							AS PER MB RECALL CAMPAIGN 2018100006 , DRIVER'S STEERING WHEEL AIRBAG MUST BE REPLACED. CONFIRMED NO SRS LIGHT OR WARNING ARE ON. DISCONNECTED BATTERY GROUND TERMINAL. REMOVED AIRBAG FROM STEERING WHEEL. SCANNED VIN AND AIRBAG CODES. INSTALLED NEW AIRBAG. RECONNECTED BATTERY GROUND. STARTED THE VEHICLE. CONFIRMED NO SRS LIGHT OR WARNINGS.
+							<br>PARTS SCAN ID: ****
+						</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2020090004')">
+						205 CHARCOAL CANISTER MISBUILD 0.3H</button><br>
+						<form oninput=recallNumberSelect(a,"2020090004Form")>
+							<label class="s1" for="a">Part Number: </label>
+							<input type="text" id="a" name="a" placeholder="A 205 470 4000">
+						</form>
+						<s1 id="2020090004";>
+							AS PER MB RECALL CAMPAIGN 2020090004 , ACTIVATED CHARCOAL CANISTERS WITH THE PART NUMBER <b>(A 205 470 04 59)</b> MUST BE REPLACED. CHECKED CHARCOAL CANISTER PART NUMBER. PART NUMBER IS (<s1 id="2020090004Form">A 205 470 4000</s1>). NO FURTHER WORK NEEDED.
+						</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2020110014')">
+						213 SRS CONTROL UNIT UPDATE 0.3H</button><br>
+						<s1 id="2020110014";>
+							AS PER MB RECALL CAMPAIGN 2020110014 , SUPPLEMENTAL RESTRAINT SYSTEM (SRS) CONTROL UNIT SOFTWARE MUST BE UPDATED. CONNECTED XENTRY DIAGNOSIS AND BATTERY CHARGER. PERFORMED CONTROL UNIT <b>SOFTWARE UPDATE OF N2/10 SRS UNDER "ACTION 5498916".</b>
+						</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2020080003')">
+						VGS TRANSMISSION SOFTWARE UPDATE 0.3H
+						</button><br>
+						<s1 id="2020080003";>
+						AS PER MB RECALL CAMPAIGN 2020080003, TRANSMISSION CONTROL UNIT SOFTWARE MUST BE UPDATED. CONNECTED XENTRY DIAGNOSIS AND BATTERY CHARGER. PERFORMED SOFTWARE UPDATE OF TRANSMISSION CONTROL UNIT (VGS). DISCONNECTED XENTRY DIAGNOSIS.
+						</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2020080003')">
+						DKG TRANSMISSION SOFTWARE UPDATE 0.3H
+						</button><br>
+						<s1 id="2022050008";>
+						AS PER MB RECALL CAMPAIGN 2022050008, TRANSMISSION CONTROL UNIT SOFTWARE MUST BE UPDATED. CONNECTED XENTRY DIAGNOSIS AND BATTERY CHARGER. PERFORMED SOFTWARE UPDATE OF TRANSMISSION CONTROL UNIT (DKG). DISCONNECTED XENTRY DIAGNOSIS.
+						</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2020030004')">
+						213, 205, 253 SEATBELT DETECTION 0.2H
+						</button><br>
+						<s1 id="2020030004";>
+						AS PER MB RECALL CAMPAIGN 2020030004 , FUNCTION OF FRONT LEFT AND RIGHT SEATBELT BUCKLES MUST BE TESTED. TESTED FUNCTION OF DRIVER'S SEATBELT BUCKLE USING THE CORRECT TESTING TONGUE. CONFIRMED SEATBELT INDICATOR ON THE CLUSTER GOES OUT WHEN THE TESTING TONGUE IS INSERTED. TESTED FUNCTION OF PASSENGER'S SEATBELT BUCKLE USING THE CORRECT TESTING TONGUE. CONFIRMED SEATBELT INDICATOR ON THE CLUSTER GOES OUT WHEN THE TESTING TONGUE IS INSERTED. NO FURTHER WORK NEEDED.</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('buckle1')">
+						SECOND ROW SEATBELT DOUBLE BUCKLE 0.2H</button><br>
+						<s1 id="buckle1";>
+							AS PER MB RECALL CAMPAIGN 2020110003 , CENTRE AND RIGHT SECOND ROW SEATBELT BUCKLES MUST BE TIED TOGETHER TO PREVENT THE CENTRE BUCKLE FROM BEING PUSHED INTO THE GAP BETWEEN THE VEHICLE BODY AND SEAT CUSHION. INSTALLED CABLE TIE PER WORK INSTRUCTION.
+						</s1>
+						<s1><br>PART: A 006 997 11 90 </s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2021010004')">
+						253 STARTER HARNESS</button><br>
+						<form oninput="form2021010004()">
+							<input type="radio" id="2021010004a" name="2021010004" checked>
+							<label class="s1" for="2021010004a">Check 0.5H&nbsp;</label>
+							<input type="radio" id="2021010004b" name="2021010004">
+							<label class="s1" for="2021010004b">Modify 0.6H&nbsp;</label>
+							<input type="radio" id="2021010004c" name="2021010004">
+							<label class="s1" for="2021010004c">Replace 0.6H&nbsp;</label>
+						</form>
+						<s1 id="2021010004";>
+							<s1 id="2021010004result">AS PER MB RECALL CAMPAIGN 2021010004 , THE POWER SUPPLY HARNESS OF THE STARTER MOTOR MUST BE CHECKED FOR DAMAGES AND PROPER CLEARANCE WITH THE STARTER SOLENOID. LIFTED THE VEHICLE AND REMOVED LOWER ENGINE COVER. CHECKED STARTER WIRING HARNESS AT STARTER. STARTER WIRING HARNESS IS NOT IN CONTACT WITH THE STARTER. NO FURTHER WORK NEEDED.</s1>
+						</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2021020005A')">
+						REAR VIEW CAMERA FUNCTION 0.2H</button><br>
+						<s1 id="2021020005A";>
+							AS PER MB RECALL CAMPAIGN 2021020005 , THE VARIANT CODING OF THE HEAD UNIT MIGHT NOT MEET SPECIFICATIONS. CONNECTED XENTRY SCAN TOOL AND BATTERY CHARGER. PERFORMED UPDATE OF <b>SCN CODING OF COMAND CONTROL UNIT (HEAD UNIT).</b>
+						</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2021030004')">
+						ESP SOFTWARE UPDATE 0.3H</button><br>
+						<s1 id="2021030004";>
+							AS PER MB RECALL CAMPAIGN 2021030004 , THE ELECTRONIC STABILITY PROGRAM (ESP) SOFTWARE MIGHT NOT MEET SPECIFICATIONS. CONNECTED XENTRY SCAN TOOL AND BATTERY CHARGER. PERFORMED <b>SOFTWARE UPDATE OF ESP CONTROL UNIT (N30/4).</b>
+						</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2021020001')">
+						SRS SOFTWARE UPDATE 0.3H</button><br>
+						<s1 id="2021020001";>
+							AS PER MB RECALL CAMPAIGN 2021020001 , THE SOFTWARE OF SUPPLEMENTAL RESTRAINT SYSTEM (SRS) MAY NOT CORRESPOND TO THE CURRENT SERIES PRODUCTION CONFIGURATION. CONNECTED XENTRY SCAN TOOL AND BATTERY CHARGER. UPDATED THE <b>SOFTWARE OF SRS CONTROL UNIT (N2/10) UNDER CONFIGURATION - MANUAL SETTINGS - ACTION 1380 2020 0296.</b>
+						</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2022060015')">
+						MTAS SOFTWARE UPDATE 0.3H</button><br>
+						<s1 id="2022060015";>
+							AS PER MBC CAMPAIGN 2021020001 , THE MOBILE PHONE CRADLE (MTAS) CONTROL UNIT SOFTWARE DOES NOT CORRESPOND TO THE CURRENT SERIES PRODUCTION CONFIGURATION AND MUST BE UPDATED. CONNECTED XENTRY SCAN TOOL AND BATTERY CHARGER. PERFORMED <b>SOFTWARE UPDATE OF MTAS CONTROL UNIT.</b>
+						</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2021020006')">
+						CABRIOLET SEAT BELT POSITION 0.1H, 1.3H, 2.2H</button><br>
+						<form oninput="function2021020006()">
+							<input type="checkbox" id="2021020006left" name="2021020006left">
+							<label class="s1" for="2021020006left">Left</label>
+							<input type="checkbox" id="2021020006right" name="2021020006right">
+							<label class="s1" for="2021020006right">Right</label>
+						</form>
+						<s1 id="2021020006";>
+							AS PER MB RECALL CAMPAIGN 2021020006 , ON CERTAIN C-CLASS CABRIOLET WITH PRE-SAFE, THE SEAT BELT MIGHT NOT RETRACT COMPLETELY TO ITS STORAGE POSITION. CHECKED FRONT LEFT AND RIGHT SEAT BELTS. FOUND BOTH SEAT BELT STRAPS RETRACT INTO THEIR FINAL POSITION AUTOMATICALLY. NO FURTHER WORK NEEDED.
+						</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2020120005')">
+						TOWING EYE MISSING RECALL GLB 0.1H
+						</button><br>
+						<form oninput="function2020120005()">
+							<input type="radio" id="2020120005P" name="2020120005">
+							<label class="s1" for="2020120005P">Present</label>
+							<input type="radio" id="2020120005M" name="2020120005">
+							<label class="s1" for="2020120005M">Missing</label>
+						</form>
+						<s1 id="2020120005";>
+							AS PER MB RECALL CAMPAIGN 2020120005 , TOWING EYE MAY BE MISSING IN THE STOWAGE BOX.
+						</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2020060019')">
+						STOP PLUGS ON TIMING CASE S-CLASS 0.5H
+						</button><br>
+						<s1 id="2020060019";>
+							AS PER MB RECALL CAMPAIGN 2020060019 , THE PLUG USED TO CLOSE OIL PORTS ON THE ENGINE COULD FAIL AND CAUSE AN OIL LEAK. LIFTED THE VEHICLE AND REMOVED TWO FRONT LOWER ENGINE COMPARTMENT LINING. CLEANED STOP PLUGS. INSTALLED NEW ADDITIONAL STOP PLUGS WITH O-RINGS INTO STOP PLUGS. INSTALLED ADDITIONAL RETAINING PLATE AND TIGHTENED TO 10NM. RE-ASSEMBLED IN REVERSE ORDER.
+						</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2021030020')">
+						INERTISATION SYSTEM LINE 0.1H
+						</button><br>
+						<s1 id="2021030020";>
+							AS PER MB RECALL CAMPAIGN 2021030020 , THE INERTISATION SYSTEM GAS LINES MIGHT NOT MEET SPECIFICATIONS. OPENED HOOD AND REMOVED RIGHT-SIDE ENGINE BAY COVER. INSPECTED SPRING CLIPS AS DETAILED IN THE DOCUMENT. FOUND ALL CLIPS ARE INSTALLED CORRECTLY.
+						</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2021050008')">
+						GLB TAILGATE SIDE SPOILERS 0.1H
+					</button><br>
+					<s1 id="2021050008";>
+						AS PER MB RECALL CAMPAIGN 2021050008 , SIDE SPOILERS AT TAILGATE MIGHT NOT HAVE BEEN MOUNTED ACCORDING TO SPEC. OPENED TAILGATE AND INSPECTED BOTH SIDE SPOILERS AS DETAILED IN THE DOCUMENT. FOUND NO FAULTS.
+					</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2021040008')">
+					SEAT POSITION SWITCH 0.7H
+					</button><br>
+					<s1 id="2021040008";>
+					AS PER MB RECALL CAMPAIGN 2021040008 , THE ELECTRICAL CONTACTING INSIDE THE SEAT POSITION SWITCH FOR THE FRONT SEATS MIGHT NOT MEET SPECIFICATIONS AND MUST BE REPLACED. UNFASTENED FRONT LEFT AND RIGHT SEATS. REMOVED SEAT HALL SENSORS. INSTALLED NEW SENSORS AND TORQUED TO SPEC (3.5NM). ASSEMBLED IN REVERSE ORDER.
+					</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2021050004')">
+					INSPECT 167 IGNITION COILS 0.9H
+					</button><br>
+					<s1 id="2021050004";>
+					AS PER MB RECALL CAMPAIGN 2021050004 , THE IGNITION COILS OR THEIR INSTALLATION ON THE M256 ENGINE MIGHT NOT MEET SPECIFICATIONS. REMOVED UPPER ENGINE COVER AND NOISE ISOLATION FOAM. REMOVED AND INSPECTED ALL IGNITION COILS.<b> CONFIRMED ALL IGNITION COILS HAVE THE "Q2" MARKER.</b> INSPECTED NOISE INSULATION, ELECTRICAL CONNECTORS, THREADED CONNECTION OF IGNITION COILS AT CYLINDER HEAD COVER. FOUND NO DAMAGE. ASSEMBLED IN REVERSE ORDER.
+
+					</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2021060014')">
+					463 REAR DOOR LOCK FUNCTION 1.5H
+					</button><br>
+					<s1 id="2021060014";>
+						AS PER MB RECALL CAMPAIGN 2021060014 , ON CERTAIN 463 CHASSIS, THE REAR DOORS MIGHT NOT OPEN, CLOSE, OR LOCK AS SPECIFIED. REMOVED REAR LEFT AND RIGHT DOOR LINING, FOAM SHEETING, AND DOOR LOCKS. INSTALLED COMPLETE DOOR LOCK UNIT IN REAR LEFT AND RIGHT DOORS. ASSEMBLED REAR DOORS IN REVERSE ORDER. PERFORMED FUNCTION TEST OF LOCKS. CONFIRMED REAR LEFT AND RIGHT LOCKS ARE WORKING NORMALLY.
+					</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2021070002')">
+					253 M276 IGNITION COIL ISOLATION 1.1H
+					</button><br>
+					<s1 id="2021070002";>
+					AS PER MB RECALL CAMPAIGN 2021070002 , IGNITION COILS ON CERTAIN ENGINES MIGHT NOT MEET SPECIFICATIONS AND MUST BE REPLACED. REMOVED UPPER ENGINE COVER. REMOVED LEFT AND RIGHT DUCTS AND FILTER BOXES. REMOVED ALL IGNITION COILS. APPLIED SPARK PLUG CONNECTOR GREASE. INSTALLED NEW IGNITION COILS AND TORQUED TO 9NM. ASSEMBLED IN REVERSE ORDER. TEST DROVE THE VEHICLE.
+					</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2021030006')">
+					CONTINENTAL TIRE 0.1H
+					</button><br>
+					<s1 id="2021030006";>
+					AS PER MB RECALL CAMPAIGN 2021030006 , A TIRE RECALLED BY THE MANUFACTURER CONTINENTAL COULD HAVE BEEN INSTALLED. INSPECTED TIRE MANUFACTURER AND SIZE, DOT INFORMATION, PRODUCTION DATE, AND MOLD NUMBERS OF ALL FOUR TIRES. FOUND TIRE DOT IDENTIFICATIONS, PRODUCTION DATES, AND MOLD NUMBERS DO NOT MATCH THE RECALL.
+					</s1>
+					<s2>
+					<b><br>CONTINENTAL CROSSCONTACT LX SPORT 265/45 R20 108H MO</b>
+					<br>DOT NUMBER: <b>A3XK NXX4</b>
+					<br>PRODUCTION DATE: <b>1318</b>
+					<br>MOLD NUMBER: <b>408692</b>
+					</s2>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2020020002')">
+					TIREFIT INFORMATION LABEL 0.1H
+					</button><br>
+					<s1 id="2020020002";>
+					AS PER MB RECALL CAMPAIGN 2020020002 , TIREFIT BOTTLE MAY NOT COMPLY WITH THE LOCAL IDENTIFICATIONS GUIDELINES. REMOVED TIREFIT BOTTLE AND ATTACHED ADDITIONAL INFORMATION STICKER.
+					</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2022030016')">
+						HERMES CONTROL UNIT RETROFIT
+						</button><br>
+						<form oninput="function2022030016()">
+							<input type="radio" id="2022030016A" name="2022030016">
+							<label class="s1" for="2022030016A">118, 177, 247, 257 0.9H</label>
+							<input type="radio" id="2022030016GLC" name="2022030016">
+							<label class="s1" for="2022030016GLC">253 1.1H</label>
+							<input type="radio" id="2022030016E" name="2022030016">
+							<label class="s1" for="2022030016E">213 1.0H</label>
+						</form>
+						<s1 id="2022030016";>
+							RETROFIT STORY FOR 2022030016. CONNECTED XENTRY DIAGNOSIS AND A BATTERY CHARGER. PERFORMED RETROFIT PROGRAMMING OF NEW CONTROL UNIT UNDER TEACH-IN. DISCONNECTED BATTERY CHARGER AND XENTRY. REMOVED MASKING STICKER FROM SOS BUTTON. PERFORMED FUNCTION TEST. CONFIRMED SOS-NOT-READY GOES OUT AUTOMATICALLY.
+						</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2022010002')">
+						AUGMENTED REALITY CAMERA RETROFIT 0.8H</button><br>
+						<s1 id="2022010002";>
+							PER MBC CAMPAIGN 2022010002, THE AUGMENTED REALITY CAMERA MAY NOT BE PRESENT. REMOVED FRONT WINDSHIELD SENSORS COVER. INSTALLED AUGMENTED CAMERA (KAR) AND ASSEMBLED IN REVERSE ORDER. CONNECTED XENTRY AND BATTERY CHARGER. PERFORMED INITIALIZATION OF KAR CONTROL UNIT UNDER TEACH-IN AND RETROFIT. PERFORMED CALIBRATION OF THE CAMERA.
+						</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2022040008')">
+						STEERING WHEEL HAND DETECTION 0.3H</button><br>
+						<s1 id="2022040008";>
+							AS PER MB RECALL CAMPAIGN 2022040008, HANDS-OFF DETECTION MIGHT NOT READ CORRECTLY WHEN USING THE DISTRONIC ASSISTANCE SYSTEM. CODING OF THE HAND DETECTION SYSTEM (HE) WILL HAVE TO BE UPDATED. CONNECTED XENTRY DIAGNOSIS AND BATTERY CHARGER. PERFORMED UPDATE OF <b>SCN CODING OF N179-HE</b>. DISCONNECTED BATTERY CHARGER AND XENTRY DIAGNOSIS.
+						</s1>
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="CopyToClipboard('2022040012')">
+						48V GROUND CONNECTION 1.3H</button><br>
+						<s1 id="2022040012";>
+							AS PER MB RECALL CAMPAIGN 2022040012, THE BOLTING OF THE 48V GROUND CONNECTION UNDER THE PASSENGER SEAT MIGHT BE FASTENED WITH AN INSUFFICIENT TORQUE. UNBOLTED FRONT RIGHT SEAT. REMOVED FRONT AND REAR RIGHT LOWER TRIM AT ENTRANCE. REOVED LOWER PART OF RIGHT B-PILLAR TRIM. DISCONNECTED 12V BATTERY GROUND. MOVED THE FLOOR COVERING AND INSPECTED GROUND CONNECTRION W106/1. FOUND NO DIGNS OF DIRT/HEAT. TORQUED GROUND NUT TO 16NM. ASSEMBLED IN REVERSE ORDER. CONNECTED XENTRY SCANNER AND CLEARED FAULT MEMORY.
+						</s1>
+
+					<span class="a"></span>
+
+					<span class="a"></span>
+
+
+
+
+
+
+					<s3>MISCELLANEOUS</s3><!-- MISCELLANEOUS ***************************** -->
+
+
+
+
+
+
+
+					<span class="a"></span>
+
+					<button class="button"; onclick="copypasteRO('COPYPASTE')">
+					COPY-PASTE STORY
+					</button><br>
+					<label class="s1" for="copypasteROn">DIAG RO:</label>
+					<input type="text" id="copypasteROn" name="copypasteROn" size="10" maxlength="6">
+					<br>
+					<textarea id="copypasteROStory" name="copypasteROStory" rows="30" cols="110"></textarea>
+					<br>
+					<s1 id="COPYPASTE";>
+					</s1>
+
+					<span class="a"></span>
+
+
+			</div> <!-- All STORIES -->
+					<!---Test/Temp area start---------->
+
+
+
+					<!--
+					<s1 id="test1">Test1</s1>
+					<form oninput=recallNumberSelect(a,"test1")>
+						<input type="radio" value="1" id="test1In" name="a">
+						<label class="s1" for="test1In">Recall 1;</label>
+					</form>
+					<s1 id="test2">Test2</s1>
+					<form oninput=recallNumberSelect(a,"test2")>
+						<select id="a">
+							<option value="test1">test1</option>
+							<option value="test2">test2</option>
+						</select>
+					</form>
+
+
+
+
+		<button class="button"; onclick="CopyToClipboard('M270ENGINE')">
+			M270 ENGINE</button><br>
+			<form oninput="functionM270ENGINE()">
+				<input type="radio" id="M270ENGINESpark" name="M270ENGINE">
+				<label class="s1" for="M270ENGINESpark">Spark Plugs&emsp;</label>
+				<input type="radio" id="M270ENGINETransmissionService" name="M270ENGINE">
+				<label class="s1" for="M270ENGINETransmissionService">Transmission Service&emsp;</label>
+				<input type="radio" id="M270ENGINEAirFilter" name="M270ENGINE">
+				<label class="s1" for="M270ENGINEAirFilter">Air Filters&emsp;</label>
+				<input type="radio" id="M270ENGINERemove" name="M270ENGINE">
+				<label class="s1" for="M270ENGINERemove">Engine Removal/Installation&emsp;</label>
+			</form>
+			<s1 id="M270ENGINE";></s1>
+-->
+
+
+					<!---Test area end---------->
+
+
+
+
+
+
+			<span class="b"></span>
+			<s2>&#169; Jude Payumo &emsp;&emsp; Updated: 21 Aug 2022, Test Area (Backup)</s2> <!-- UDATE DATE *******-->
+			<span class="b"></span>
+
+			</div><!-- Story container-->
+		</div>
+	</div>
+</body>
+</html>
+
+
+<!--TEMPLATE-
+
+			<button class="button"; onclick="CopyToClipboard('replaceThisWithID')">
+			TITLE HERE
+			</button><br>
+			<s1 id="replaceThisWithID";>
+			STORY HERE
+			</s1>
+
+			<span class="a"></span>
+-->
