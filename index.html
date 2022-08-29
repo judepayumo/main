@@ -1,7 +1,17 @@
 <!doctype html>
 <html>
+<!-- TO DO:
+			Fade converter div when not in hover
+			Add jump to Service or Recall buttons
+			Add scroll to top button
+			Add in-lb to torque conversion
+			Add cross camber/toe to alignment function
+			Add countdown timer
+			Add saveable temp story
+
+		-->
 	<head>
-		<title>Nothing Here</title>
+		<title>Nothing Here Yet</title>
 		<link rel="shortcut icon" type="image/png" href="https://www.mercedes-benz.ca/favicon.ico">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<!--<link rel="stylesheet" href="https://xentry.daimler.com/xentry-frame-ui/css/main.css?v=2">-->
@@ -137,8 +147,7 @@
 			  color: #57e2ff;
 			}
 			.story-container{
-				position:absolute;
-				background-image: linear-gradient(to bottom, #fff 60%, rgba(156,156,156,.80));
+				position:relative;
 				overflow-y:auto;
 				padding:20px 50px 50px;
 				margin: 0px 10px 20px;
@@ -208,6 +217,7 @@
 			  document.getElementById(hidden).style.display='none';
 			  return false;
 			}
+
 		</script>
 	</head>
 <body style="background-color: black">
@@ -217,24 +227,24 @@
 				<div class="mainTitle";>
 						<img src="https://www.mercedes-benz.ca/etc/designs/mb-nafta/images/Mercedes_Benz__logo--desktop.png"
 						 width="50" height="50" href="#" onclick="passcode();"><span class="xf-only-frame-title" style="padding-left: 10px; padding-top:5px;">
-						Nothing here<br></span> <!-- Main title Logo https://www.mercedes-benz.ca/etc/designs/mb-nafta/images/Mercedes_Benz__logo--desktop.png-->
+               Access forbidden<br></span> <!-- Main title Logo https://www.mercedes-benz.ca/etc/designs/mb-nafta/images/Mercedes_Benz__logo--desktop.png-->
 				</div>
-				<img id="topbanner" alt="banner" class="banner-image" src="https://ats.daimler.com/attachment/downloadByRedirect?skey=1b2e366b-5a52-4679-823f-223a080bc859&inline=true" style="display:none;">
+				<img id="topbanner" alt="banner" class="banner-image" src="https://ats.daimler.com/attachment/downloadByRedirect?skey=1b2e366b-5a52-4679-823f-223a080bc859&inline=true" style="opacity: 0.0; display:none;">
 				<div class="icon-bar">
-					<a href="https://xentry.mercedes-benz.com/home/" target="_blank"><i class="fa fa-home"></i></a>
-					<a href="https://xentry.mercedes-benz.com/xhpi/" target="_blank"><i class="fa fa-wrench"></i></a>
-					<a href="https://controlpanel.msoutlookonline.net/portal/aduser/login" target="_blank"><i class="fa fa-envelope"></i></a>
+					<a href=""><i class="fa fa-home"></i></a>
+					<a href=""><i class="fa fa-wrench"></i></a>
+					<a href=""><i class="fa fa-envelope"></i></a>
 					<a href="#"><i class="fa fa-lock" onclick="show('onOff','onOff');"></i></a><!--Lock button -->
 				</div>
 			</div>
 			<!-- MAIN STORIES ********************************************************** -->
-			<div id="onOff"; class="story-container" style="height: 100%; display:none;">
+			<div id="onOff"; class="story-container" style="display:none;">
+          <span class="mainTitle">You do not have the authorisations required for this page</span>
 
-			<span class="b"></span>
-			<s2>&#169; Jude Payumo &emsp;&emsp; Updated: 28 Aug 2022</s2> <!-- UDATE DATE *******-->
-			<span class="b"></span>
 
-			</div><!-- Story container-->
+
+
+			</div>
 		</div>
 	</div>
 </body>
