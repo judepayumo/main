@@ -95,9 +95,8 @@
 				width:100%;
 				margin:-9px;
 				color:#fff;
-				background-image: linear-gradient(to bottom, #000 20px, rgba(0, 0, 0, .3), rgba(50, 70, 200, .1)), url(https://www.mercedes-amg.com/en/home/_jcr_content/stage/media/slides/slide_1775332595_cop_771106324/media1/video.video.20220527174120.mp4);
-				/*https://www.mercedes-amg.com/content/global/en/vehicles/mercedes-amg-one/jcr:content/content/imageslider_1477917283/slides/slide/media1/image.media5.responsive_full_viewport_16_9.1531816317159.jpeg
-				*/
+				background-image: linear-gradient(to bottom, #000 20px, rgba(0, 0, 0, .3), rgba(50, 70, 200, .1)), url(https://www.mercedes-amg.com/content/global/en/home/jcr:content/root/responsivegrid/herostage_726660968/teasers/teaser_copy.media5.responsive_full_viewport_16_9.1666615185519.jpeg);
+
 				background-size: cover;
 			}
 			.converter{
@@ -172,51 +171,46 @@
 			}
 		</style>
 		<script>
-			function passcode(){
+			function displayBanner(){
+				document.getElementById("topbanner").style.display='block';
+			}
+			function show(shown, hidden) {
+				document.getElementById(shown).style.display='block';
+				document.getElementById(hidden).style.display='none';
+				return false;
+			}
+			function mecheck(){
+				var checkchecksout = document.getElementById("GN288750").value;
+				var prompts = document.getElementById("WDDSJ4GB1").value + "ss" + document.getElementById("WDDSJ4GB1G").value + "d:";
 				displayBanner();
-				var passcodeInput = prompt("Password: ");
+				var mecheckInput = prompt(prompts);
 				for (var i = 0; i < 2; i++) {
-					if (passcodeInput === null){
-						var passcodeInput = prompt("Password: ");
-					} else if (passcodeInput != "Jude"){
-						var passcodeInput = prompt("Password: ");
-					} else if (passcodeInput === "Jude") {
+					if (mecheckInput === null){
+						var mecheckInput = prompt(prompts);
+					} else if (mecheckInput != checkchecksout){
+						var mecheckInput = prompt(prompts);
+					} else if (mecheckInput === checkchecksout) {
 						show('onOff','');
 						var i = 5;
 					}
 				}
-				if (passcodeInput != "Jude") {
-					window.open("https://i.kym-cdn.com/entries/icons/original/000/030/359/cover4.jpg", '_self');
-				} else if (passcodeInput === "Jude") {
+				if (mecheckInput != checkchecksout) {
+					show('onOff','');
+					/*window.open("https://i.kym-cdn.com/entries/icons/original/000/030/359/cover4.jpg", '_self');*/
+				} else if (mecheckInput === checkchecksout) {
 					show('onOff','');
 				}
 				}
-			function displayBanner(){
-				document.getElementById("topbanner").style.display='block';
-			}
-			function CopyToClipboard(id){
-				var r = document.createRange();
-				r.selectNode(document.getElementById(id));
-				window.getSelection().removeAllRanges();
-				window.getSelection().addRange(r);
-				document.execCommand('copy');
-				window.getSelection().removeAllRanges();
-			}
-			function show(shown, hidden) {
-			  document.getElementById(shown).style.display='block';
-			  document.getElementById(hidden).style.display='none';
-			  return false;
-			}
-
 		</script>
 	</head>
+
 <body style="background-color: black">
 	<div class="main-page">
 		<div>
 			<div class="headerSpace">
 				<div class="mainTitle";>
 						<img src="https://www.mercedes-benz.ca/etc/designs/mb-nafta/images/Mercedes_Benz__logo--desktop.png"
-						 width="50" height="50" href="#" onclick="passcode();"><span class="xf-only-frame-title" style="padding-left: 10px; padding-top:5px;">
+						 width="50" height="50" href="#" onclick="mecheck();"><span class="xf-only-frame-title" style="padding-left: 10px; padding-top:5px;">
                Access forbidden<br></span> <!-- Main title Logo https://www.mercedes-benz.ca/etc/designs/mb-nafta/images/Mercedes_Benz__logo--desktop.png-->
 				</div>
 				<img id="topbanner" alt="banner" class="banner-image" src="https://ats.daimler.com/attachment/downloadByRedirect?skey=1b2e366b-5a52-4679-823f-223a080bc859&inline=true" style="opacity: 0.0; display:none;">
@@ -228,13 +222,26 @@
 				</div>
 			</div>
 			<!-- MAIN STORIES ********************************************************** -->
+
+
+
 			<div id="onOff"; class="story-container" style="display:none;">
           <span class="mainTitle">You do not have the authorisations required for this page</span>
 
 
 
 
-			</div>
+
+
+
+			<span class="b"></span>
+			<input type="text" id="WDDSJ4GB1G" value="wor" hidden>
+			<s2>&#169; Jude Payumo &emsp;&emsp; Updated: 30 October 2022</s2> <!-- UpdateDate -->
+			<input type="text" id="WDDSJ4GB1" value="Pa" hidden>
+			<input type="text" id="GN288750" value="Jude" hidden>
+			<span class="b"></span>
+
+			</div><!-- Story container-->
 		</div>
 	</div>
 </body>
