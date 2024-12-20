@@ -1,299 +1,47 @@
-</<!DOCTYPE html>
-<!--
-Todo:
-
-
--->
-
-
-
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv = "refresh" content = "1; url = https://www.rrc.ca/fundraising/2019/05/29/judes-story/" />
-    <title>Nothing here...</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="shortcut icon" type="image/png" href="https://www.mercedes-benz.ca/favicon.ico">
-
-  </head>
-  <style>
-    s1{/*font format for story*/
-      font-size: 12px;
-      font-family: "Lucinda Console", "Curier New", monospace;
-      color: white;
-    }
-    s2{/*font formal for titles*/
-      display: block;
-      text-align: center;
-      font-size: 25px;
-      font-family: "Lucinda Console", "Curier New", monospace;
-      font-variant: small-caps;
-      color: red;
-      position: sticky;
-      top: -25px;
-      text-shadow: #000 0px 0 2px;
-    }
-    s3{/*font formal for titles*/
-      font-size: 11px;
-      font-family: "Lucinda Console", "Curier New", monospace;
-      color: black;
-    }
-    s4{/*font formal for phone*/
-      font-size: 20px;
-      font-family: "Lucinda Console", "Curier New", monospace;
-      font-variant: small-caps;
-      color: white;
-      text-shadow: #660000 0px 0 4px;
-    }
-    s5{/*font formal for phone*/
-      font-size: 14px;
-      font-family: "Lucinda Console", "Curier New", monospace;
-      font-variant: small-caps;
-      color: white;
-    }
-    .s1{/*font format for story*/
-        font-size: 12px;
-        font-family: "Lucinda Console", "Curier New", monospace;
-        color: white;
-    }
-    .button{
-      background-color: black;
-      border: black;
-      color: red;
-      padding: 2px;
-      text-align: center;
-      font-family: "Lucinda Console", "Curier New", monospace;
-      font-size: 13px;
-      margin: 0px 0px 10px -5px;
-      border-radius: 6px 2px;
-      transition: all 0.2s ease;
-    }
-    .button:hover{
-      background-color: red;
-      color: white;
-      border-color: black;
-    }
-    .mainPage{ /* entire page*/
-      background-image: linear-gradient(to bottom, #000 20px, rgba(0, 0, 0, .2), rgba(50, 70, 200, .02)), url(https://customerracing.mercedes-amg.com/content/customerracing/en/vehicles/mercedes-amg-gt-track-series/jcr:content/content/mediaslider_19931803/slides/slide/media1/image.media5.responsive_full_viewport_16_9.1648034010867.jpeg);
-      position: fixed;
-    }
-		.nothingHere{
-			background: url(https://colorlib.com/wp/wp-content/uploads/sites/2/404-error-template-6.png) no-repeat center;
-      position: fixed;
-			top: 0px;
-			height: 70%;
-			width: 90%;
-			align-items: center;
-			margin: 80px 80px 80px 80px;
-			opacity: .95;
-			border: dotted red 1px;
-			border-radius: 30px 90px;
-		}
-    .topBanner{
-      background-color: rgba(0, 0, 0, 0.5);
-      position: fixed;
-      width: 100%;
-      height: 110px;
-      top: 0;
-      left: 0;
-      margin: 0px 0px 10px 0px;
-      padding: 20px 20px 5px 20px;
-    }
-    .topBannerLogo{
-      width: 360px;
-    }
-    .mainDiv{ /* main div*/
-      position: relative;
-      top: 100px;
-      max-height: 750px;
-      max-width: 100%;
-      overflow-y: scroll;
-      margin: 30px 10px 30px 10px; /* top right botton left*/
-      padding: 30px 20px 30px 20px;
-      background-color: rgba(151, 151, 151, 0.7);
-    }
-    .mainStory{ /*story blocks*/
-    }
-    .shortcutDiv{
-      top: 40px;
-      right: 70px;
-      position: absolute;
-      align-content: center;
-      font-size: 20px;
-    }
-    .shortcutDiv a{
-      transition: all 0.2s ease;
-      color: rgb(110,13,0);
-      text-decoration: none;
-    }
-    .shortcutDiv a:hover{
-      color: red;
-    }
-    .vinDiv{
-      position: absolute;
-      top: 80px;
-      right: 70px;
-      font-size: 20px;
-    }
-    .phoneDiv{
-      background-color: rgba(151, 151, 151, .95);
-      border-radius: 6px 2px;
-      border: 1px solid red;
-      box-shadow: 5px 10px 8px #000;
-      padding: 20px 20px 20px 20px;
-      position: fixed;
-      top: 150px;
-      right: 50px;
-      height: 350px;
-      width: 200px;
-      overflow-y: scroll;
-    }
-		.bottomDiv{
-			position: fixed;
-      bottom: 30px;
-      right: 40px;
-			height: 30;
-			width: 30;
-      font-size: 50px;
-    }
-		.bottomDiv a{
-		 transition: all 0.2s ease;
-		 color: rgb(110,13,0);
-		 text-decoration: none;
-	 	}
-	 .bottomDiv a:hover{
-		 color: red;
-	 }
-    table, th, td {
-      color: white;
-      /*border: .1px dotted black;*/
-    }
-		tr:nth-child(even) {
-  		background-color: gray;
-		}
-    .vinDiv input{
-      background-color: black;
-      border-radius: 6px 2px;
-      border: 0.5px solid red;
-      color: gray;
-      width: 180px;
-      height: 25px;
-    }
-    .vinDiv a{
-      transition: all 0.2s ease;
-      color: rgb(110,13,0);
-      text-decoration: none;
-    }
-    .vinDiv a:hover{
-      color: red;
-    }
-    span.topBannerTitle{
-      position: absolute;
-      font-family: "Lucida Console", "Courier New", monospace;
-      font-weight: normal;
-      font-variant: small-caps;
-      font-size: 40px;
-      color: red;
-      top: 40px;
-      left: 170px;
-    }
-    span.a{/*For spacing stories*/
-      display: block;
-      width: 100px;
-      height: 40px;
-      padding: 0px;
-      border: none;
-      background-color: none;
-    }
-    span.c{/*For spacing at ends*/
-      display: block;
-      width: 100px;
-      height: 200px;
-      padding: 0px;
-      border: none;
-      background-color: none;
-    }
-  </style>
-  <script>
-    function CopyToClipboard(id){
-      var r = document.createRange();
-      r.selectNode(document.getElementById(id));
-      window.getSelection().removeAllRanges();
-      window.getSelection().addRange(r);
-      document.execCommand('copy');
-      window.getSelection().removeAllRanges();
-    }
-    function show(shown, hidden) {
-      document.getElementById(shown).style.display='block';
-      document.getElementById(hidden).style.display='none';
-      return false;
-    }
-    function mecheck(){
-      var checkchecksout = document.getElementById("GN288750").value;
-      var prompts = document.getElementById("WDDSJ4GB1").value + "ss" + document.getElementById("WDDSJ4GB1G").value + "d:";
-      var mecheckInput = prompt(prompts);
-      for (var i = 0; i < 2; i++) {
-        if (mecheckInput === null){
-          var mecheckInput = prompt(prompts);
-        } else if (mecheckInput != checkchecksout){
-          var mecheckInput = prompt(prompts);
-        } else if (mecheckInput === checkchecksout) {
-          show('onOff','');
-          var i = 5;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Under Construction</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #2c3e50, #bdc3c7);
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 2em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
         }
-      }
-      if (mecheckInput != checkchecksout) {
-        show('notMe','');
-      } else if (mecheckInput === checkchecksout) {
-        show('onOff','');
-      }
-      }
-    function toggleDiv(divID){
-      var toggleDiv = document.getElementById(divID).style.display;
-      if (toggleDiv == "block") {
-        document.getElementById(divID).style.display='none';
-      } else {
-        document.getElementById(divID).style.display='block';
-      }
-      return false;
-    }
-		function scrollUp(){
-			document.getElementById('onOff').scrollTop = 0;
-			toggleDiv('bottomDiv'); //hides button when at the top
-		}
-		function scrollFunction(){ //show scroll button
-			var scrollPos = document.getElementById('onOff').scrollTop;
-			show('phoneDiv','phoneDiv'); // hides phone when mainDiv scrolls
-			if (scrollPos > 500 && scrollPos < 800) {
-				show('bottomDiv','');
-			}
-			}
-  </script>
-  <body class="mainPage">
-    <div class="topBanner">
-      <span class="topBannerTitle">Nothing here</span>
-      <img src="https://www.mercedes-amg.com/etc/clientlibs/amg/amg.base/assets/images/svg/amg-logo.svg" class="topBannerLogo" onclick="mecheck()">
-      <div class="shortcutDiv">
-        <a href="#"><i class="fa fa-home"></i>&nbsp&nbsp&nbsp;</a>
-        <a href="#"><i class="fa fa-search"></i>&nbsp&nbsp&nbsp;</a>
-        <a href="#"><i class="fa fa-calculator"></i>&nbsp&nbsp&nbsp;</a>
-        <a href="#"><i class="fa fa-wrench"></i>&nbsp&nbsp&nbsp;</a>
-        <a href="#"><i class="fa fa-envelope"></i>&nbsp&nbsp&nbsp;</a>
-        <a href="#"><i class="fa fa-phone" onclick="toggleDiv('phoneDiv')"></i>&nbsp&nbsp&nbsp;</a>
-        <a href="#"><i class="fa fa-lock" onclick="show('notMe','onOff');"></i>&nbsp&nbsp&nbsp;</a><!--Lock button -->
-      </div>
-      <div class="vinDiv">
-        <form>
-          <input type="text" id="dataVIN" value="nothing here" size="18" maxlength="17">&nbsp&nbsp
-          <input type="text" id="GN288750" value="Jude" hidden>
-          <a href="#"><i class="fa fa-book" onclick=""></i>&nbsp&nbsp</a> <!-- View vedoc codes -->
-  				<a href="#"><i class="fa fa-barcode" onclick=""></i>&nbsp&nbsp</a> <!-- View major components -->
-        </form>
-      </div>
+        .container {
+            text-align: center;
+            animation: pulse 3s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+        }
+        .icon {
+            font-size: 5em;
+            margin-bottom: 0.5em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">🚧</div>
+        <div>Under Construction</div>
     </div>
-    <div class="mainDiv" id="notMe" style="display:block"> <!-- Not Me Div -->
-      <s2>Redirecting...</s2>
-    </div>
-	
-  </body>
+</body>
 </html>
