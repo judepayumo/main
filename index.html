@@ -6,7 +6,7 @@
   <title>Inventory</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-    body { padding-top: 80px; background: #dfdfdf; color: #222; }
+    body { padding-top: 80px; background: #b8b8b8; color: #222; }
 
     header {
       position: fixed;
@@ -23,6 +23,15 @@
     }
 
     header h1 { font-size: 22px; }
+
+    .disclaimer {
+      max-width: 1200px;
+      margin: 20px auto 40px;
+      padding: 0 20px;
+      font-size: 12px;
+      color: #2a2a2a;
+      text-align: center;
+    }   
 
     .controls {
       max-width: 1200px;
@@ -52,6 +61,7 @@
     }
 
     .car-card {
+      position: relative;
       background: white;
       border-radius: 12px;
       overflow: hidden;
@@ -74,6 +84,32 @@
     .car-price { color: #0f8a5f; font-weight: bold; margin-bottom: 8px; }
     .car-price.sold { color: #c62828; }
     .car-meta { font-size: 13px; color: #666; }
+    .private-badge {
+      position: absolute;
+      top: 30px;
+      left: -38px;
+      background: #c62828;
+      color: white;
+      padding: 6px 48px;
+      font-size: 12px;
+      font-weight: bold;
+      transform: rotate(-35deg);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      z-index: 2;
+    }
+    .incoming-badge {
+      position: absolute;
+      top: 30px;
+      left: -38px;
+      background: #383838;
+      color: white;
+      padding: 6px 48px;
+      font-size: 14px;
+      font-weight: bold;
+      transform: rotate(-35deg);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      z-index: 2;
+    }
 
     .modal {
       position: fixed;
@@ -172,6 +208,10 @@
   </div>
 </div>
 
+<footer class="disclaimer">
+  Prices do not include applicable taxes. Vehicles marked “Private Sale - No GST” are exempt from GST. <br> Updated 11 May 2026
+</footer>
+
 <!-- template
    {
     id: 0000#,
@@ -187,6 +227,8 @@
     image: "",
     details: "Details.",
     sold: false,
+    privateSale: false,
+    incomingVeh: false,
     contactUrl: "http://www.example.com",
   },
   
@@ -195,6 +237,23 @@
 
 <script>
 const cars = [
+
+   {
+    id: 00007,
+    dateAdded: "2026-05-12", //yyyy-mm-dd
+    brand: "Mercedes-Benz",
+    title: "2014 Mercedes-Benz E550",
+    price: 18000,
+    mileage: "190,000 km",
+    exterior: "Black",
+    interior: "Black",
+    engine: "",
+    transmission: "",
+    image: "https://www.mercedes-benz.com/assets/innovation/milestones/mercedes-benz-vehicles/the-history-of-the-e-class/000-e-class-2025-2-2560x1440.jpeg?im=Resize=(1690)",
+    details: "",
+    incomingVeh: true,
+    //contactUrl: "http://www.example.com",
+  },
 
   {//C300
     id: 00006,
@@ -209,7 +268,6 @@ const cars = [
     transmission: "Automatic",
     image: "https://scontent-atl3-2.xx.fbcdn.net/v/t39.30808-6/690853900_36352203831037444_7835208526640402510_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=104&ccb=1-7&_nc_sid=db9c8c&_nc_ohc=nahFw3sgvtcQ7kNvwEOA31c&_nc_oc=AdqH8SMgU4VbDmWTquJB0UCAfSttc-JjlfzMgFm1xuEbclYOq-7xgNt8JLt8ObxcfhjfTFWpVJoQ9ykL_neOaAyl&_nc_zt=23&_nc_ht=scontent-atl3-2.xx&_nc_gid=zOIvBeVbx150a78f_sazTg&_nc_ss=7b2a8&oh=00_Af4aGkHQTPe5bSLGN42HiVcWwEGTyj1qWozIthkvlUDpig&oe=6A0731CE",
     details: "This C300 combines luxury, comfort, and all-weather confidence with Mercedes’ 4MATIC AWD system, making it a great daily driver year-round.",
-    sold: false,
     contactUrl: "https://www.facebook.com/marketplace/item/946577551597286",
   },
   {//GLA 
@@ -225,7 +283,7 @@ const cars = [
     transmission: "7-speed Dual-Clutch Transmission",
     image: "https://scontent-msp1-1.xx.fbcdn.net/v/t39.30808-6/698572925_36350820664509094_3753024283829016563_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=109&ccb=1-7&_nc_sid=db9c8c&_nc_ohc=fL-IHoTC12gQ7kNvwFUo1mX&_nc_oc=AdocmIOvvblXPTIOv7JK6hWoSb7MSsxWEcs0w2T7xph2kuik5_s8cBgr5k-5J_aJJiJVg14Kd_V4GTIEd-6IMdL1&_nc_zt=23&_nc_ht=scontent-msp1-1.xx&_nc_gid=3dRsMVLovi7D3_S3gdeYpQ&_nc_ss=7b2a8&oh=00_Af6GiXyQq_TznbJ9CSZ5ggiHC9tmpTovZh5mZJ9-48R26A&oe=6A073521",
     details: "Clean title and 2-owner vehicle, with complete maintenance records. This car has been meticulously cared for and is in excellent condition. Private Sale - No GST",
-    sold: false,
+    privateSale: true,
     contactUrl: "https://www.facebook.com/marketplace/item/1647837953034349",
   },
   {//ML
@@ -241,7 +299,6 @@ const cars = [
     transmission: "7-speed Automatic Transmission",
     image: "https://scontent-atl3-1.xx.fbcdn.net/v/t39.30808-6/672675326_35811739275083905_6813062432948239820_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=103&ccb=1-7&_nc_sid=db9c8c&_nc_ohc=radfdW4j6O0Q7kNvwGQIynV&_nc_oc=Adqm-e0vD6L84yT7S5_2nb4WtytVzhkTVe3Xf-xNHuRzO-OB705XP36V5aJ4_wuXrW5mnIdigkTAZGfQgGpYkOVa&_nc_zt=23&_nc_ht=scontent-atl3-1.xx&_nc_gid=-vwxXTN7AlFdjw8maM5RDQ&_nc_ss=7b2a8&oh=00_Af7smlXkEWNRggzLlrp9oLx-ajAOdUP4hss3aOO3fGY_lw&oe=6A0727C7",
     details: "Well-equipped 2015 ML350 BlueTEC 4MATIC with a strong feature set and premium options.",
-    sold: false,
     contactUrl: "https://www.facebook.com/marketplace/item/978412348039894",
   },
   {//Edge
@@ -257,7 +314,6 @@ const cars = [
     transmission: "Automatic",
     image: "https://scontent-msp1-1.xx.fbcdn.net/v/t39.30808-6/668896709_35726767410247759_2183199922186353805_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=103&ccb=1-7&_nc_sid=db9c8c&_nc_ohc=DnbepkLfFTwQ7kNvwHLKGHK&_nc_oc=AdrWV2G_FTaCF7f8ruO-ifJ1ESbc6yM2ykdizUmEZvFI0BG2Vd_tUsJgq7RHW_mBYnSLTySlqCg1__AWs3nDrb5V&_nc_zt=23&_nc_ht=scontent-msp1-1.xx&_nc_gid=UaA7wLrbb8Hkg9n5q4f7-A&_nc_ss=7b2a8&oh=00_Af4pKFgHtpKULub6loCOWa4tEdXUmANBXUNI5zSyQgmrLw&oe=6A074466",
     details: "Runs and drives great, highway mileage, and well maintained. Lots of space and a solid daily driver or family vehicle.",
-    sold: false,
     contactUrl: "https://www.facebook.com/marketplace/item/4466637443662399",
   },
   {//GLK
@@ -318,6 +374,8 @@ function renderCars() {
     card.onclick = () => openModal(car.id);
 
     card.innerHTML = `
+      ${car.privateSale ? '<div class="private-badge">Private Sale - No GST</div>' : ''}
+      ${car.incomingVeh ? '<div class="incoming-badge">Incoming Vehicle</div>' : ''}
       <img src="${car.image}" alt="${car.title}">
       <div class="card-body">
         <div class="car-title">${car.title}</div>
@@ -334,6 +392,7 @@ function openModal(id) {
   const car = cars.find(c => c.id === id);
   document.getElementById('modal-image').src = car.image;
   document.getElementById('modal-title').innerText = car.title;
+
   const modalPrice = document.getElementById('modal-price');
   modalPrice.innerText = (car.sold ? 'SOLD • ' : '$') + (car.sold ? '$' : '') + car.price.toLocaleString();
   modalPrice.className = 'modal-price' + (car.sold ? ' sold' : '');
