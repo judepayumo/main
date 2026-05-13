@@ -1,424 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Inventory</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-    body { padding-top: 80px; background: #b8b8b8; color: #222; }
-
-    header {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 80px;
-      background: #111;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 24px;
-      z-index: 1000;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    }
-
-    header h1 { font-size: 22px; }
-
-    .disclaimer {
-      max-width: 1200px;
-      margin: 20px auto 40px;
-      padding: 0 20px;
-      font-size: 12px;
-      color: #2a2a2a;
-      text-align: center;
-    }   
-
-    .controls {
-      max-width: 1200px;
-      margin: 20px auto 0;
-      padding: 0 20px;
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .controls input, .controls select {
-      padding: 10px 12px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 14px;
-    }
-
-    .controls input { flex: 1; min-width: 220px; }
-
-    .container {
-      max-width: 1200px;
-      margin: 20px auto;
-      padding: 0 20px 20px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-    }
-
-    .car-card {
-      position: relative;
-      background: white;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-
-    .car-card:hover { transform: translateY(-4px); }
-
-    .car-card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      display: block;
-    }
-
-    .card-body { padding: 14px; }
-    .car-title { font-size: 17px; font-weight: bold; margin-bottom: 6px; }
-    .car-price { color: #0f8a5f; font-weight: bold; margin-bottom: 8px; }
-    .car-price.sold { color: #c62828; }
-    .car-meta { font-size: 13px; color: #666; }
-    .private-badge {
-      position: absolute;
-      top: 30px;
-      left: -38px;
-      background: #c62828;
-      color: white;
-      padding: 6px 48px;
-      font-size: 12px;
-      font-weight: bold;
-      transform: rotate(-35deg);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      z-index: 2;
-    }
-    .incoming-badge {
-      position: absolute;
-      top: 30px;
-      left: -38px;
-      background: #383838;
-      color: white;
-      padding: 6px 48px;
-      font-size: 14px;
-      font-weight: bold;
-      transform: rotate(-35deg);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      z-index: 2;
-    }
-
-    .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.75);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 2000;
-      padding: 20px;
-    }
-
-    .modal-content {
-      background: white;
-      width: 100%;
-      max-width: 800px;
-      border-radius: 12px;
-      padding: 20px;
-      position: relative;
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-
-    .modal-content img {
-      width: 100%;
-      max-height: 420px;
-      object-fit: cover;
-      border-radius: 8px;
-      margin-bottom: 16px;
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 14px;
-      right: 18px;
-      font-size: 26px;
-      cursor: pointer;
-    }
-
-    .modal-title { font-size: 24px; font-weight: bold; }
-    .modal-price { font-size: 20px; color: #0f8a5f; margin: 8px 0 12px; }
-    .modal-price.sold { color: #c62828; }
-    .modal-specs { margin-bottom: 14px; color: #555; }
-    .modal-details { line-height: 1.6; color: #333; margin: 8px 0 12px;}
-    .modal-engine {line-height: 1.6; color: #333; }
-    .modal-transmission {line-height: 1.6; color: #333; }
-    .modal-interior {line-height: 1.6; color: #333; }
-    .modal-exterior {line-height: 1.6; color: #333; }
-
-    .contact-btn {
-      display: inline-block;
-      margin-top: 18px;
-      padding: 12px 20px;
-      background: #111;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Under Construction</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #2c3e50, #bdc3c7);
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 2em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+            animation: pulse 3s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+        }
+        .icon {
+            font-size: 5em;
+            margin-bottom: 0.5em;
+        }
+    </style>
 </head>
 <body>
-
-<header>
-  <h1>Inventory</h1>
-</header>
-
-<section class="controls">
-  <input type="text" id="searchInput" placeholder="Search make, model, trim..." />
-  <select id="brandFilter">
-    <option value="all">All Brands</option>
-    <option value="Audi">Audi</option>
-    <option value="BMW">BMW</option>
-    <option value="Ford">Ford</option>
-    <option value="Honda">Honda</option>
-    <option value="Mercedes-AMG">Mercedes-AMG</option>
-    <option value="Mercedes-Benz">Mercedes-Benz</option>
-  </select>
-</section>
-
-<div class="container" id="carContainer"></div>
-
-<div class="modal" id="modal">
-  <div class="modal-content">
-    <span class="close-btn" onclick="closeModal()">&times;</span>
-    <img id="modal-image" src="" alt="Vehicle image" />
-    <div class="modal-title" id="modal-title"></div>
-    <div class="modal-price" id="modal-price"></div>
-    <div class="modal-specs" id="modal-specs"></div>
-    <div class="modal-exterior" id="modal-exterior"></div>
-    <div class="modal-interior" id="modal-interior"></div>
-    <div class="modal-engine" id="modal-engine"></div>
-    <div class="modal-transmission" id="modal-transmission"></div>
-    <div class="modal-details" id="modal-details"></div>
-    <a id="contact-button" class="contact-btn" href="#" target="_blank" rel="noopener noreferrer">More info</a>
-  </div>
-</div>
-
-<footer class="disclaimer">
-  Prices do not include applicable taxes. Vehicles marked “Private Sale - No GST” are exempt from GST. <br> Updated 11 May 2026
-</footer>
-
-<!-- template
-   {
-    id: 0000#,
-    dateAdded: "2026-04-11", //yyyy-mm-dd
-    brand: "Mercedes-Benz",
-    title: "2012 Mercedes-Benz",
-    price: 8500,
-    mileage: "196,000 km",
-    exterior: "Silver",
-    interior: "Black",
-    engine: "Naturally Aspirated 3.5L V6",
-    transmission: "Automatic",
-    image: "https://www.payumo.ca/placeholder.jpeg",
-    details: "Details.",
-    sold: false,
-    privateSale: false,
-    incomingVeh: false,
-    contactUrl: "http://www.example.com",
-  },
-  
-  
-  -->
-
-<script>
-const cars = [
-
-   {
-    id: 00007,
-    dateAdded: "2026-05-12", //yyyy-mm-dd
-    brand: "Mercedes-Benz",
-    title: "2014 Mercedes-Benz E550",
-    price: 18000,
-    mileage: "210,000 km",
-    exterior: "Black",
-    interior: "Black",
-    engine: "",
-    transmission: "",
-    image: "https://www.payumo.ca/placeholder.jpeg",
-    details: "",
-    incomingVeh: true,
-    contactUrl: "https://www.facebook.com/marketplace/item/946577551597286",
-  },
-
-  {//C300
-    id: 00006,
-    dateAdded: "2026-05-11", //yyyy-mm-dd
-    brand: "Mercedes-Benz",
-    title: "2019 Mercedes-Benz C300 4MATIC",
-    price: 28500,
-    mileage: "110,000 km",
-    exterior: "White",
-    interior: "Black",
-    engine: "2.0L Turbocharged inline-four",
-    transmission: "Automatic",
-    image: "https://scontent-atl3-2.xx.fbcdn.net/v/t39.30808-6/690853900_36352203831037444_7835208526640402510_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=104&ccb=1-7&_nc_sid=db9c8c&_nc_ohc=nahFw3sgvtcQ7kNvwEOA31c&_nc_oc=AdqH8SMgU4VbDmWTquJB0UCAfSttc-JjlfzMgFm1xuEbclYOq-7xgNt8JLt8ObxcfhjfTFWpVJoQ9ykL_neOaAyl&_nc_zt=23&_nc_ht=scontent-atl3-2.xx&_nc_gid=zOIvBeVbx150a78f_sazTg&_nc_ss=7b2a8&oh=00_Af4aGkHQTPe5bSLGN42HiVcWwEGTyj1qWozIthkvlUDpig&oe=6A0731CE",
-    details: "This C300 combines luxury, comfort, and all-weather confidence with Mercedes’ 4MATIC AWD system, making it a great daily driver year-round.",
-    contactUrl: "https://www.facebook.com/marketplace/item/946577551597286",
-  },
-  {//GLA 
-    id: 00005,
-    dateAdded: "2026-05-10", //yyyy-mm-dd
-    brand: "Mercedes-AMG",
-    title: "2017 Mercedes-AMG GLA45 4MATIC",
-    price: 35000,
-    mileage: "59,000 km",
-    exterior: "Black",
-    interior: "Black",
-    engine: "2.0L Handcrafted Turbocharged inline-four",
-    transmission: "7-speed Dual-Clutch Transmission",
-    image: "https://scontent-msp1-1.xx.fbcdn.net/v/t39.30808-6/698572925_36350820664509094_3753024283829016563_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=109&ccb=1-7&_nc_sid=db9c8c&_nc_ohc=fL-IHoTC12gQ7kNvwFUo1mX&_nc_oc=AdocmIOvvblXPTIOv7JK6hWoSb7MSsxWEcs0w2T7xph2kuik5_s8cBgr5k-5J_aJJiJVg14Kd_V4GTIEd-6IMdL1&_nc_zt=23&_nc_ht=scontent-msp1-1.xx&_nc_gid=3dRsMVLovi7D3_S3gdeYpQ&_nc_ss=7b2a8&oh=00_Af6GiXyQq_TznbJ9CSZ5ggiHC9tmpTovZh5mZJ9-48R26A&oe=6A073521",
-    details: "Clean title and 2-owner vehicle, with complete maintenance records. This car has been meticulously cared for and is in excellent condition. Private Sale - No GST",
-    privateSale: true,
-    contactUrl: "https://www.facebook.com/marketplace/item/1647837953034349",
-  },
-  {//ML
-    id: 00004,
-    dateAdded: "2026-04-16", //yyyy-mm-dd
-    brand: "Mercedes-Benz",
-    title: "2015 Mercedes-Benz ML350 4MATIC",
-    price: 20500,
-    mileage: "120,000 km",
-    exterior: "Grey",
-    interior: "Black",
-    engine: "3.0L Turbocharged Diesel V6",
-    transmission: "7-speed Automatic Transmission",
-    image: "https://scontent-atl3-1.xx.fbcdn.net/v/t39.30808-6/672675326_35811739275083905_6813062432948239820_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=103&ccb=1-7&_nc_sid=db9c8c&_nc_ohc=radfdW4j6O0Q7kNvwGQIynV&_nc_oc=Adqm-e0vD6L84yT7S5_2nb4WtytVzhkTVe3Xf-xNHuRzO-OB705XP36V5aJ4_wuXrW5mnIdigkTAZGfQgGpYkOVa&_nc_zt=23&_nc_ht=scontent-atl3-1.xx&_nc_gid=-vwxXTN7AlFdjw8maM5RDQ&_nc_ss=7b2a8&oh=00_Af7smlXkEWNRggzLlrp9oLx-ajAOdUP4hss3aOO3fGY_lw&oe=6A0727C7",
-    details: "Well-equipped 2015 ML350 BlueTEC 4MATIC with a strong feature set and premium options.",
-    contactUrl: "https://www.facebook.com/marketplace/item/978412348039894",
-  },
-  {//Edge
-    id: 00003,
-    dateAdded: "2026-04-11",
-    brand: "Ford",
-    title: "2012 Ford Edge Limited AWD",
-    price: 8500,
-    mileage: "196,000 km",
-    interior: "Black",
-    exterior: "Silver",
-    engine: "Naturally Aspirated 3.5L V6",
-    transmission: "Automatic",
-    image: "https://scontent-msp1-1.xx.fbcdn.net/v/t39.30808-6/668896709_35726767410247759_2183199922186353805_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=103&ccb=1-7&_nc_sid=db9c8c&_nc_ohc=DnbepkLfFTwQ7kNvwHLKGHK&_nc_oc=AdrWV2G_FTaCF7f8ruO-ifJ1ESbc6yM2ykdizUmEZvFI0BG2Vd_tUsJgq7RHW_mBYnSLTySlqCg1__AWs3nDrb5V&_nc_zt=23&_nc_ht=scontent-msp1-1.xx&_nc_gid=UaA7wLrbb8Hkg9n5q4f7-A&_nc_ss=7b2a8&oh=00_Af4pKFgHtpKULub6loCOWa4tEdXUmANBXUNI5zSyQgmrLw&oe=6A074466",
-    details: "Runs and drives great, highway mileage, and well maintained. Lots of space and a solid daily driver or family vehicle.",
-    contactUrl: "https://www.facebook.com/marketplace/item/4466637443662399",
-  },
-  {//GLK
-    id: 00002,
-    dateAdded: "2025-11-16",
-    brand: "Mercedes-Benz",
-    title: "2015 Mercedes-Benz GLK350 4MATIC",
-    price: 18500,
-    mileage: "102,500 km",
-    interior: "White",
-    exterior: "Grey",
-    engine: "Naturally Aspirated 3.5L V6",
-    transmission: "Automatic",
-    image: "https://scontent-msp1-1.xx.fbcdn.net/v/t39.30808-6/655454866_35276872471903924_9158621609410559368_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=100&ccb=1-7&_nc_sid=db9c8c&_nc_ohc=WJgxeV6nL-sQ7kNvwG5Lf6O&_nc_oc=AdpM_t-U7_CJMogQWIthD4WvwxiuFdN1iUVMQvGDR9BXoomG7Ye5RUQZf9UDrXrIe--VRzSV7BYPJJAETdNcaAtP&_nc_zt=23&_nc_ht=scontent-msp1-1.xx&_nc_gid=vOBwigXLgC0RKKtZaRHCkw&_nc_ss=7b2a8&oh=00_Af4RFOfBZPtIge13XHWOEsqJAUyVB0QBSxUho4kvVTHlpA&oe=6A07254A",
-    details: "Fully loaded with premium Mercedes-Benz features and in excellent shape.",
-    sold: true,
-    contactUrl: "https://www.facebook.com/marketplace/item/2833670710165548",
-  },
-  {//S5
-    id: 00001,
-    dateAdded: "2025-09-04",
-    brand: "Audi",
-    title: "2009 Audi S5 Coupe AWD",
-    price: 13000,
-    mileage: "131,000 km",
-    interior: "Red",
-    exterior: "Black",
-    engine: "Naturally Aspirated 4.2L V8",
-    transmission: "6-Speed Manual",
-    image: "https://scontent-atl3-2.xx.fbcdn.net/v/t39.30808-6/652172141_35256837817240723_2444535996008092360_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=102&ccb=1-7&_nc_sid=db9c8c&_nc_ohc=8bkmoZmpWXcQ7kNvwHo5ixn&_nc_oc=AdrCdNn04DMN1k0epZAFeBJ4EmIAXcSghWs8XkPbzD8NIh1fXGiU4yE3Tkc2-OiYvDctBtEn2qDTOK2fpYBVXxKf&_nc_zt=23&_nc_ht=scontent-atl3-2.xx&_nc_gid=g29ppex_zQP2PGHST_Z5hA&_nc_ss=7b2a8&oh=00_Af7jTBewLCgAI9-SFSCNWFp27T0PXxicvBzgoPoqCvbGZw&oe=6A071F9C",
-    details: "This S5 is well-maintained and in excellent condition for its year. The combination of a V8 and manual transmission makes it one of the most engaging Audis to drive, while the black-on-red color combo turns heads everywhere.",
-    sold: true,
-    contactUrl: "https://www.facebook.com/marketplace/item/1322159732886758",
-  }
-];
-
-const container = document.getElementById('carContainer');
-const searchInput = document.getElementById('searchInput');
-const brandFilter = document.getElementById('brandFilter');
-
-function renderCars() {
-  const search = searchInput.value.toLowerCase();
-  const brand = brandFilter.value;
-
-  const filtered = cars
-    .filter(car => {
-      const matchesSearch = car.title.toLowerCase().includes(search);
-      const matchesBrand = brand === 'all' || car.brand === brand;
-      return matchesSearch && matchesBrand;
-    })
-    .sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded));
-
-  container.innerHTML = '';
-
-  filtered.forEach(car => {
-    const card = document.createElement('div');
-    card.className = 'car-card';
-    card.onclick = () => openModal(car.id);
-
-    card.innerHTML = `
-      ${car.privateSale ? '<div class="private-badge">Private Sale - No GST</div>' : ''}
-      ${car.incomingVeh ? '<div class="incoming-badge">Incoming Vehicle</div>' : ''}
-      <img src="${car.image}" alt="${car.title}">
-      <div class="card-body">
-        <div class="car-title">${car.title}</div>
-        <div class="car-price ${car.sold ? 'sold' : ''}">${car.sold ? 'SOLD • ' : ''}$${car.price.toLocaleString()}</div>
-        <div class="car-meta">${car.mileage}</div>
-      </div>
-    `;
-
-    container.appendChild(card);
-  });
-}
-
-function openModal(id) {
-  const car = cars.find(c => c.id === id);
-  document.getElementById('modal-image').src = car.image;
-  document.getElementById('modal-title').innerText = car.title;
-
-  const modalPrice = document.getElementById('modal-price');
-  modalPrice.innerText = (car.sold ? 'SOLD • ' : '$') + (car.sold ? '$' : '') + car.price.toLocaleString();
-  modalPrice.className = 'modal-price' + (car.sold ? ' sold' : '');
-  document.getElementById('modal-specs').innerText = `${car.mileage} • ${car.brand}`;
-  document.getElementById('modal-exterior').innerText = `Exterior colour: ${car.exterior}`;
-  document.getElementById('modal-interior').innerText = `Interior colour: ${car.interior}`;
-  document.getElementById('modal-engine').innerText = `Engine: ${car.engine}`;
-  document.getElementById('modal-transmission').innerText = `Transmission: ${car.transmission}`;
-  document.getElementById('modal-details').innerText = car.details;
-  document.getElementById('contact-button').href = car.contactUrl;
-  document.getElementById('modal').style.display = 'flex';
-}
-
-function closeModal() {
-  document.getElementById('modal').style.display = 'none';
-}
-
-window.onclick = e => {
-  if (e.target.id === 'modal') closeModal();
-};
-
-searchInput.addEventListener('input', renderCars);
-brandFilter.addEventListener('change', renderCars);
-
-renderCars();
-</script>
-
+    <div class="container">
+        <div class="icon">🚧</div>
+        <div>Nothing Here</div>
+    </div>
 </body>
 </html>
